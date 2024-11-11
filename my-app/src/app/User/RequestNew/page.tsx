@@ -30,7 +30,7 @@ export default function RequestNew(){
     useEffect(() => {
         // Fetch data from API
         Promise.all([
-            apiFetch('/jobtype').then(response => response.json()),
+            apiFetch('/api/requestor/jobtype').then(response => response.json()),
             apiFetch('/lineprocess').then(response => response.json())
         ])
         .then(([jobtypes, lineprocesses]) => {
