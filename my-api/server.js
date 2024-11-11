@@ -33,12 +33,13 @@ app.get('/', (req, res) => {
 });
 
 // Use route handlers
-app.use('/requestor', Requestor);
-app.use('/login', Login);
-app.use('/admin', Admin);
-app.use('/operator', Operator);
-app.use('/dashboard', Dashboard);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/requestor', Requestor);
+app.use('/api/login', Login);
+app.use('/api/admin', Admin);
+app.use('/api/operator', Operator);
+app.use('/api/dashboard', Dashboard);
+app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Start the server
 const port = process.env.PORT || 8000;
