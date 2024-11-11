@@ -4,44 +4,45 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const Login = require('./models/login');
-const Requestor = require('./models/requestor'); // ตรวจสอบว่าการนำเข้าเป็น router
+const Requestor = require('./models/requestor');
 const Admin = require('./models/admin');
 const Operator = require('./models/worker');
 const Dashboard = require('./models/dashbord');
 
 const app = express();
-app.use(cors({
-  origin: 'https://p-request-app.vercel.app', // โดเมนของคลายแอนด์
+
+// CORS configuration - make sure this is at the top of the file before any routes
+const corsOptions = {
+  origin: 'https://p-request-app.vercel.app', // Allow your frontend domain
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-}));
+};
 
-app.use(cors(corsOptions));
+// Apply CORS middleware
+app.use(cors(corsOptions));  // This applies CORS globally to all routes
 
 // Handle preflight requests (OPTIONS requests) for all routes
-app.options('*', cors()); 
+app.options('*', cors());
 
-// ตั้งค่าพอร์ต
-const port = process.env.PORT || 8000;
+// Body parser middleware
+app.use(bodyParser.json());
 
-app.use(bodyParser.json()); // ใช้ bodyParser สำหรับการแปลง request body เป็น JSON
-
-// เส้นทางเริ่มต้น
+// Basic route for testing
 app.get('/', (req, res) => {
   res.send("Hi hi!");
 });
 
-// ใช้เส้นทางที่แยกไว้
-app.use('/requestor', Requestor); // ตรวจสอบว่าการใช้เป็น router
-app.use('/',Login);
+// Use route handlers
+app.use('/requestor', Requestor);
+app.use('/', Login);
 app.use('/admin', Admin);
-app.use('/operator',Operator);
-app.use('/dashboard',Dashboard)
+app.use('/operator', Operator);
+app.use('/dashboard', Dashboard);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-
-// เริ่มต้นเซิร์ฟเวอร์
+// Start the server
+const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
