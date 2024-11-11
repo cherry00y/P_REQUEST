@@ -17,6 +17,11 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use(cors(corsOptions));
+
+// Handle preflight requests (OPTIONS requests) for all routes
+app.options('*', cors()); 
+
 // ตั้งค่าพอร์ต
 const port = process.env.PORT || 8000;
 
