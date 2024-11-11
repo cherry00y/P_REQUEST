@@ -27,11 +27,11 @@ app.get('/', (req, res) => {
 });
 
 // ใช้เส้นทางที่แยกไว้
-app.use('/', Requestor); // ตรวจสอบว่าการใช้เป็น router
-app.use('/',Login);
-app.use('/', Admin);
-app.use('/',Operator);
-app.use('/',Dashboard)
+app.use('/api/requestor', Requestor); // ตรวจสอบว่าการใช้เป็น router
+app.use('/api/login',Login);
+app.use('/api/admin', Admin);
+app.use('/api/operator',Operator);
+app.use('/api/dashboard',Dashboard)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
