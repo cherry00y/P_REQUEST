@@ -22,7 +22,7 @@ export default function Implement() {
     const causeRef = useRef<HTMLTextAreaElement | null>(null);
     const solutionRef = useRef<HTMLTextAreaElement | null>(null);
     const typeScrewdriverSelectRef = useRef<HTMLSelectElement | null>(null);
-    const torqueRefs = Array.from({ length: 4 }, () => useRef<HTMLInputElement | null>(null));
+    const torqueRefs = useRef<(HTMLInputElement | null)[]>([null, null, null, null]);
     const serialnoInputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
@@ -43,6 +43,7 @@ export default function Implement() {
 
         fetchData();
     }, []);
+
 
     const handleTypeChange = (value: string) => {
         setTypes(prevTypes =>
@@ -85,10 +86,10 @@ export default function Implement() {
             operator_id: operatorId,
             cause: causeRef.current?.value ?? '',
             solution: solutionRef.current?.value ?? '',
-            torque_label: torqueRefs[0]?.current?.value ?? '',
-            torque_check1: torqueRefs[1]?.current?.value ?? '',
-            torque_check2: torqueRefs[2]?.current?.value ?? '',
-            torque_check3: torqueRefs[3]?.current?.value ?? '',
+            torque_label: torqueRefs.current[0]?.value ?? '',
+            torque_check1: torqueRefs.current[1]?.value ?? '',
+            torque_check2: torqueRefs.current[2]?.value ?? '',
+            torque_check3: torqueRefs.current[3]?.value ?? '',
             typesd: typeScrewdriverSelectRef.current?.value ?? '',
             speed: types.includes('High-Speed') ? 'High-Speed' : 'Low-Speed',
             serial_no: serialnoInputRef.current?.value ?? '',
@@ -135,7 +136,7 @@ export default function Implement() {
         causeRef.current && (causeRef.current.value = '');
         solutionRef.current && (solutionRef.current.value = '');
         serialnoInputRef.current && (serialnoInputRef.current.value = '');
-        torqueRefs.forEach(ref => ref.current && (ref.current.value = ''));
+        torqueRefs.current.forEach(ref => ref && (ref.value = ''));
     };
 
     if (loading) {
@@ -178,7 +179,7 @@ export default function Implement() {
                             {['Torque value at the sign..', 'Checkable value 1st', 'Checkable value 2nd', 'Checkable value 3rd'].map((placeholder, index) => (
                                 <input
                                     key={index}
-                                    ref={torqueRefs[index]}
+                                    ref={(el) => { torqueRefs.current[index] = el; }}
                                     type="text"
                                     placeholder={placeholder}
                                     required

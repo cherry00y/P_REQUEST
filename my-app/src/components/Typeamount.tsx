@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { apiFetch } from '@/information/api';
@@ -18,7 +18,7 @@ const WeeklyRequestsChart: React.FC = () => {
   const [selectedRange, setSelectedRange] = useState('Last 7 days');
   const [customDate, setCustomDate] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isCustomDateSelected, setIsCustomDateSelected] = useState(false); // Added state for custom date
+  const [isCustomDateSelected, setIsCustomDateSelected] = useState(false);
 
   // Fetch data from API
   const fetchData = async () => {
@@ -32,48 +32,48 @@ const WeeklyRequestsChart: React.FC = () => {
   };
 
   // Function to filter data based on the selected date range
-  const filterData = (range: string) => {
+  const filterData = useCallback((range: string) => {
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0]; // Convert current date to YYYY-MM-DD format
-
+  
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
       const itemDateString = itemDate.toISOString().split('T')[0]; // Convert item date to YYYY-MM-DD format
-
+  
       if (range === 'Today') {
         return itemDateString === currentDateString;
       }
-
+  
       if (range === 'Last 7 days') {
         const diff = (currentDate.getTime() - itemDate.getTime()) / (1000 * 3600 * 24);
         return diff <= 7;
       }
-
+  
       if (range === 'Last Month') {
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
         const itemMonth = itemDate.getMonth();
         const itemYear = itemDate.getFullYear();
-
+  
         return itemYear === currentYear && itemMonth === currentMonth - 1;
       }
-
+  
       if (range === 'Custom Date' && customDate) {
         const selectedDate = new Date(customDate);
         const dayOfWeek = selectedDate.getDay();
         const startOfWeek = new Date(selectedDate);
         startOfWeek.setDate(selectedDate.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1)); // Monday of that week
         const endOfWeek = new Date(startOfWeek);
-        endOfWeek.setDate(startOfWeek.getDate() + 4); // Friday of that week
-  
+        endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday of that week
+    
         return itemDate >= startOfWeek && itemDate <= endOfWeek;
       }
-
+  
       return range !== 'Custom Date';
     });
-
+  
     setFilteredData(filtered);
-  };
+  }, [data, customDate]);
 
   // Call fetchData on component mount
   useEffect(() => {
@@ -85,15 +85,15 @@ const WeeklyRequestsChart: React.FC = () => {
     if (selectedRange !== 'Custom Date' || (selectedRange === 'Custom Date' && customDate)) {
       filterData(selectedRange);
     }
-  }, [data, selectedRange, customDate]);
+  }, [data, selectedRange, customDate, filterData]);
 
   const handleRangeChange = (range: string) => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
-      setIsDropdownOpen(true); // เปิด dropdown ทันทีเมื่อเลือก Custom Date
+      setIsDropdownOpen(true); // Open dropdown when Custom Date is selected
     } else {
-      setCustomDate(''); // ล้างค่า customDate เมื่อไม่ใช่ Custom Date
-      setIsDropdownOpen(false); // ปิด dropdown ถ้าเลือก range อื่น
+      setCustomDate(''); // Clear customDate when not Custom Date
+      setIsDropdownOpen(false); // Close dropdown for other ranges
       filterData(range);
     }
   };
@@ -101,7 +101,7 @@ const WeeklyRequestsChart: React.FC = () => {
   const handleCustomDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomDate(e.target.value);
     if (selectedRange === 'Custom Date') {
-      filterData('Custom Date'); // เรียก filterData เมื่อเลือกวันที่ใน Custom Date
+      filterData('Custom Date'); // Call filterData when custom date is selected
     }
   };
 
@@ -128,7 +128,7 @@ const WeeklyRequestsChart: React.FC = () => {
 
   // Update chart data based on filtered data
   filteredData.forEach((item: DataPoint) => {
-    const dayIndex = (new Date(item.day).getDay() + 6) % 7; // Adjust so that Monday = 0, ..., Friday = 4
+    const dayIndex = (new Date(item.day).getDay() + 6) % 7; // Adjust so that Monday = 0, ..., Friday = 6
     if (item.request_type === 'Repair Request') {
       chartData.datasets[0].data[dayIndex]++;
     } else if (item.request_type === 'New Request') {
@@ -180,7 +180,7 @@ const WeeklyRequestsChart: React.FC = () => {
                 type="date"
                 value={customDate || ''}
                 onChange={handleCustomDateChange}
-                className="w-full px-4 py-2 mt-2 border rounded-md"
+                className="mt-2 w-full text-sm border border-gray-300 rounded-lg"
               />
             )}
           </div>

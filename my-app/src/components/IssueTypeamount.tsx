@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import { apiFetch } from '@/information/api';
@@ -37,22 +37,22 @@ const IssueTypeamount: React.FC = () => {
         fetchData();
       }, []); // เปลี่ยนจากการพึ่งพาค่า 'data'
       
-      useEffect(() => {
-        filterData(); // ทำการกรองข้อมูลหลังจากเลือกเดือนหรือปี
-      }, [selectedYear, selectedMonth, data]);
-      
-      const filterData = () => {
+      const filterData = useCallback(() => {
         const filtered = data
           .filter((item) => {
-            const itemYear = item.Year; // ตรวจสอบปีจากข้อมูลที่ดึงมา
-            const itemMonth = item.Month; // ตรวจสอบเดือนจากข้อมูลที่ดึงมา
+            const itemYear = item.Year; // Check the year from fetched data
+            const itemMonth = item.Month; // Check the month from fetched data
             return itemYear === parseInt(selectedYear) && itemMonth === selectedMonth;
           })
-          .sort((a, b) => b.RequestCount - a.RequestCount) // เรียงข้อมูลตามจำนวน request
-          .slice(0, 3); // เอาแค่ 3 อันดับแรก
-      
+          .sort((a, b) => b.RequestCount - a.RequestCount) // Sort data by request count
+          .slice(0, 3); // Take only top 3 entries
+    
         setFilteredData(filtered);
-      };
+      }, [data, selectedYear, selectedMonth]);
+    
+      useEffect(() => {
+        filterData(); // Filter data after selecting year or month
+      }, [selectedYear, selectedMonth, data, filterData]); 
       
     // Prepare chart data
     const chartData = {

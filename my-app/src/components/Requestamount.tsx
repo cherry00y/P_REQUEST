@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { apiFetch } from '@/information/api';
@@ -31,7 +31,7 @@ const ChartComponent: React.FC = () => {
     }
   };
 
-  const filterData = (range: string) => {
+  const filterData = useCallback((range: string) => {
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
 
@@ -64,17 +64,20 @@ const ChartComponent: React.FC = () => {
     });
 
     setFilteredData(filtered);
-  };
+  }, [data, customDate]); // Only recompute filterData if `data` or `customDate` changes
+
+  // useEffect hook to trigger filterData when dependencies change
+  useEffect(() => {
+    if (selectedRange !== 'Custom Date' || (selectedRange === 'Custom Date' && customDate)) {
+      filterData(selectedRange); // Call filterData when selectedRange, data, or customDate changes
+    }
+  }, [filterData, selectedRange, customDate]); // Ensure filterData is in the dependency array
+
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (selectedRange !== 'Custom Date' || (selectedRange === 'Custom Date' && customDate)) {
-      filterData(selectedRange);
-    }
-  }, [data, selectedRange, customDate]);
 
   const handleRangeChange = (range: string) => {
     setSelectedRange(range);
