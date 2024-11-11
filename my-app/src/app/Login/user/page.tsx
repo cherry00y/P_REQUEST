@@ -20,6 +20,7 @@ function LoginUser() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, employee_code: employeeCode }),
+                credentials: 'include'
             });
     
             if (!response.ok) {

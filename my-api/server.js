@@ -12,6 +12,7 @@ const Dashboard = require('./models/dashbord');
 const app = express();
 app.use(cors({
   origin: 'https://p-request-app.vercel.app', // โดเมนของคลายแอนด์
+  allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
