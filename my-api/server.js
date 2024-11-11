@@ -13,11 +13,12 @@ const app = express();
 
 // CORS configuration - make sure this is at the top of the file before any routes
 const corsOptions = {
-  origin: 'https://p-request-app.vercel.app', // Allow your frontend domain
+  origin: ['https://p-request-app.vercel.app', 'https://another-domain.com'], // ใส่โดเมนเพิ่มเติม
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };
+
 
 app.use(cors(corsOptions));  // This applies CORS globally to all routes
 
