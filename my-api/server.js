@@ -3,15 +3,15 @@ require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const Login = require('./models/login');
-const Requestor = require('./models/requestor'); // ตรวจสอบว่าการนำเข้าเป็น router
-const Admin = require('./models/admin');
-const Operator = require('./models/worker');
-const Dashboard = require('./models/dashbord');
+const Login = require('./api/login');
+const Requestor = require('./api/requestor'); // ตรวจสอบว่าการนำเข้าเป็น router
+const Admin = require('./api/admin');
+const Operator = require('./api/worker');
+const Dashboard = require('./api/dashbord');
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3000', // โดเมนของคลายแอนด์
+  origin: 'https://kaizen-request.vercel.app', // โดเมนของคลายแอนด์
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
