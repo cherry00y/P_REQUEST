@@ -51,7 +51,7 @@ function isWorker(position_name) {
 }
 
 
-router.post('/login', (req, res) => {
+router.post('/signin', (req, res) => {
     const { email, employee_code } = req.body;
 
     UserService.login(email, employee_code, (err, data) => {

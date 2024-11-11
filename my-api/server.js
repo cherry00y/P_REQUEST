@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 // Use route handlers
 app.use('/requestor', Requestor);
-app.use('/', Login);
+app.use('/login', Login);
 app.use('/admin', Admin);
 app.use('/operator', Operator);
 app.use('/dashboard', Dashboard);
