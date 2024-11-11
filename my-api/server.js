@@ -19,7 +19,6 @@ const corsOptions = {
   credentials: true,
 };
 
-// Apply CORS middleware
 app.use(cors(corsOptions));  // This applies CORS globally to all routes
 
 // Handle preflight requests (OPTIONS requests) for all routes
