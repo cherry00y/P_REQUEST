@@ -118,6 +118,7 @@ router.get('/issuetype', (req, res) => {
             res.status(500).send('Error querying the database.');
             return;
         }
+        console.log('Database results: ', results);
         res.json(results);
     });
 });
