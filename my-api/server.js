@@ -11,7 +11,7 @@ const Dashboard = require('./models/dashbord');
 
 const app = express();
 app.use(cors({
-  origin: 'https://kaizen-request.vercel.app', // โดเมนของคลายแอนด์
+  origin: 'https://p-request-app.vercel.app', // โดเมนของคลายแอนด์
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
