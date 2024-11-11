@@ -42,7 +42,4 @@ app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Start the server
-const port = process.env.PORT || 8000;
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+module.exports = app;
