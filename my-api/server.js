@@ -13,7 +13,7 @@ const app = express();
 
 // CORS configuration - make sure this is at the top of the file before any routes
 const corsOptions = {
-  origin: ['https://p-request-app.vercel.app', 'https://p-request-api.vercel.app'], // ใส่โดเมนเพิ่มเติม
+  origin: '*', // ใส่โดเมนเพิ่มเติม
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
@@ -34,11 +34,11 @@ app.get('/', (req, res) => {
 });
 
 // Use route handlers
-app.use('/', Requestor);
-app.use('/', Login);
-app.use('/', Admin);
-app.use('/', Operator);
-app.use('/', Dashboard);
+app.use('/Requestor', Requestor);
+app.use('/Login', Login);
+app.use('/Admin', Admin);
+app.use('/Operator', Operator);
+app.use('/Dash', Dashboard);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
