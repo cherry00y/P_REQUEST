@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 });
 
 // ใช้เส้นทางที่แยกไว้
-app.use('/', Requestor); // ตรวจสอบว่าการใช้เป็น router
+app.use('/api', Requestor); // ตรวจสอบว่าการใช้เป็น router
 app.use('/',Login);
 app.use('/', Admin);
 app.use('/',Operator);
