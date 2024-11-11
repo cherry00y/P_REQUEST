@@ -14,7 +14,7 @@ function LoginUser() {
         event.preventDefault();
     
         try {
-            const response = await apiFetch('https://p-request-api.vercel.app/login', {
+            const response = await apiFetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
