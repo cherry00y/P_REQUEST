@@ -9,27 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "server.js"
-    },
-    {
-      "src": "/Login/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/Admin/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/Operator/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/Dashboard/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/uploads/(.*)",
-      "dest": "/uploads/$1"
+      "dest": "server"
     }
   ]
 }
