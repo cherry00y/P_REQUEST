@@ -7,7 +7,7 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/Requestor/(.*)",
       "dest": "my-api/$1"
     }
   ]

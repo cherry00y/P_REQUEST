@@ -20,9 +20,8 @@ const corsOptions = {
 };
 
 
-app.use(cors(corsOptions));  // This applies CORS globally to all routes
+app.use(cors(corsOptions));  
 
-// Handle preflight requests (OPTIONS requests) for all routes
 app.options('*', cors());
 
 // Body parser middleware
