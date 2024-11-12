@@ -35,9 +35,9 @@ export default function RequestRepair() {
 
   useEffect(() => {
     Promise.all([
-      apiFetch('/issuetype').then(response => response.json()),
-      apiFetch('/lineprocess').then(response => response.json()),
-      apiFetch('/rank').then(response => response.json())
+      apiFetch('/Requestor/issuetype').then(response => response.json()),
+      apiFetch('/Requestor/lineprocess').then(response => response.json()),
+      apiFetch('/Requestor/rank').then(response => response.json())
     ])
     .then(([issuetypes, lineprocesses, ranks]) => {
       setIssueType(issuetypes);
@@ -82,7 +82,7 @@ export default function RequestRepair() {
     };
 
     try {
-      const response = await apiFetch('/request', {
+      const response = await apiFetch('/Requestor/request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
