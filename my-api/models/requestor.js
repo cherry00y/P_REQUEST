@@ -1,39 +1,6 @@
 const connection = require('../config/config');
 
 
-
-
-// กำหนดที่เก็บไฟล์และประเภทไฟล์ที่อนุญาต
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads'); // โฟลเดอร์ที่ใช้เก็บไฟล์
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // ตั้งชื่อไฟล์ด้วยเวลาและนามสกุลไฟล์
-    }
-});
-
-const upload = multer({ storage: storage });
-
-
-// Middleware สำหรับตรวจสอบ Token
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    console.log('Authorization Header:', authHeader);
-
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (token == null) return res.sendStatus(403);
-
-    jwt.verify(token, secretKey, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
-}
-
-
-
 const Requestor = {
 
     getIssueType: function(callback) {
