@@ -24,8 +24,7 @@ app.use(cors(corsOptions));
 
 app.options('*', cors());
 
-// Body parser middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Basic route for testing
 app.get('/', (req, res) => {
