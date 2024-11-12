@@ -13,7 +13,7 @@ const app = express();
 
 // CORS configuration - make sure this is at the top of the file before any routes
 const corsOptions = {
-  origin: ['https://p-request-app.vercel.app', 'https://p-request-api.vercel.app'], // ใส่โดเมนเพิ่มเติม
+  origin: ['https://p-request-app.vercel.app', 'https://p-request.onrender.com'], // ใส่โดเมนเพิ่มเติม
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
