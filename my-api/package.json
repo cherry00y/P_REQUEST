@@ -21,6 +21,7 @@
     "express": "^4.19.2",
     "froala-editor": "^4.2.2",
     "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.4",
     "react-froala-wysiwyg": "^4.2.2"
