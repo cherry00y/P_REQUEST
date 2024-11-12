@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/Requestor/(.*)",
-      "dest": "/models/requestor.js"
+      "dest": "/routes/requestor.js"
     },
     {
       "src": "/Login/(.*)",
