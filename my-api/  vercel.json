@@ -8,8 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/Requestor/(.*)",
-      "dest": "/routes/requestor.js"
+      "src": "/(.*)",
+      "dest": "server.js"
     },
     {
       "src": "/Login/(.*)",
