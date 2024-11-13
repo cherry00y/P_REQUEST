@@ -27,7 +27,7 @@ const Requestor = {
             requestData.request_type, 
             status, 
             requestData.requestor, 
-            null, null], 
+            null, null,null], 
             (err, results) => {
             if (err) {
                 console.error('Error executing query:', err);
