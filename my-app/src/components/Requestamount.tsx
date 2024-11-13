@@ -92,22 +92,20 @@ const ChartComponent: React.FC = () => {
   const handleRangeChange = (range: string) => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
-      setIsDropdownOpen(true); // Close dropdown when selecting Custom Date
-      setIsDateInputVisible(true); // Show date input
+      setIsDateInputVisible(true); // Immediately show the input for Custom Date
+      setIsDropdownOpen(false); // Close the dropdown after selecting 'Custom Date'
     } else {
-      setCustomDate('');
-      setIsDropdownOpen(false); // Close dropdown if range is not Custom Date
-      filterData(range);
+      setCustomDate(''); // Clear the custom date when other ranges are selected
+      setIsDateInputVisible(false); // Hide the date input for other ranges
+      filterData(range); // Filter data based on the selected range
     }
   };
-  
+
   const handleCustomDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomDate(e.target.value);
-    if (selectedRange === 'Custom Date') {
-      filterData('Custom Date');
-      setIsDropdownOpen(true);
+    if (selectedRange === 'Custom Date' && e.target.value) {
+      filterData('Custom Date'); // Filter data when a custom date is selected
     }
-    setIsDropdownOpen(false);
   };
 
   const chartData = {
