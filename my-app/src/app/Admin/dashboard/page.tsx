@@ -18,7 +18,7 @@ export default function Dashbord() {
     <div className='flex flex-col min-h-screen'>
       <NavbarAdmin />
       <main className="flex-1 p-4 bg-slate-100">
-        <div className="px-8 grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+        <div className="px-8 grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
           {/* Top section with three components */}
           <ChartComponent />
           <WeeklyRequestsChart />
