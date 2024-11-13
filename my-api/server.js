@@ -3,11 +3,11 @@ require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const Login = require('./models/login');
+const Login = require('./routes/login');
 const Requestor = require('./routes/requestor');
-const Admin = require('./models/admin');
-const Operator = require('./models/worker');
-const Dashboard = require('./models/dashbord');
+const Admin = require('./routes/admin');
+const Operator = require('./routes/worker');
+const Dashboard = require('./routes/dashbord');
 
 const app = express();
 
