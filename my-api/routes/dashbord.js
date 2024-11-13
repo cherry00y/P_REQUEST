@@ -33,14 +33,5 @@ router.get('/yearsummary', (req, res) => {
     })
 });
 
-router.get('/issuetypesummary', (req, res) => {
-    Dashboard.getamountissuetype((err, results) => {
-        if (err) {
-            console.error('Error fetching issuetype request summary:', err);
-            return res.status(500).json({error: 'Internal server error'});
-        }
-        res.json(results)
-    });
-});
 
 module.exports = router;
