@@ -68,7 +68,7 @@ const Dashboard = {
                 YEAR(r.date), MONTH(r.date), it.issuetype_name
         ) AS RankedRequests
         WHERE 
-            rank <= 3
+             \`rank\` <= 3
         ORDER BY 
             Year ASC, 
             Month ASC, 
