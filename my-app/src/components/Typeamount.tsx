@@ -107,7 +107,7 @@ const WeeklyRequestsChart: React.FC = () => {
     setCustomDate(e.target.value);
     if (selectedRange === 'Custom Date') {
       filterData('Custom Date');
-      setIsDropdownOpen(false); // Close dropdown after selecting date
+      setIsDropdownOpen(true); // Close dropdown after selecting date
     }
     setIsDropdownOpen(false); // Hide the dropdown when date is selected
   };
