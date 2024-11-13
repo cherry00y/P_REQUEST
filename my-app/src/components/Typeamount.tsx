@@ -15,7 +15,7 @@ interface DataPoint {
 const WeeklyRequestsChart: React.FC = () => {
   const [data, setData] = useState<DataPoint[]>([]);
   const [filteredData, setFilteredData] = useState<DataPoint[]>([]);
-  const [selectedRange, setSelectedRange] = useState('Last 7 days');
+  const [selectedRange, setSelectedRange] = useState('This week');
   const [customDate, setCustomDate] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCustomDateSelected, setIsCustomDateSelected] = useState(false);
@@ -34,46 +34,51 @@ const WeeklyRequestsChart: React.FC = () => {
   // Function to filter data based on the selected date range
   const filterData = useCallback((range: string) => {
     const currentDate = new Date();
-    const currentDateString = currentDate.toISOString().split('T')[0]; // Convert current date to YYYY-MM-DD format
+    const currentDateString = currentDate.toISOString().split('T')[0];
+  
+    // Calculate start and end of the current week (Monday to Sunday)
+    const startOfWeek = new Date(currentDate);
+    const dayOfWeek = startOfWeek.getDay();
+    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Adjust if it's Sunday
+    startOfWeek.setDate(startOfWeek.getDate() - daysSinceMonday);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // End on Sunday
+  
+    // Calculate start and end of the previous week (Monday to Sunday)
+    const startOfLastWeek = new Date(startOfWeek);
+    startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
+    const endOfLastWeek = new Date(startOfLastWeek);
+    endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
   
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
-      const itemDateString = itemDate.toISOString().split('T')[0]; // Convert item date to YYYY-MM-DD format
+      const itemDateString = itemDate.toISOString().split('T')[0];
   
       if (range === 'Today') {
         return itemDateString === currentDateString;
       }
   
-      if (range === 'Last 7 days') {
-        const diff = (currentDate.getTime() - itemDate.getTime()) / (1000 * 3600 * 24);
-        return diff <= 7;
+      if (range === 'This Week') {
+        // Check if date falls between Monday and Sunday of the current week
+        return itemDate >= startOfWeek && itemDate <= endOfWeek;
       }
   
-      if (range === 'Last Month') {
-        const currentMonth = currentDate.getMonth();
-        const currentYear = currentDate.getFullYear();
-        const itemMonth = itemDate.getMonth();
-        const itemYear = itemDate.getFullYear();
-  
-        return itemYear === currentYear && itemMonth === currentMonth - 1;
+      if (range === 'Last Week') {
+        // Check if date falls between Monday and Sunday of the previous week
+        return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
       }
   
       if (range === 'Custom Date' && customDate) {
         const selectedDate = new Date(customDate);
-        const dayOfWeek = selectedDate.getDay();
-        const startOfWeek = new Date(selectedDate);
-        startOfWeek.setDate(selectedDate.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1)); // Monday of that week
-        const endOfWeek = new Date(startOfWeek);
-        endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday of that week
-    
-        return itemDate >= startOfWeek && itemDate <= endOfWeek;
+        return itemDateString === selectedDate.toISOString().split('T')[0];
       }
   
-      return range !== 'Custom Date';
+      return false;
     });
   
     setFilteredData(filtered);
   }, [data, customDate]);
+  
 
   // Call fetchData on component mount
   useEffect(() => {
@@ -166,10 +171,10 @@ const WeeklyRequestsChart: React.FC = () => {
                 <a href="#" onClick={() => handleRangeChange('Today')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
               </li>
               <li>
-                <a href="#" onClick={() => handleRangeChange('Last 7 days')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                <a href="#" onClick={() => handleRangeChange('This week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">This week</a>
               </li>
               <li>
-                <a href="#" onClick={() => handleRangeChange('Last Month')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last Month</a>
+                <a href="#" onClick={() => handleRangeChange('Last week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last week</a>
               </li>
               <li>
                 <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>
