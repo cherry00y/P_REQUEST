@@ -35,17 +35,18 @@ const WeeklyRequestsChart: React.FC = () => {
   const filterData = useCallback((range: string) => {
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
-  
-    // Calculate start and end of the current week (Monday to Sunday)
-    const startOfWeek = new Date(currentDate);
-    const dayOfWeek = startOfWeek.getDay();
-    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Adjust if it's Sunday
-    startOfWeek.setDate(startOfWeek.getDate() - daysSinceMonday);
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // End on Sunday
-  
-    // Calculate start and end of the previous week (Monday to Sunday)
-    const startOfLastWeek = new Date(startOfWeek);
+    
+    // Calculate the start of the current week (Monday)
+    const startOfWeekMonday = new Date(currentDate);
+    const dayOfWeek = startOfWeekMonday.getDay();
+    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If it's Sunday, set to Monday
+    startOfWeekMonday.setDate(startOfWeekMonday.getDate() - daysSinceMonday);
+    
+    // Calculate the end of the week (Friday)
+    const endOfWeekFriday = new Date(startOfWeekMonday);
+    endOfWeekFriday.setDate(startOfWeekMonday.getDate() + 4); // Add 4 days to reach Friday
+
+    const startOfLastWeek = new Date(startOfWeekMonday);
     startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
     const endOfLastWeek = new Date(startOfLastWeek);
     endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
@@ -58,19 +59,17 @@ const WeeklyRequestsChart: React.FC = () => {
         return itemDateString === currentDateString;
       }
   
-      if (range === 'This Week') {
-        // Check if date falls between Monday and Sunday of the current week
-        return itemDate >= startOfWeek && itemDate <= endOfWeek;
+      if (range === 'This week') {
+        // Check if date falls between Monday and Friday of this week
+        return itemDate >= startOfWeekMonday && itemDate <= endOfWeekFriday;
       }
   
-      if (range === 'Last Week') {
-        // Check if date falls between Monday and Sunday of the previous week
+      if (range === 'Last week') {
         return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
       }
   
       if (range === 'Custom Date' && customDate) {
-        const selectedDate = new Date(customDate);
-        return itemDateString === selectedDate.toISOString().split('T')[0];
+        return itemDateString === customDate;
       }
   
       return false;
