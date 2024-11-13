@@ -20,7 +20,7 @@ export default function NewRequestAccept() {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        apiFetch('/NewRequest')
+        apiFetch('/Operator/NewRequest')
         .then(response => response.json())
         .then((data) => {
             console.log('API response:', data);

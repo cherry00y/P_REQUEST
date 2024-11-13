@@ -23,7 +23,7 @@ export default function ListRequest() {
 
 
     useEffect(() => {
-        apiFetch('/listrequest')
+        apiFetch('/Admin/listrequest')
         .then(response => response.json())
         .then((data) => {
             console.log('API response:', data); // Check API response

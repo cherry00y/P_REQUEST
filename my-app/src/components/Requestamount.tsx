@@ -23,7 +23,7 @@ const ChartComponent: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await apiFetch(`/requestsummary`);
+      const response = await apiFetch(`/Dashboard/requestsummary`);
       const result = await response.json();
       setData(result);
     } catch (error) {

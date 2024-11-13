@@ -38,7 +38,7 @@ export default function Information() {
         setIsHydrated(true);
 
         // Fetch data from API
-        apiFetch('/information')
+        apiFetch('/Admin/information')
             .then((res) => res.json())
             .then((fetchedData) => {
                 console.log(fetchedData); // Log to check API response

@@ -37,7 +37,7 @@ export default function Cost(){
             window.location.href = '/Admin/Information/Informcompleted'; // Redirect if no repairlog_id is found
         }
 
-        apiFetch('/product')
+        apiFetch('/Admin/product')
         .then(response => response.json())
         .then((products) => {
             setProduct(products); // Assuming the API returns an array of products
@@ -137,7 +137,7 @@ export default function Cost(){
         };
     
         try {
-            const response = await apiFetch('/addcost', {
+            const response = await apiFetch('/Admin/addcost', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

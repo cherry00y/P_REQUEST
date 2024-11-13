@@ -37,7 +37,7 @@ export default function DetailRequest(){
         const request_id = queryParams.get('request_id')?.split('-')[1]; // Extract numeric part
 
         if (request_id) {
-            apiFetch(`/detailrepair/${request_id}`)
+            apiFetch(`/Admin/detailrepair/${request_id}`)
                 .then(response => response.json())
                 .then(data => {
                     if(data.length > 0){
@@ -58,7 +58,7 @@ export default function DetailRequest(){
         if (!request_id) return;
 
         try {
-            const response = await apiFetch(`/reject/${numericId}`, {
+            const response = await apiFetch(`/Admin/reject/${numericId}`, {
                 method: 'DELETE',
             });
 
@@ -127,7 +127,7 @@ export default function DetailRequest(){
     const performAcceptRequest = async (numericId: string, data: any) => {
         try {
             const token = localStorage.getItem('token');
-            const responseAccept = await apiFetch(`/acceptrequest/${numericId}`, {
+            const responseAccept = await apiFetch(`/Admin/acceptrequest/${numericId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

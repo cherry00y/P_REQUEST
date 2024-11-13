@@ -20,7 +20,7 @@ export default function InformCompleted() {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        apiFetch('/InformCompleteRepari')
+        apiFetch('/Admin/InformCompleteRepari')
         .then(response => response.json())
         .then((data) => {
             console.log('API response:', data);

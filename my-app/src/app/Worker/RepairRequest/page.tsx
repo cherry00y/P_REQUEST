@@ -19,7 +19,7 @@ export default function RepairAccept() {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        apiFetch('/RepairRequest')
+        apiFetch('/Operator/RepairRequest')
         .then(response => response.json())
         .then((data) => {
             console.log('API response:', data);

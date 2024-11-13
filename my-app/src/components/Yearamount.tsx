@@ -24,7 +24,7 @@ const YearlyRequestsChart: React.FC = () => {
   // Fetch data from API
   const fetchData = async () => {
     try {
-      const response = await apiFetch(`/typesummary`);
+      const response = await apiFetch(`/Dashboard/typesummary`);
       const result = await response.json();
       setData(result);
     } catch (error) {

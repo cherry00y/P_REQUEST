@@ -30,7 +30,7 @@ export default function Implement() {
 
         const fetchData = async () => {
             try {
-                const response = await apiFetch('/TypeScrewdriver');
+                const response = await apiFetch('/Operator/TypeScrewdriver');
                 const data = await response.json();
                 console.log('API response:', data);
                 setTypeScrewdriver(data);
@@ -102,7 +102,7 @@ export default function Implement() {
         };
 
         try {
-            const response = await apiFetch('/Implement', {
+            const response = await apiFetch('/Operator/Implement', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

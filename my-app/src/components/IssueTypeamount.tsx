@@ -24,7 +24,7 @@ const IssueTypeamount: React.FC = () => {
     // Fetch data from API
     const fetchData = async () => {
       try {
-        const response = await apiFetch(`/issuetypesummary`);
+        const response = await apiFetch(`/Dashboard/issuetypesummary`);
         const result = await response.json();
         console.log(result); // Inspect the response
         setData(result);

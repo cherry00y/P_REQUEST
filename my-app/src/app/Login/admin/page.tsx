@@ -14,7 +14,7 @@ function LoginAdmin() {
         event.preventDefault();
     
         try {
-            const response = await apiFetch('/login', {
+            const response = await apiFetch('/Login/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
