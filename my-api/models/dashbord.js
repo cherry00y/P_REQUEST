@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const connection = require('../config/config');
 
 const Dashboard = {
@@ -119,4 +117,4 @@ router.get('/issuetypesummary', (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = Dashboard;
