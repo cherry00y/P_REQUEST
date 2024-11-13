@@ -16,9 +16,9 @@ const WeeklyRequestsChart: React.FC = () => {
   const [data, setData] = useState<DataPoint[]>([]);
   const [filteredData, setFilteredData] = useState<DataPoint[]>([]);
   const [selectedRange, setSelectedRange] = useState('This week');
-  const [customDate, setCustomDate] = useState<string | null>(null);
+  const [customDate, setCustomDate] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isCustomDateSelected, setIsCustomDateSelected] = useState(false);
+  const [isDateInputVisible, setIsDateInputVisible] = useState(false); // Track visibility of the date input field
 
   // Fetch data from API
   const fetchData = async () => {
@@ -95,6 +95,7 @@ const WeeklyRequestsChart: React.FC = () => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
       setIsDropdownOpen(true); // Open dropdown when Custom Date is selected
+      setIsDateInputVisible(true);
     } else {
       setCustomDate(''); // Clear customDate when not Custom Date
       setIsDropdownOpen(false); // Close dropdown for other ranges
@@ -165,7 +166,7 @@ const WeeklyRequestsChart: React.FC = () => {
           </svg>
         </button>
 
-        {isDropdownOpen && (
+        {isDropdownOpen && !isDateInputVisible && (
           <div id="lastDaysdropdown" className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 max-h-[200px] overflow-y-auto">
             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
@@ -181,15 +182,17 @@ const WeeklyRequestsChart: React.FC = () => {
                 <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>
               </li>
             </ul>
-            {selectedRange === 'Custom Date' && (
-              <input
-                type="date"
-                value={customDate || ''}
-                onChange={handleCustomDateChange}
-                className="mt-2 w-full text-sm border border-gray-300 rounded-lg"
-              />
-            )}
           </div>
+        )}
+
+        {isDateInputVisible && (
+          <input
+            type="date"
+            value={customDate}
+            onChange={handleCustomDateChange}
+            className="w-full px-4 py-2 mt-2 border rounded-md dark:bg-gray-800 dark:text-white"
+            autoFocus
+          />
         )}
       </div>
     </div>
