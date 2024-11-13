@@ -92,19 +92,18 @@ const ChartComponent: React.FC = () => {
   const handleRangeChange = (range: string) => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
-      setIsDateInputVisible(true); // Immediately show the input for Custom Date
-      setIsDropdownOpen(false); // Close the dropdown after selecting 'Custom Date'
+      setIsDropdownOpen(true); // เปิด dropdown ทันทีเมื่อเลือก Custom Date
     } else {
-      setCustomDate(''); // Clear the custom date when other ranges are selected
-      setIsDateInputVisible(false); // Hide the date input for other ranges
-      filterData(range); // Filter data based on the selected range
+      setCustomDate(''); // ล้างค่า customDate เมื่อไม่ใช่ Custom Date
+      setIsDropdownOpen(false); // ปิด dropdown ถ้าเลือก range อื่น
+      filterData(range);
     }
   };
-
+  
   const handleCustomDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomDate(e.target.value);
-    if (selectedRange === 'Custom Date' && e.target.value) {
-      filterData('Custom Date'); // Filter data when a custom date is selected
+    if (selectedRange === 'Custom Date') {
+      filterData('Custom Date'); // เรียก filterData เมื่อเลือกวันที่ใน Custom Date
     }
   };
 
@@ -160,17 +159,15 @@ const ChartComponent: React.FC = () => {
                 <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>
               </li>
             </ul>
+            {selectedRange === 'Custom Date' && (
+              <input
+                type="date"
+                value={customDate || ''}
+                onChange={handleCustomDateChange}
+                className="w-full px-4 py-2 mt-2 border rounded-md"
+              />
+            )}
           </div>
-        )}
-
-        {isDateInputVisible && (
-          <input
-            type="date"
-            value={customDate}
-            onChange={handleCustomDateChange}
-            className="w-full px-4 py-2 mt-2 border rounded-md dark:bg-gray-800 dark:text-white"
-            autoFocus
-          />
         )}
       </div>
     </div>
