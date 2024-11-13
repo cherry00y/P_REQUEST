@@ -20,6 +20,7 @@ const ChartComponent: React.FC = () => {
   const [selectedRange, setSelectedRange] = useState('Last 7 days');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [customDate, setCustomDate] = useState('');
+  const [isDateInputVisible, setIsDateInputVisible] = useState(false); // Track visibility of the date input field
 
   const fetchData = async () => {
     try {
@@ -34,58 +35,57 @@ const ChartComponent: React.FC = () => {
   const filterData = useCallback((range: string) => {
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
-
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth(); // เดือน 0-11
+  
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
       const itemDateString = itemDate.toISOString().split('T')[0];
-
+      const itemYear = itemDate.getFullYear();
+      const itemMonth = itemDate.getMonth();
+  
       if (range === 'Today') {
         return itemDateString === currentDateString;
       }
-
+  
       if (range === 'Last 7 days') {
         const diff = (currentDate.getTime() - itemDate.getTime()) / (1000 * 3600 * 24);
         return diff <= 7;
       }
-
+  
       if (range === 'Last Month') {
-        const currentMonth = currentDate.getMonth();
-        const currentYear = currentDate.getFullYear();
-        const itemMonth = itemDate.getMonth();
-        const itemYear = itemDate.getFullYear();
         return itemYear === currentYear && itemMonth === currentMonth - 1;
       }
-
+  
       if (range === 'Custom Date' && customDate) {
         return itemDateString === customDate;
       }
-
+  
       return range !== 'Custom Date';
     });
-
+  
     setFilteredData(filtered);
-  }, [data, customDate]); // Only recompute filterData if `data` or `customDate` changes
+  }, [data, customDate]);
 
-  // useEffect hook to trigger filterData when dependencies change
   useEffect(() => {
     if (selectedRange !== 'Custom Date' || (selectedRange === 'Custom Date' && customDate)) {
-      filterData(selectedRange); // Call filterData when selectedRange, data, or customDate changes
+      filterData(selectedRange);
     }
-  }, [filterData, selectedRange, customDate]); // Ensure filterData is in the dependency array
-
+  }, [filterData, selectedRange, customDate]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
-
   const handleRangeChange = (range: string) => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
-      setIsDropdownOpen(true); // เปิด dropdown ทันทีเมื่อเลือก Custom Date
+      setIsDropdownOpen(false); // Close dropdown when selecting Custom Date
+      setIsDateInputVisible(true); // Show date input
     } else {
-      setCustomDate(''); // ล้างค่า customDate เมื่อไม่ใช่ Custom Date
-      setIsDropdownOpen(false); // ปิด dropdown ถ้าเลือก range อื่น
+      setCustomDate('');
+      setIsDropdownOpen(false); // Close dropdown if range is not Custom Date
+      setIsDateInputVisible(false); // Hide date input
       filterData(range);
     }
   };
@@ -93,10 +93,9 @@ const ChartComponent: React.FC = () => {
   const handleCustomDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomDate(e.target.value);
     if (selectedRange === 'Custom Date') {
-      filterData('Custom Date'); // เรียก filterData เมื่อเลือกวันที่ใน Custom Date
+      filterData('Custom Date');
     }
   };
-  
 
   const chartData = {
     labels: filteredData.map(item => item.day),
@@ -134,7 +133,7 @@ const ChartComponent: React.FC = () => {
           </svg>
         </button>
 
-        {isDropdownOpen && (
+        {isDropdownOpen && !isDateInputVisible && (
           <div id="lastDaysdropdown" className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 max-h-[200px] overflow-y-auto">
             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
@@ -150,16 +149,17 @@ const ChartComponent: React.FC = () => {
                 <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>
               </li>
             </ul>
-            {selectedRange === 'Custom Date' && (
-              <input
-                type="date"
-                value={customDate}
-                onChange={handleCustomDateChange}
-                className="w-full px-4 py-2 mt-2 border rounded-md dark:bg-gray-800 dark:text-white"
-                autoFocus // ให้โฟกัสที่ input date ทันทีที่เปิด
-              />
-            )}
           </div>
+        )}
+
+        {isDateInputVisible && (
+          <input
+            type="date"
+            value={customDate}
+            onChange={handleCustomDateChange}
+            className="w-full px-4 py-2 mt-2 border rounded-md dark:bg-gray-800 dark:text-white"
+            autoFocus
+          />
         )}
       </div>
     </div>
