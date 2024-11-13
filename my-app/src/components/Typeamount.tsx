@@ -105,8 +105,10 @@ const WeeklyRequestsChart: React.FC = () => {
   const handleCustomDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomDate(e.target.value);
     if (selectedRange === 'Custom Date') {
-      filterData('Custom Date'); // Call filterData when custom date is selected
+      filterData('Custom Date');
+      setIsDropdownOpen(false);
     }
+    setIsDropdownOpen(true);
   };
 
   // Prepare chart data

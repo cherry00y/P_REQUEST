@@ -106,6 +106,7 @@ const ChartComponent: React.FC = () => {
     setCustomDate(e.target.value);
     if (selectedRange === 'Custom Date') {
       filterData('Custom Date');
+      setIsDropdownOpen(false);
     }
     setIsDropdownOpen(true);
   };
