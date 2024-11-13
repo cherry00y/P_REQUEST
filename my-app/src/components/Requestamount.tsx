@@ -93,7 +93,7 @@ const ChartComponent: React.FC = () => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
       setIsDropdownOpen(true); // Close dropdown when selecting Custom Date
-      setIsDateInputVisible(false); // Show date input
+      setIsDateInputVisible(true); // Show date input
     } else {
       setCustomDate('');
       setIsDropdownOpen(false); // Close dropdown if range is not Custom Date
