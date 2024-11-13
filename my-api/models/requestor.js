@@ -40,8 +40,7 @@ const Requestor = {
 
     insertRepairRequest: function(repairData, callback) {
         const query = 
-        `INSERT INTO RepairRequest (request_id, rank, lineprocess, station, subjectrr, linestop, problem)
-            VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        'INSERT INTO RepairRequest (request_id, `rank`, lineprocess, station, subjectrr, linestop, problem) VALUES (?, ?, ?, ?, ?, ?, ?)';
         connection.query(query, [
             repairData.request_id, 
             repairData.rank, 
