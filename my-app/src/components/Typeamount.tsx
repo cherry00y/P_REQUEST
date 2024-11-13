@@ -168,33 +168,33 @@ const WeeklyRequestsChart: React.FC = () => {
         </button>
 
         {isDropdownOpen && !isDateInputVisible && (
-          <div id="lastDaysdropdown" className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 max-h-[200px] overflow-y-auto">
-            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-              <li>
-                <a href="#" onClick={() => handleRangeChange('Today')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
-              </li>
-              <li>
-                <a href="#" onClick={() => handleRangeChange('This week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">This week</a>
-              </li>
-              <li>
-                <a href="#" onClick={() => handleRangeChange('Last week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last week</a>
-              </li>
-              <li>
-                <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>
-              </li>
-            </ul>
-          </div>
-        )}
+        <div id="lastDaysdropdown" className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 max-h-[200px] overflow-y-auto">
+          <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+            <li>
+              <a href="#" onClick={() => handleRangeChange('Today')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+            </li>
+            <li>
+              <a href="#" onClick={() => handleRangeChange('This week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">This week</a>
+            </li>
+            <li>
+              <a href="#" onClick={() => handleRangeChange('Last week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last week</a>
+            </li>
+            <li>
+              <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>
+            </li>
+          </ul>
+        </div>
+      )}
 
-        {isDateInputVisible && (
-          <input
-            type="date"
-            value={customDate}
-            onChange={handleCustomDateChange}
-            className="w-full px-4 py-2 mt-2 border rounded-md dark:bg-gray-800 dark:text-white"
-            autoFocus
-          />
-        )}
+      {isDateInputVisible && (
+        <input
+          type="date"
+          value={customDate}
+          onChange={handleCustomDateChange}
+          className="w-full px-4 py-2 mt-2 border rounded-md dark:bg-gray-800 dark:text-white"
+          autoFocus
+        />
+      )}
       </div>
     </div>
   );
