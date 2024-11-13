@@ -47,6 +47,14 @@ const ChartComponent: React.FC = () => {
     const sevenDaysAgo = new Date(startOfWeek);
     sevenDaysAgo.setDate(startOfWeek.getDate() - 7); // 7 วันที่ผ่านมาในสัปดาห์นี้
     
+    // คำนวณวันแรกของสัปดาห์ที่แล้ว
+    const startOfLastWeek = new Date(startOfWeek);
+    startOfLastWeek.setDate(startOfWeek.getDate() - 7); // วันแรกของสัปดาห์ที่แล้ว
+  
+    // คำนวณวันสุดท้ายของสัปดาห์ที่แล้ว
+    const endOfLastWeek = new Date(startOfWeek);
+    endOfLastWeek.setDate(startOfWeek.getDate() - 1); // วันสุดท้ายของสัปดาห์ที่แล้ว
+    
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
       const itemDateString = itemDate.toISOString().split('T')[0];
@@ -55,15 +63,14 @@ const ChartComponent: React.FC = () => {
         return itemDateString === currentDateString;
       }
     
-      if (range === 'Last 7 days') {
-        // เช็คว่าเป็นวันที่ระหว่าง 7 วันที่ผ่านมาในสัปดาห์นี้
-        return itemDate >= sevenDaysAgo && itemDate <= startOfWeek;
+      if (range === 'This week') {
+        // เช็คว่าเป็นวันที่ระหว่างสัปดาห์ปัจจุบัน (จากวันอาทิตย์จนถึงวันนี้)
+        return itemDate >= startOfWeek && itemDate <= currentDate;
       }
     
-      if (range === 'Last Month') {
-        const itemYear = itemDate.getFullYear();
-        const itemMonth = itemDate.getMonth();
-        return itemYear === currentYear && itemMonth === currentMonth - 1;
+      if (range === 'Last week') {
+        // เช็คว่าเป็นวันที่ระหว่างสัปดาห์ที่แล้ว (จากวันอาทิตย์ที่แล้วจนถึงวันเสาร์ที่แล้ว)
+        return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
       }
     
       if (range === 'Custom Date' && customDate) {
@@ -150,10 +157,10 @@ const ChartComponent: React.FC = () => {
                 <a href="#" onClick={() => handleRangeChange('Today')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
               </li>
               <li>
-                <a href="#" onClick={() => handleRangeChange('Last 7 days')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                <a href="#" onClick={() => handleRangeChange('This week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
               </li>
               <li>
-                <a href="#" onClick={() => handleRangeChange('Last Month')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last Month</a>
+                <a href="#" onClick={() => handleRangeChange('Last week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last Month</a>
               </li>
               <li>
                 <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>

@@ -54,7 +54,7 @@ const Admin = {
         LEFT JOIN 
             IssueType it ON rr.subjectrr = it.issuetype_id 
         LEFT JOIN 
-            LineProcess lp ON rr.lineprocess = lp.lineprocess_id 
+            Lineprocess lp ON rr.lineprocess = lp.lineprocess_id 
         LEFT JOIN 
             Ranks rk ON rr.rank = rk.rank_id  -- Join with RankDescriptions table
         WHERE 
@@ -84,7 +84,7 @@ const Admin = {
         LEFT JOIN 
             JobType jb ON nr.job_type = jb.jobtype_id 
         LEFT JOIN 
-            LineProcess lp ON nr.lineprocess = lp.lineprocess_id 
+            Lineprocess lp ON nr.lineprocess = lp.lineprocess_id 
         WHERE 
             r.request_type = 'New Request' 
         AND 
