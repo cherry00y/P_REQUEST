@@ -36,24 +36,33 @@ const ChartComponent: React.FC = () => {
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
     const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth(); // เดือน 0-11
+    const currentMonth = currentDate.getMonth();
+    
+    // คำนวณวันแรกของสัปดาห์ (อาทิตย์นี้)
+    const dayOfWeek = currentDate.getDay(); // วันที่ในสัปดาห์ (0 = Sunday, 1 = Monday, ...)
+    const startOfWeek = new Date(currentDate); 
+    startOfWeek.setDate(currentDate.getDate() - dayOfWeek); // กำหนดให้เป็นวันอาทิตย์ที่ผ่านมาหรือวันนี้
+  
+    // กรองข้อมูลในช่วง 7 วันของอาทิตย์ปัจจุบัน
+    const sevenDaysAgo = new Date(startOfWeek);
+    sevenDaysAgo.setDate(startOfWeek.getDate() - 7); // 7 วันที่ผ่านมา
   
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
       const itemDateString = itemDate.toISOString().split('T')[0];
-      const itemYear = itemDate.getFullYear();
-      const itemMonth = itemDate.getMonth();
   
       if (range === 'Today') {
         return itemDateString === currentDateString;
       }
   
       if (range === 'Last 7 days') {
-        const diff = (currentDate.getTime() - itemDate.getTime()) / (1000 * 3600 * 24);
-        return diff <= 7;
+        // เช็คว่าเป็นวันที่ระหว่าง 7 วันที่ผ่านมาในอาทิตย์นี้
+        return itemDate >= sevenDaysAgo && itemDate <= startOfWeek;
       }
   
       if (range === 'Last Month') {
+        const itemYear = itemDate.getFullYear();
+        const itemMonth = itemDate.getMonth();
         return itemYear === currentYear && itemMonth === currentMonth - 1;
       }
   
@@ -95,6 +104,7 @@ const ChartComponent: React.FC = () => {
     if (selectedRange === 'Custom Date') {
       filterData('Custom Date');
     }
+    setIsDropdownOpen(false);
   };
 
   const chartData = {
