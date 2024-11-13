@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY;
 const connection = require('../config/config');

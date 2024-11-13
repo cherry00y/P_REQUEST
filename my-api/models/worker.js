@@ -1,7 +1,5 @@
 const connection = require('../config/config');
 
-
-
 const Operator = {
     getAcceptRepair: function(callback) {
         connection.query(`

@@ -258,9 +258,4 @@ const Admin = {
 };
 
 
-
-
-
-
-
 module.exports = Admin;
