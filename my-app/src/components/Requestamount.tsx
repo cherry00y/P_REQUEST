@@ -42,37 +42,37 @@ const ChartComponent: React.FC = () => {
     const dayOfWeek = currentDate.getDay(); // วันที่ในสัปดาห์ (0 = Sunday, 1 = Monday, ...)
     const startOfWeek = new Date(currentDate); 
     startOfWeek.setDate(currentDate.getDate() - dayOfWeek); // กำหนดให้เป็นวันอาทิตย์ที่ผ่านมาหรือวันนี้
-  
-    // กรองข้อมูลในช่วง 7 วันของอาทิตย์ปัจจุบัน
+    
+    // กรองข้อมูลในช่วง 7 วันของสัปดาห์นี้
     const sevenDaysAgo = new Date(startOfWeek);
-    sevenDaysAgo.setDate(startOfWeek.getDate() - 7); // 7 วันที่ผ่านมา
-  
+    sevenDaysAgo.setDate(startOfWeek.getDate() - 7); // 7 วันที่ผ่านมาในสัปดาห์นี้
+    
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
       const itemDateString = itemDate.toISOString().split('T')[0];
-  
+    
       if (range === 'Today') {
         return itemDateString === currentDateString;
       }
-  
+    
       if (range === 'Last 7 days') {
-        // เช็คว่าเป็นวันที่ระหว่าง 7 วันที่ผ่านมาในอาทิตย์นี้
+        // เช็คว่าเป็นวันที่ระหว่าง 7 วันที่ผ่านมาในสัปดาห์นี้
         return itemDate >= sevenDaysAgo && itemDate <= startOfWeek;
       }
-  
+    
       if (range === 'Last Month') {
         const itemYear = itemDate.getFullYear();
         const itemMonth = itemDate.getMonth();
         return itemYear === currentYear && itemMonth === currentMonth - 1;
       }
-  
+    
       if (range === 'Custom Date' && customDate) {
         return itemDateString === customDate;
       }
-  
+    
       return range !== 'Custom Date';
     });
-  
+    
     setFilteredData(filtered);
   }, [data, customDate]);
 
@@ -104,7 +104,7 @@ const ChartComponent: React.FC = () => {
     if (selectedRange === 'Custom Date') {
       filterData('Custom Date');
     }
-    setIsDropdownOpen(false);
+    setIsDropdownOpen(true);
   };
 
   const chartData = {
