@@ -5,7 +5,7 @@ export default {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 'p-request.onrender.com',
         port: '',
         pathname: '/uploads/**',

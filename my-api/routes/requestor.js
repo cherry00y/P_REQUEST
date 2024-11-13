@@ -11,10 +11,10 @@ const Requestor = require('../models/requestor');
 // กำหนดที่เก็บไฟล์และประเภทไฟล์ที่อนุญาต
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads'); // โฟลเดอร์ที่ใช้เก็บไฟล์
+        cb(null, 'uploads');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // ตั้งชื่อไฟล์ด้วยเวลาและนามสกุลไฟล์
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
 
