@@ -6,8 +6,8 @@ export default {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
+        hostname: 'p-request.onrender.com',
+        port: '',
         pathname: '/uploads/**',
       },
     ],

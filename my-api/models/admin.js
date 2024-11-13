@@ -92,7 +92,7 @@ const Admin = {
     },
 
     rejectRequest: function (request_id, callback) {
-        const uploadsDir = path.join('/Users/dawan/Desktop/intern/P_Request/my-api', 'uploads');
+        const uploadsDir = path.join(__dirname, '..', 'uploads');
 
         connection.beginTransaction((err) => {
             if (err) {

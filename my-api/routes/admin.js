@@ -94,7 +94,7 @@ router.get('/detailnewrequest/:request_id', (req,res) => {
         }
 
         if(Array.isArray(results)) {
-            const baseUrl = 'http://localhost:8000/';
+            const baseUrl = `${req.protocol}://${req.get('host')}/uploads/`;
             const formattedData = results.map(row =>({
                 request_id: `Doc No.24-${row['Doc No.']}`,
                 requestor: row.Requestor,
