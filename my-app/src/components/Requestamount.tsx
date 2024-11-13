@@ -37,49 +37,49 @@ const ChartComponent: React.FC = () => {
     const currentDateString = currentDate.toISOString().split('T')[0];
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
-    
+  
     // คำนวณวันแรกของสัปดาห์ (อาทิตย์นี้)
     const dayOfWeek = currentDate.getDay(); // วันที่ในสัปดาห์ (0 = Sunday, 1 = Monday, ...)
-    const startOfWeek = new Date(currentDate); 
+    const startOfWeek = new Date(currentDate);
     startOfWeek.setDate(currentDate.getDate() - dayOfWeek); // กำหนดให้เป็นวันอาทิตย์ที่ผ่านมาหรือวันนี้
-    
-    // กรองข้อมูลในช่วง 7 วันของสัปดาห์นี้
-    const sevenDaysAgo = new Date(startOfWeek);
-    sevenDaysAgo.setDate(startOfWeek.getDate() - 7); // 7 วันที่ผ่านมาในสัปดาห์นี้
-    
-    // คำนวณวันแรกของสัปดาห์ที่แล้ว
-    const startOfLastWeek = new Date(startOfWeek);
-    startOfLastWeek.setDate(startOfWeek.getDate() - 7); // วันแรกของสัปดาห์ที่แล้ว
   
-    // คำนวณวันสุดท้ายของสัปดาห์ที่แล้ว
-    const endOfLastWeek = new Date(startOfWeek);
-    endOfLastWeek.setDate(startOfWeek.getDate() - 1); // วันสุดท้ายของสัปดาห์ที่แล้ว
-    
+    // คำนวณวันจันทร์ถึงศุกร์ในสัปดาห์นี้
+    const startOfWeekMonday = new Date(startOfWeek);
+    startOfWeekMonday.setDate(startOfWeek.getDate() + 1); // วันจันทร์
+    const endOfWeekFriday = new Date(startOfWeek);
+    endOfWeekFriday.setDate(startOfWeek.getDate() + 5); // วันศุกร์
+  
+    // คำนวณวันอาทิตย์ถึงเสาร์ในสัปดาห์ที่แล้ว
+    const startOfLastWeekSunday = new Date(startOfWeek);
+    startOfLastWeekSunday.setDate(startOfWeek.getDate() - 7); // วันอาทิตย์ที่แล้ว
+    const endOfLastWeekSaturday = new Date(startOfWeek);
+    endOfLastWeekSaturday.setDate(startOfWeek.getDate() - 2); // วันเสาร์ที่แล้ว
+  
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
       const itemDateString = itemDate.toISOString().split('T')[0];
-    
+  
       if (range === 'Today') {
         return itemDateString === currentDateString;
       }
-    
+  
       if (range === 'This week') {
-        // เช็คว่าเป็นวันที่ระหว่างสัปดาห์ปัจจุบัน (จากวันอาทิตย์จนถึงวันนี้)
-        return itemDate >= startOfWeek && itemDate <= currentDate;
+        // เช็คว่าเป็นวันที่ระหว่างวันจันทร์ถึงศุกร์ของสัปดาห์นี้
+        return itemDate >= startOfWeekMonday && itemDate <= endOfWeekFriday;
       }
-    
-      if (range === 'Last week') {
-        // เช็คว่าเป็นวันที่ระหว่างสัปดาห์ที่แล้ว (จากวันอาทิตย์ที่แล้วจนถึงวันเสาร์ที่แล้ว)
-        return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
+  
+      if (range === 'Last 7 days') {
+        // เช็คว่าเป็นวันที่ระหว่างวันอาทิตย์ถึงเสาร์ของสัปดาห์ที่แล้ว
+        return itemDate >= startOfLastWeekSunday && itemDate <= endOfLastWeekSaturday;
       }
-    
+  
       if (range === 'Custom Date' && customDate) {
         return itemDateString === customDate;
       }
-    
+  
       return range !== 'Custom Date';
     });
-    
+  
     setFilteredData(filtered);
   }, [data, customDate]);
 
