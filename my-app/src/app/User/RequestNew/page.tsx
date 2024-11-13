@@ -31,7 +31,7 @@ export default function RequestNew(){
         // Fetch data from API
         Promise.all([
             apiFetch('/Requestor/jobtype').then(response => response.json()),
-            apiFetch('/Requestor/ineprocess').then(response => response.json())
+            apiFetch('/Requestor/lineprocess').then(response => response.json())
         ])
         .then(([jobtypes, lineprocesses]) => {
             setJobType(jobtypes);
