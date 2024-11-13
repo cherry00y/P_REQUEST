@@ -45,6 +45,11 @@ const ChartComponent: React.FC = () => {
     // Calculate the end of the week (Friday)
     const endOfWeekFriday = new Date(startOfWeekMonday);
     endOfWeekFriday.setDate(startOfWeekMonday.getDate() + 4); // Add 4 days to reach Friday
+
+    const startOfLastWeek = new Date(startOfWeekMonday);
+    startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
+    const endOfLastWeek = new Date(startOfLastWeek);
+    endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
   
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
@@ -59,10 +64,8 @@ const ChartComponent: React.FC = () => {
         return itemDate >= startOfWeekMonday && itemDate <= endOfWeekFriday;
       }
   
-      if (range === 'Last 7 days') {
-        const last7Days = new Date(currentDate);
-        last7Days.setDate(currentDate.getDate() - 7);
-        return itemDate >= last7Days && itemDate <= currentDate;
+      if (range === 'Last week') {
+        return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
       }
   
       if (range === 'Custom Date' && customDate) {
