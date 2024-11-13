@@ -94,23 +94,24 @@ const WeeklyRequestsChart: React.FC = () => {
   const handleRangeChange = (range: string) => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
-      setIsDropdownOpen(true); // Open dropdown when Custom Date is selected
-      setIsDateInputVisible(true); // Show the date input field
+      setIsDropdownOpen(true); // เปิด dropdown เมื่อเลือก Custom Date
+      setIsDateInputVisible(true); // แสดง input สำหรับเลือกวันที่
     } else {
-      setCustomDate(''); // Clear customDate when not Custom Date
-      setIsDropdownOpen(false); // Close dropdown for other ranges
+      setCustomDate(''); // ล้างค่า customDate เมื่อไม่เลือก Custom Date
+      setIsDropdownOpen(false); // ปิด dropdown สำหรับตัวเลือกอื่น ๆ
       filterData(range);
     }
   };
   
+  
   const handleCustomDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomDate(e.target.value);
-    if (selectedRange === 'Custom Date') {
+    if (selectedRange === 'Custom Date' && customDate) {
       filterData('Custom Date');
-      setIsDropdownOpen(true); // Close dropdown after selecting date
+      setIsDropdownOpen(false); // ปิด dropdown หลังจากเลือกวันที่เสร็จ
     }
-    setIsDropdownOpen(false); // Hide the dropdown when date is selected
   };
+  
 
   // Prepare chart data
   const chartData = {
