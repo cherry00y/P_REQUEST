@@ -17,7 +17,7 @@ interface ChartProps {
 const ChartComponent: React.FC = () => {
   const [data, setData] = useState<DataPoint[]>([]);
   const [filteredData, setFilteredData] = useState<DataPoint[]>([]);
-  const [selectedRange, setSelectedRange] = useState('Last 7 days');
+  const [selectedRange, setSelectedRange] = useState('This week');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [customDate, setCustomDate] = useState('');
   const [isDateInputVisible, setIsDateInputVisible] = useState(false); // Track visibility of the date input field
