@@ -35,25 +35,16 @@ const ChartComponent: React.FC = () => {
   const filterData = useCallback((range: string) => {
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth();
-  
-    // คำนวณวันแรกของสัปดาห์ (อาทิตย์นี้)
-    const dayOfWeek = currentDate.getDay(); // วันที่ในสัปดาห์ (0 = Sunday, 1 = Monday, ...)
-    const startOfWeek = new Date(currentDate);
-    startOfWeek.setDate(currentDate.getDate() - dayOfWeek); // กำหนดให้เป็นวันอาทิตย์ที่ผ่านมาหรือวันนี้
-  
-    // คำนวณวันจันทร์ถึงศุกร์ในสัปดาห์นี้
-    const startOfWeekMonday = new Date(startOfWeek);
-    startOfWeekMonday.setDate(startOfWeek.getDate() + 1); // วันจันทร์
-    const endOfWeekFriday = new Date(startOfWeek);
-    endOfWeekFriday.setDate(startOfWeek.getDate() + 5); // วันศุกร์
-  
-    // คำนวณวันอาทิตย์ถึงเสาร์ในสัปดาห์ที่แล้ว
-    const startOfLastWeekSunday = new Date(startOfWeek);
-    startOfLastWeekSunday.setDate(startOfWeek.getDate() - 7); // วันอาทิตย์ที่แล้ว
-    const endOfLastWeekSaturday = new Date(startOfWeek);
-    endOfLastWeekSaturday.setDate(startOfWeek.getDate() - 2); // วันเสาร์ที่แล้ว
+    
+    // Calculate the start of the current week (Monday)
+    const startOfWeekMonday = new Date(currentDate);
+    const dayOfWeek = startOfWeekMonday.getDay();
+    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If it's Sunday, set to Monday
+    startOfWeekMonday.setDate(startOfWeekMonday.getDate() - daysSinceMonday);
+    
+    // Calculate the end of the week (Friday)
+    const endOfWeekFriday = new Date(startOfWeekMonday);
+    endOfWeekFriday.setDate(startOfWeekMonday.getDate() + 4); // Add 4 days to reach Friday
   
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
@@ -64,24 +55,26 @@ const ChartComponent: React.FC = () => {
       }
   
       if (range === 'This week') {
-        // เช็คว่าเป็นวันที่ระหว่างวันจันทร์ถึงศุกร์ของสัปดาห์นี้
+        // Check if date falls between Monday and Friday of this week
         return itemDate >= startOfWeekMonday && itemDate <= endOfWeekFriday;
       }
   
       if (range === 'Last 7 days') {
-        // เช็คว่าเป็นวันที่ระหว่างวันอาทิตย์ถึงเสาร์ของสัปดาห์ที่แล้ว
-        return itemDate >= startOfLastWeekSunday && itemDate <= endOfLastWeekSaturday;
+        const last7Days = new Date(currentDate);
+        last7Days.setDate(currentDate.getDate() - 7);
+        return itemDate >= last7Days && itemDate <= currentDate;
       }
   
       if (range === 'Custom Date' && customDate) {
         return itemDateString === customDate;
       }
   
-      return range !== 'Custom Date';
+      return false;
     });
   
     setFilteredData(filtered);
   }, [data, customDate]);
+  
 
   useEffect(() => {
     if (selectedRange !== 'Custom Date' || (selectedRange === 'Custom Date' && customDate)) {
@@ -157,10 +150,10 @@ const ChartComponent: React.FC = () => {
                 <a href="#" onClick={() => handleRangeChange('Today')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
               </li>
               <li>
-                <a href="#" onClick={() => handleRangeChange('This week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                <a href="#" onClick={() => handleRangeChange('This week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">This week</a>
               </li>
               <li>
-                <a href="#" onClick={() => handleRangeChange('Last week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last Month</a>
+                <a href="#" onClick={() => handleRangeChange('Last week')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last week</a>
               </li>
               <li>
                 <a href="#" onClick={() => handleRangeChange('Custom Date')} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Custom Date</a>
