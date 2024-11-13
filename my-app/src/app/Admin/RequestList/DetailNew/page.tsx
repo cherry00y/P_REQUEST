@@ -41,6 +41,7 @@ export default function DetailRequest(){
             apiFetch(`/Admin/detailnewrequest/${request_id}`)
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 if(data.length > 0){
                     setDetailNewRequest(data[0]);
                 }
