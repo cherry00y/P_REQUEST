@@ -3,6 +3,7 @@ const nextConfig = {};
 
 export default {
   images: {
+    domains: ['p-request.onrender.com'],
     remotePatterns: [
       {
         protocol: 'https',
