@@ -95,7 +95,7 @@ const WeeklyRequestsChart: React.FC = () => {
     setSelectedRange(range);
     if (range === 'Custom Date') {
       setIsDropdownOpen(true); // Open dropdown when Custom Date is selected
-      setIsDateInputVisible(true);
+      setIsDateInputVisible(false);
     } else {
       setCustomDate(''); // Clear customDate when not Custom Date
       setIsDropdownOpen(false); // Close dropdown for other ranges
