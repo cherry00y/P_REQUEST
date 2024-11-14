@@ -15,7 +15,7 @@ export default function NavbarAdmin() {
             <li>
               <details className="relative">
                 <summary className="cursor-pointer text-white font-bold ">Information</summary>
-                <ul className="absolute left-0 bg-base-100 rounded-md mt-2 p-2 w-48">
+                <ul className="absolute left-0 bg-base-100 rounded-md mt-2 p-2 w-48 z-50">
                   <li>
                     <Link href="/Admin/Information" className="block px-4 py-2 hover:bg-gray-50">Pending Information</Link>
                   </li>
