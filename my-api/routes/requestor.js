@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const multer = require('multer');
+const path = require('path');
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY; 
 const Requestor = require('../models/requestor');
