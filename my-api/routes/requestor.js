@@ -68,7 +68,7 @@ router.get('/lineprocess', (req,res) => {
 app.post('/request', authenticateToken, (req, res) => {
     const form = new formidable.IncomingForm();
 
-    // ตั้งค่าจุดที่ต้องการเก็บไฟล์
+    // ตั้งค่าการอัปโหลด
     form.uploadDir = path.join(__dirname, 'uploads'); // กำหนดที่เก็บไฟล์
     form.keepExtensions = true;  // เก็บนามสกุลไฟล์เดิม
     form.parse(req, (err, fields, files) => {
@@ -80,6 +80,7 @@ app.post('/request', authenticateToken, (req, res) => {
         console.log('Fields:', fields);  // ข้อมูลที่ได้จาก body (ไม่รวมไฟล์)
         console.log('Files:', files);    // ข้อมูลไฟล์ที่อัปโหลด
 
+        // แก้ไขการดึงค่าจากอาร์เรย์
         const {
             request_type,
             rank,
@@ -95,13 +96,18 @@ app.post('/request', authenticateToken, (req, res) => {
             job_type
         } = fields;
 
+        const requestType = request_type[0]; // ดึงค่าจากอาร์เรย์ (หากมีค่า)
+        const lineProcess = lineprocess[0]; // ดึงค่าจากอาร์เรย์
+        const jobType = job_type[0]; // ดึงค่าจากอาร์เรย์
+        const imagePath = files.pic ? files.pic[0].filepath : null; // ถ้ามีไฟล์ให้ดึง path
+
         const user_id = req.user.id;
         const requestor = `${req.user.firstname} ${req.user.lastname}`;
         const lineStopValue = linestop ? 1 : 0;
 
         const requestData = {
             user_id,
-            request_type,
+            request_type: requestType, // ใช้ค่าจากอาร์เรย์
             requestor,
             duedate: duedate || null
         };
@@ -118,7 +124,7 @@ app.post('/request', authenticateToken, (req, res) => {
                 const repairData = {
                     request_id: requestId,
                     rank: rank,
-                    lineprocess: lineprocess,
+                    lineprocess: lineProcess,
                     station,
                     subjectrr: subjectrr,
                     linestop: lineStopValue,
@@ -133,17 +139,14 @@ app.post('/request', authenticateToken, (req, res) => {
                     res.json({ message: 'Repair Request saved successfully' });
                 });
             } else if (requestData.request_type === 'New Request') {
-                const imagePath = files.pic ? files.pic[0].filepath : null; // ถ้ามีไฟล์ให้ดึง path
-                console.log('Image path:', imagePath);
-
                 const newRequestData = {
                     request_id: requestId,
-                    lineprocess,
+                    lineprocess: lineProcess,
                     station,
                     subject,
                     cause,
                     detail,
-                    job_type,
+                    job_type: jobType,
                     image: imagePath // บันทึก path ของไฟล์
                 };
 
@@ -160,6 +163,7 @@ app.post('/request', authenticateToken, (req, res) => {
         });
     });
 });
+
 
 
 module.exports = router;
