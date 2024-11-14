@@ -121,7 +121,7 @@ const ChartComponent: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 relative">
+    <div className="max-w-xl w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 relative">
       <div className="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
         <h5 className="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Request Summary</h5>
       </div>
