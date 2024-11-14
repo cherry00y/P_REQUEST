@@ -88,9 +88,11 @@ export default function RequestNew(){
                     text: 'You are not authorized to perform this action. Please login.',
                     timer: 2000,
                     confirmButtonText: 'OK'
-                  });
-                window.location.href = "/Login"; // Redirect to login page
-                return;
+                  }).then(() => {
+                    window.location.href = "/Login"; // Redirect to login page
+                    return;
+                  })
+                
             }
 
             if (!response.ok) {
