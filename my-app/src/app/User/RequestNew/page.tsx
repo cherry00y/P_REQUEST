@@ -68,7 +68,7 @@ export default function RequestNew(){
 
         const fileInput = document.getElementById('file_input') as HTMLInputElement | null;
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
-            data.append('image', fileInput.files[0]);  // Append only one file
+            data.append('pic', fileInput.files[0]);
         }
 
 
@@ -198,7 +198,7 @@ export default function RequestNew(){
                         </div>
                         <div className="mt-3">
                             <label htmlFor="file_input" className="block mb-2 text-sm font-medium">Upload Image</label>
-                            <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" id="file_input" type="file" name="image" />
+                            <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" id="file_input" type="file" name="pic" />
                         </div>
                         <div className="flex items-center justify-center mt-4">
                             <button onClick={handleSubmit} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Submit</button>
