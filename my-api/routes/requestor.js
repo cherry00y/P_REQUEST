@@ -65,7 +65,7 @@ router.get('/lineprocess', (req,res) => {
 
 
 // สร้าง route สำหรับการอัปโหลดคำร้อง
-app.post('/request', authenticateToken, (req, res) => {
+router.post('/request', authenticateToken, (req, res) => {
     const form = new formidable.IncomingForm();
 
     // ตั้งค่าการอัปโหลด
