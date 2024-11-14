@@ -144,8 +144,9 @@ export default function DetailRequest(){
                     title: "Request successfully accepted",
                     showConfirmButton: false,
                     timer: 2500
-                  });
-                window.location.href = '/Admin/RequestList';
+                  }).then(() => {
+                    window.location.href = '/Admin/RequestList';
+                  })
             } else {
                 console.error('Failed to accept request:', responseAccept.statusText);
                 Swal.fire({

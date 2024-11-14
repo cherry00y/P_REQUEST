@@ -149,8 +149,9 @@ export default function DetailRequest(){
                     icon: 'success',
                     timer: 1500,
                     showConfirmButton: false
+                }).then(() => {
+                     window.location.href = `/Admin/RequestList/DetailNew/Cost?newrequest_id=${newrequestId}`;
                 })
-                window.location.href = `/Admin/RequestList/DetailNew/Cost?newrequest_id=${newrequestId}`;
             } else {
                 console.error('Failed to accept request:', responseAccept.statusText);
                 Swal.fire({

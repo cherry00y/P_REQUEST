@@ -143,8 +143,9 @@ export default function Cost(){
                     confirmButtonText: 'OK',
                     timer: 2000,
 
-                });
-                window.location.href = '/Admin/Information/Infomcompleted'
+                }).then(() => {
+                    window.location.href = '/Admin/Information/Infomcompleted'
+                })    
             } else {
                 Swal.fire("Error", "Failed to save cost data", "error");
             }
