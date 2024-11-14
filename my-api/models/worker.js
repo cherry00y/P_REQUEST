@@ -7,7 +7,8 @@ const Operator = {
             r.request_id AS 'Doc No.', 
             it.issuetype_name AS 'Subject', 
             r.duedate AS 'DueDate', 
-            r.request_type AS 'Type'
+            r.request_type AS 'Type',
+            r.status AS 'Status'
         FROM 
             Request r 
         LEFT JOIN 
