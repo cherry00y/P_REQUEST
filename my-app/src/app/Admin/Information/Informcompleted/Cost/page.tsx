@@ -153,7 +153,7 @@ export default function Cost(){
                     timer: 2000,
                 }).then(() => {
                     localStorage.removeItem('repairlog_id');
-                    window.location.href = '/Admin/Information/Infomcompleted'
+                    window.location.href = '/Admin/Information/Informcompleted'
                 })
                 
             } else {
