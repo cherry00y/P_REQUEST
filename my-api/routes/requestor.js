@@ -149,7 +149,7 @@ router.post('/request', authenticateToken, upload.single('image'), (req, res) =>
                 res.json({ message: 'Repair Request saved successfully' });
             });
         } else if (requestData.request_type === 'New Request') {
-            const imagePath = req.file ? req.file.path : null; // ดึง path ของไฟล์
+            const imagePath = req.file ? req.file.filename : null; // ดึง path ของไฟล์
 
             const newRequestData = {
                 request_id: requestId,
