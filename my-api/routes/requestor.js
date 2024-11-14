@@ -64,11 +64,6 @@ router.get('/lineprocess', (req,res) => {
 });
 
 
-const express = require('express');
-const formidable = require('formidable');
-const path = require('path');
-const app = express();
-
 // สร้าง route สำหรับการอัปโหลดคำร้อง
 app.post('/request', authenticateToken, (req, res) => {
     const form = new formidable.IncomingForm();
