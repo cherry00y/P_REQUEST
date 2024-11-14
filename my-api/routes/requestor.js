@@ -1,23 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const multer = require('multer');
-const path = require('path');
+const formidable = require('formidable');
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY; 
 const Requestor = require('../models/requestor');
-
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
-const upload = multer({ storage: storage });
-
 
 // Middleware สำหรับตรวจสอบ Token
 function authenticateToken(req, res, next) {
@@ -77,102 +63,114 @@ router.get('/lineprocess', (req,res) => {
 });
 
 
-router.post('/request', authenticateToken, upload.single('pic'), (req, res) => {
-    console.log('Request Body:', req.body);   // ตรวจสอบข้อมูลใน body
-    console.log('Received file:', req.file);
-    const {
-        request_type,
-        rank,
-        lineprocess,
-        duedate,
-        station,
-        subjectrr,
-        linestop,
-        problem,
-        subject,
-        cause,
-        detail,
-        job_type
-    } = req.body;
-
-    console.log('Received data:', {
-        request_type,
-        rank,
-        lineprocess,
-        duedate,
-        station,
-        subjectrr,
-        linestop,
-        problem,
-        job_type,
-        subject,
-        cause,
-        detail,
-        image: req.file
-    });
-
-    const user_id = req.user.id; // ดึง user_id จาก token
-    const requestor = `${req.user.firstname} ${req.user.lastname}`;
-    const lineStopValue = linestop ? 1 : 0;
-
-    const requestData = {
-        user_id,
-        request_type,
-        requestor,
-        duedate: duedate || null
-    };
-
-    // บันทึกข้อมูลคำร้องในตาราง Request
-    Requestor.insertRequest(requestData, (err, requestId) => {
+router.post('/request', authenticateToken, (req, res) => {
+    const form = new formidable.IncomingForm();
+    
+    // กำหนดให้ไฟล์ถูกเก็บในโฟลเดอร์ 'uploads'
+    form.uploadDir = 'uploads';
+    form.keepExtensions = true; // เก็บนามสกุลของไฟล์
+    form.parse(req, (err, fields, files) => {
         if (err) {
-            console.error('Error inserting request:', err);
-            return res.status(500).send('Error inserting request');
+            console.error('Error parsing form:', err);
+            return res.status(500).send('Error uploading file');
         }
 
-        // ตรวจสอบประเภทคำร้องว่าเป็น Repair Request หรือ New Request
-        if (requestData.request_type === 'Repair Request') {
-            const repairData = {
-                request_id: requestId,
-                rank: rank,
-                lineprocess: lineprocess,
-                station,
-                subjectrr: subjectrr,
-                linestop: lineStopValue,
-                problem: problem
-            };
+        console.log('Received fields:', fields); // ข้อมูลที่ได้จาก body
+        console.log('Received files:', files); // ข้อมูลไฟล์ที่อัปโหลด
 
-            Requestor.insertRepairRequest(repairData, (err) => {
-                if (err) {
-                    console.error('Error inserting repair request:', err.message);
-                    return res.status(500).send('Error inserting repair request');
-                }
-                res.json({ message: 'Repair Request saved successfully' });
-            });
-        } else if (requestData.request_type === 'New Request') {
-            const imagePath = req.file ? req.file.path : null; // ดึง path ของไฟล์
-            console.log('Image path:', imagePath);
+        const {
+            request_type,
+            rank,
+            lineprocess,
+            duedate,
+            station,
+            subjectrr,
+            linestop,
+            problem,
+            subject,
+            cause,
+            detail,
+            job_type
+        } = fields;  // ดึงข้อมูลจาก form fields
 
-            const newRequestData = {
-                request_id: requestId,
-                lineprocess,
-                station,
-                subject,
-                cause,
-                detail,
-                job_type,
-                image: imagePath // บันทึก path ของไฟล์
-            };
+        const imagePath = files.pic ? files.pic.path : null;  // ดึง path ของไฟล์ที่อัปโหลด
 
-            Requestor.insertNewRequest(newRequestData, (err) => {
-                if (err) {
-                    console.error('Error inserting new request:', err);
-                    return res.status(500).send('Error inserting new request');
-                }
-                res.json({ message: 'New Request saved successfully' });
-            });
-        } else {
-            res.status(400).send('Invalid request type');
-        }
+        console.log('Received data:', {
+            request_type,
+            rank,
+            lineprocess,
+            duedate,
+            station,
+            subjectrr,
+            linestop,
+            problem,
+            job_type,
+            subject,
+            cause,
+            detail,
+            image: imagePath // เก็บ path ของไฟล์
+        });
+
+        const user_id = req.user.id; // ดึง user_id จาก token
+        const requestor = `${req.user.firstname} ${req.user.lastname}`;
+        const lineStopValue = linestop ? 1 : 0;
+
+        const requestData = {
+            user_id,
+            request_type,
+            requestor,
+            duedate: duedate || null
+        };
+
+        // บันทึกข้อมูลคำร้องในตาราง Request
+        Requestor.insertRequest(requestData, (err, requestId) => {
+            if (err) {
+                console.error('Error inserting request:', err);
+                return res.status(500).send('Error inserting request');
+            }
+
+            // ตรวจสอบประเภทคำร้องว่าเป็น Repair Request หรือ New Request
+            if (requestData.request_type === 'Repair Request') {
+                const repairData = {
+                    request_id: requestId,
+                    rank: rank,
+                    lineprocess: lineprocess,
+                    station,
+                    subjectrr: subjectrr,
+                    linestop: lineStopValue,
+                    problem: problem
+                };
+
+                Requestor.insertRepairRequest(repairData, (err) => {
+                    if (err) {
+                        console.error('Error inserting repair request:', err.message);
+                        return res.status(500).send('Error inserting repair request');
+                    }
+                    res.json({ message: 'Repair Request saved successfully' });
+                });
+            } else if (requestData.request_type === 'New Request') {
+                const newRequestData = {
+                    request_id: requestId,
+                    lineprocess,
+                    station,
+                    subject,
+                    cause,
+                    detail,
+                    job_type,
+                    image: imagePath // บันทึก path ของไฟล์
+                };
+
+                Requestor.insertNewRequest(newRequestData, (err) => {
+                    if (err) {
+                        console.error('Error inserting new request:', err);
+                        return res.status(500).send('Error inserting new request');
+                    }
+                    res.json({ message: 'New Request saved successfully' });
+                });
+            } else {
+                res.status(400).send('Invalid request type');
+            }
+        });
     });
 });
 

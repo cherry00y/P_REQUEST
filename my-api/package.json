@@ -19,6 +19,7 @@
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "formidable": "^3.5.2",
     "froala-editor": "^4.2.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
