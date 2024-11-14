@@ -6,8 +6,6 @@ const secretKey = process.env.SECRET_KEY;
 const Requestor = require('../models/requestor');
 
 
-
-// กำหนดที่เก็บไฟล์และประเภทไฟล์ที่อนุญาต
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads');
@@ -16,7 +14,6 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
-
 const upload = multer({ storage: storage });
 
 
