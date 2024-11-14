@@ -1,6 +1,13 @@
 import Link from "next/link";
 
 export default function NavbarWorker() {
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    window.location.href = "/";
+  };
+
+
     return (
       <nav className="bg-red-700 p-4">
       <div className="container mx-auto flex items-center justify-between">
@@ -23,7 +30,7 @@ export default function NavbarWorker() {
               </details>
             </li>
             <li>
-              <Link href="#" className="text-white hover:text-white font-bold">Log out</Link>
+              <a className="text-white hover:text-white font-bold" onClick={handleLogout}>Log out</a>
             </li>
           </ul>
         </div>

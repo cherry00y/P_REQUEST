@@ -1,6 +1,12 @@
 import Link from "next/link";
 
 export default function NavbarAdmin() {
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    window.location.href = "/";
+  };
+
     return (
       <nav className="bg-red-700 p-4">
         <div className="container mx-auto flex items-center justify-between">
@@ -32,7 +38,7 @@ export default function NavbarAdmin() {
               <Link href='/Admin/dashboard' className="text-white hover:text-white font-bold">Dashboard</Link>
             </li>
             <li>
-              <Link href="#" className="text-white hover:text-white font-bold">Log out</Link>
+              <a className="text-white hover:text-white font-bold" onClick={handleLogout}>Log out</a>
             </li>
           </ul>
         </div>
