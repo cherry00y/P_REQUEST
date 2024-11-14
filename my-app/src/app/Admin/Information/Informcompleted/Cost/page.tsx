@@ -151,9 +151,11 @@ export default function Cost(){
                     title: 'Cost data saved successfully',
                     confirmButtonText: 'OK',
                     timer: 2000,
-                });
-                localStorage.removeItem('repairlog_id');
-                window.location.href = '/Admin/Information/Infomcompleted'
+                }).then(() => {
+                    localStorage.removeItem('repairlog_id');
+                    window.location.href = '/Admin/Information/Infomcompleted'
+                })
+                
             } else {
                 Swal.fire("Error", "Failed to save cost data", "error");
             }
