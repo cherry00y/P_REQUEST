@@ -116,9 +116,10 @@ export default function Implement() {
                     title: 'Repair details submitted successfully!',
                     timer: 2000,
                     showConfirmButton: false
-                });
-                resetForm();
+                }).then(() => {
+                    resetForm();
                 window.location.href = `/Worker/NewRequest`;
+                })
             } else {
                 console.error('Failed to submit repair details.');
             }
