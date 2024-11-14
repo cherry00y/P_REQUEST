@@ -8,12 +8,15 @@ const Requestor = require('../models/requestor');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        console.log('File destination:', file);  // ตรวจสอบว่า file อยู่ใน request หรือไม่
         cb(null, 'uploads');
     },
     filename: function (req, file, cb) {
+        console.log('File name:', file.originalname);  // ตรวจสอบชื่อไฟล์
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
+
 const upload = multer({ storage: storage });
 
 
@@ -146,6 +149,7 @@ router.post('/request', authenticateToken, upload.single('image'), (req, res) =>
             });
         } else if (requestData.request_type === 'New Request') {
             const imagePath = req.file ? req.file.path : null; // ดึง path ของไฟล์
+            console.log('Image path:', imagePath);
 
             const newRequestData = {
                 request_id: requestId,
