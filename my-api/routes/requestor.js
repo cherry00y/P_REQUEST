@@ -79,6 +79,8 @@ router.get('/lineprocess', (req,res) => {
 
 
 router.post('/request', authenticateToken, upload.single('image'), (req, res) => {
+    console.log('Request Body:', req.body);   // ตรวจสอบข้อมูลใน body
+    console.log('Received file:', req.file);
     const {
         request_type,
         rank,
