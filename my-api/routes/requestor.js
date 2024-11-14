@@ -10,17 +10,12 @@ const Requestor = require('../models/requestor');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const uploadPath = path.join(__dirname, 'uploads');
-        console.log('Upload path:', uploadPath);
-        cb(null, uploadPath);  // ใช้เส้นทางที่สมบูรณ์
+        cb(null, 'uploads');
     },
     filename: function (req, file, cb) {
-        const filename = Date.now() + '-' + file.originalname;
-        console.log('File name:', filename);
-        cb(null, filename);
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
-
 const upload = multer({ storage: storage });
 
 
