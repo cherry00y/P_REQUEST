@@ -10,6 +10,8 @@ const Dashboard = require('./routes/dashbord');
 
 const app = express();
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // CORS configuration - make sure this is at the top of the file before any routes
 const corsOptions = {
   origin: ['https://p-request-app.vercel.app', 'https://p-request.onrender.com'], // ใส่โดเมนเพิ่มเติม
@@ -36,8 +38,7 @@ app.use('/Login', Login);
 app.use('/Admin', Admin);
 app.use('/Operator', Operator);
 app.use('/Dashboard', Dashboard);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-console.log(path.join(__dirname, 'uploads'));
+
 
 
 app.use((err, req, res, next) => {
