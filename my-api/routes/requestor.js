@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY; 
 const Requestor = require('../models/requestor');
 
+
 // Middleware สำหรับตรวจสอบ Token
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
@@ -63,20 +64,26 @@ router.get('/lineprocess', (req,res) => {
 });
 
 
-router.post('/request', authenticateToken, (req, res) => {
+const express = require('express');
+const formidable = require('formidable');
+const path = require('path');
+const app = express();
+
+// สร้าง route สำหรับการอัปโหลดคำร้อง
+app.post('/request', authenticateToken, (req, res) => {
     const form = new formidable.IncomingForm();
-    
-    // กำหนดให้ไฟล์ถูกเก็บในโฟลเดอร์ 'uploads'
-    form.uploadDir = 'uploads';
-    form.keepExtensions = true; // เก็บนามสกุลของไฟล์
+
+    // ตั้งค่าจุดที่ต้องการเก็บไฟล์
+    form.uploadDir = path.join(__dirname, 'uploads'); // กำหนดที่เก็บไฟล์
+    form.keepExtensions = true;  // เก็บนามสกุลไฟล์เดิม
     form.parse(req, (err, fields, files) => {
         if (err) {
-            console.error('Error parsing form:', err);
-            return res.status(500).send('Error uploading file');
+            console.error('Error parsing the form:', err);
+            return res.status(500).send('Error parsing the form');
         }
 
-        console.log('Received fields:', fields); // ข้อมูลที่ได้จาก body
-        console.log('Received files:', files); // ข้อมูลไฟล์ที่อัปโหลด
+        console.log('Fields:', fields);  // ข้อมูลที่ได้จาก body (ไม่รวมไฟล์)
+        console.log('Files:', files);    // ข้อมูลไฟล์ที่อัปโหลด
 
         const {
             request_type,
@@ -91,27 +98,9 @@ router.post('/request', authenticateToken, (req, res) => {
             cause,
             detail,
             job_type
-        } = fields;  // ดึงข้อมูลจาก form fields
+        } = fields;
 
-        const imagePath = files.pic ? files.pic.path : null;  // ดึง path ของไฟล์ที่อัปโหลด
-
-        console.log('Received data:', {
-            request_type,
-            rank,
-            lineprocess,
-            duedate,
-            station,
-            subjectrr,
-            linestop,
-            problem,
-            job_type,
-            subject,
-            cause,
-            detail,
-            image: imagePath // เก็บ path ของไฟล์
-        });
-
-        const user_id = req.user.id; // ดึง user_id จาก token
+        const user_id = req.user.id;
         const requestor = `${req.user.firstname} ${req.user.lastname}`;
         const lineStopValue = linestop ? 1 : 0;
 
@@ -149,6 +138,9 @@ router.post('/request', authenticateToken, (req, res) => {
                     res.json({ message: 'Repair Request saved successfully' });
                 });
             } else if (requestData.request_type === 'New Request') {
+                const imagePath = files.pic ? files.pic[0].filepath : null; // ถ้ามีไฟล์ให้ดึง path
+                console.log('Image path:', imagePath);
+
                 const newRequestData = {
                     request_id: requestId,
                     lineprocess,
@@ -173,5 +165,6 @@ router.post('/request', authenticateToken, (req, res) => {
         });
     });
 });
+
 
 module.exports = router;
