@@ -37,6 +37,7 @@ app.use('/Admin', Admin);
 app.use('/Operator', Operator);
 app.use('/Dashboard', Dashboard);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+console.log(path.join(__dirname, 'uploads'));
 
 
 app.use((err, req, res, next) => {

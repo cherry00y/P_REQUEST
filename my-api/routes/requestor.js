@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 const multer = require('multer');
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY; 
@@ -8,12 +9,14 @@ const Requestor = require('../models/requestor');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        console.log('File destination:', file);  // ตรวจสอบว่า file อยู่ใน request หรือไม่
-        cb(null, 'uploads');
+        const uploadPath = path.join(__dirname, 'uploads');
+        console.log('Upload path:', uploadPath);
+        cb(null, uploadPath);  // ใช้เส้นทางที่สมบูรณ์
     },
     filename: function (req, file, cb) {
-        console.log('File name:', file.originalname);  // ตรวจสอบชื่อไฟล์
-        cb(null, Date.now() + '-' + file.originalname);
+        const filename = Date.now() + '-' + file.originalname;
+        console.log('File name:', filename);
+        cb(null, filename);
     }
 });
 
