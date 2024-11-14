@@ -8,6 +8,7 @@ export default {
       {
         protocol: 'https',
         hostname: 'p-request.onrender.com',
+        port: '',
         pathname: '/uploads/**',
       },
     ],

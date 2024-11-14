@@ -150,7 +150,7 @@ router.post('/request', authenticateToken, upload.single('pic'), (req, res) => {
                 res.json({ message: 'Repair Request saved successfully' });
             });
         } else if (requestData.request_type === 'New Request') {
-            const imagePath = req.file ? req.file.path : null; // ดึง path ของไฟล์
+            const imagePath = req.file ? `/uploads/${req.file.filename}` : null; // Set accessible URL path
             console.log('Image path:', imagePath);
 
             const newRequestData = {
