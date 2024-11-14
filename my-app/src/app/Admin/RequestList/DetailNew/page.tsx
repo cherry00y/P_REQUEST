@@ -153,7 +153,14 @@ export default function DetailRequest(){
                 window.location.href = `/Admin/RequestList/DetailNew/Cost?newrequest_id=${newrequestId}`;
             } else {
                 console.error('Failed to accept request:', responseAccept.statusText);
-                alert('Error accepting request');
+                Swal.fire({
+                    icon: "error",
+                    title: "An error occurred in accepting",
+                    text: "Please,try again",
+                    cancelButtonText: 'OK',
+                    showConfirmButton: false,
+                    timer: 2500
+                  });
             }
         } catch (err) {
             console.error('Error accepting request:', err);

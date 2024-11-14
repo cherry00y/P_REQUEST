@@ -139,11 +139,23 @@ export default function DetailRequest(){
             if (responseAccept.ok) {
                 const responseData = await responseAccept.text();
                 console.log('Server response:', responseData);
-                alert('Request successfully accepted');
-                window.location.href = 'Admin/RequestList';
+                Swal.fire({
+                    icon: "success",
+                    title: "Request successfully accepted",
+                    showConfirmButton: false,
+                    timer: 2500
+                  });
+                window.location.href = '/Admin/RequestList';
             } else {
                 console.error('Failed to accept request:', responseAccept.statusText);
-                alert('Error accepting request');
+                Swal.fire({
+                    icon: "error",
+                    title: "An error occurred in accepting",
+                    text: "Please,try again",
+                    cancelButtonText: 'OK',
+                    showConfirmButton: false,
+                    timer: 2500
+                  });
             }
         } catch (err) {
             console.error('Error accepting request:', err);
