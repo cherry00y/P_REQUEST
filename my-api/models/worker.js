@@ -7,8 +7,7 @@ const Operator = {
             r.request_id AS 'Doc No.', 
             it.issuetype_name AS 'Subject', 
             r.duedate AS 'DueDate', 
-            r.request_type AS 'Type', 
-            
+            r.request_type AS 'Type'
         FROM 
             Request r 
         LEFT JOIN 
@@ -17,7 +16,7 @@ const Operator = {
             IssueType it ON rr.subjectrr = it.issuetype_id 
         WHERE 
             r.status IN ('Accept', 'Waiting for goods', 'Out of stock') 
-            AND r.request_type = 'Repair Request'`, callback)
+            AND r.request_type = 'Repair Request';`, callback)
     },
 
     getAcceptNew: function(callback) {
