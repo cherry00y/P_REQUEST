@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const formidable = require('formidable');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 const secretKey = process.env.SECRET_KEY; 
 const Requestor = require('../models/requestor');
 
