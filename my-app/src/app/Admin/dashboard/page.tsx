@@ -1,35 +1,37 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import NavbarAdmin from '@/components/NavbarAdmin';
-import Image from 'next/image';
 import ChartComponent from '@/components/Requestamount';
-import { apiFetch } from '@/information/api';
 import WeeklyRequestsChart from '@/components/Typeamount';
 import YearlyRequestsChart from '@/components/Yearamount';
+import IssueTypeamount from '@/components/Issuetypeamount';
 
-export default function Dashbord() {
+export default function Dashboard() {
   useEffect(() => {
     // Load flowbite only on the client side
     import('flowbite');
   }, []);
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen bg-gray-50'>
       <NavbarAdmin />
-      <main className="flex-1 p-4 bg-slate-100">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
+      <main className="flex-1 p-6 bg-gray-100">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           {/* Top section with two chart components */}
-          <div className="bg-white p-4 shadow-lg rounded-lg">
+          <div className="bg-white p-6 shadow-xl rounded-lg">
             <ChartComponent />
           </div>
-          <div className="bg-white p-4 shadow-lg rounded-lg">
+          <div className="bg-white p-6 shadow-xl rounded-lg">
             <WeeklyRequestsChart />
           </div>
+          <div className="bg-white p-6 shadow-xl rounded-lg">
+            <IssueTypeamount />
+          </div>
         </div>
-        <div className="container mx-auto mt-8 px-4">
+        <div className="container mx-auto mt-12 px-4">
           {/* Bottom section with a large component */}
-          <div className="bg-white p-6 shadow-lg rounded-lg">
+          <div className="bg-white p-8 shadow-xl rounded-lg">
             <YearlyRequestsChart />
           </div>
         </div>

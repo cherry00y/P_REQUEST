@@ -23,6 +23,16 @@ router.get('/typesummary', (req, res) => {
     });
 });
 
+router.get('/issuetypesummary', (req, res) => {
+    Dashboard.getrankrequest((err, results) => {
+        if (err) {
+            console.error('Error fetching issuetype request summary:', err);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+        res.json(results)
+    });
+});
+
 router.get('/yearsummary', (req, res) => {
     Dashboard.getamountrequestyear((err, results) => {
         if (err) {
