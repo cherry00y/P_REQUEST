@@ -67,15 +67,22 @@ export default function DetailRequest(){
 
                 const responseData = await response.text(); // หรือ .json() ขึ้นอยู่กับสิ่งที่เซิร์ฟเวอร์ตอบกลับ
                 console.log('Server response:', responseData);
-
-
-                alert('Request successfully rejected');
-                window.location.href = '/RequestList';
-                // Optionally, you can redirect or update the UI after the delete
-                // For example, refresh the data or navigate to another page
+                Swal.fire({
+                    icon: "success",
+                    title: "Request successfully rejected",
+                    showConfirmButton: false,
+                    timer: 1500
+                  }).then(() => {
+                    window.location.href = '/RequestList';
+                  });
             } else {
                 console.error('Failed to reject request:', response.statusText);
-                alert('Error rejecting request');
+                Swal.fire({
+                    icon: "success",
+                    title: "Error rejecting request",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
             }
         } catch (err) {
             console.error('Error rejecting request:', err);

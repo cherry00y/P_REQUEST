@@ -132,14 +132,16 @@ const WeeklyRequestsChart: React.FC = () => {
   };
 
   // Update chart data based on filtered data
+  // Update chart data based on filtered data
   filteredData.forEach((item: DataPoint) => {
-    const dayIndex = (new Date(item.day).getDay() + 6) % 7; // Adjust so that Monday = 0, ..., Friday = 6
+  const dayIndex = (new Date(item.day).getDay() + 6) % 7; // Adjust so that Monday = 0, ..., Friday = 4
     if (item.request_type === 'Repair Request') {
-      chartData.datasets[0].data[dayIndex]++;
+      chartData.datasets[0].data[dayIndex] += item.count; // ใช้ item.count ในการรวมค่า
     } else if (item.request_type === 'New Request') {
-      chartData.datasets[1].data[dayIndex]++;
+      chartData.datasets[1].data[dayIndex] += item.count; // ใช้ item.count ในการรวมค่า
     }
   });
+
 
   return (
     <div className="max-w-xl w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 relative">
