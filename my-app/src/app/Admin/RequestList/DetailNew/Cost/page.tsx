@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import NavbarAdmin from "@/components/NavbarAdmin";
 import { apiFetch } from "@/information/api";
 import Swal from 'sweetalert2';
+import Link from "next/link";
 
 
 
@@ -273,23 +274,14 @@ export default function Cost(){
                     <div className="text-lg font-bold ml-20">
                         Total Amount: <span>{grandTotal.toFixed(2)} บาท</span>
                     </div>
-                    <div className="flex gap-4 mr-20">
-                        <button
-                            onClick={handleAccept}
-                            className="bg-red-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
-                        >
-                            No use of items
-                        </button>
-                        <button
-                            onClick={handleAccept}
-                            className="bg-green-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-                        >
-                            Confirm and Save
-                        </button>
-                    </div>
+                    <button
+                        onClick={handleAccept}
+                        className="bg-green-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                        Confirm and Save
+                    </button>
                 </div>
-
-
+                <Link href='/Admin/RequestList' className="flex justify-center text-red-600"> *การร้องขอนี้ไม่มีการเบิกอุปกรณ์</Link>
             </main>
         </div>
     );
