@@ -152,7 +152,7 @@ const IssueTypeamount: React.FC = () => {
             )}
         </div>
 
-        <div id="pie-chart" className="mb-4" style={{ height: '300px' }}>
+        <div id="pie-chart" className="mb-4" style={{ height: '200px' }}>
             <Pie data={chartData} options={options} />
         </div>
     </div>
