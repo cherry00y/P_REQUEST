@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const connection = require('../config/config');
 
 
@@ -92,64 +91,45 @@ const Admin = {
     },
 
     rejectRequest: function (request_id, callback) {
-        const uploadsDir = path.join(__dirname, '..', 'uploads');
 
         connection.beginTransaction((err) => {
             if (err) {
                 return callback(err);
             }
     
-            // Retrieve the image path for the request from NewRequest table
-            db.query('SELECT image FROM NewRequest WHERE request_id = ?', [request_id], (err, results) => {
+            // ลบขั้นตอนที่เกี่ยวกับการดึงพาธของรูปภาพและการลบไฟล์
+    
+            // Delete request_id from RepairRequest table
+            db.query('DELETE FROM RepairRequest WHERE request_id = ?', [request_id], (err, results) => {
                 if (err) {
                     return db.rollback(() => callback(err));
                 }
     
-                const imagePath = results[0]?.image;
-    
-                // Delete the image if it exists
-                if (imagePath) {
-                    const fullImagePath = path.join(uploadsDir, path.basename(imagePath));
-    
-                    fs.unlink(fullImagePath, (err) => {
-                        if (err) {
-                            console.error('Error deleting image:', err);
-                            // Log error but proceed with the transaction (optional)
-                        }
-                    });
-                }
-    
-                // Delete request_id from RepairRequest table
-                db.query('DELETE FROM RepairRequest WHERE request_id = ?', [request_id], (err, results) => {
+                // Delete request_id from NewRequest table
+                db.query('DELETE FROM NewRequest WHERE request_id = ?', [request_id], (err, results) => {
                     if (err) {
                         return db.rollback(() => callback(err));
                     }
     
-                    // Delete request_id from NewRequest table
-                    db.query('DELETE FROM NewRequest WHERE request_id = ?', [request_id], (err, results) => {
+                    // Delete request_id from Request table
+                    db.query('DELETE FROM Request WHERE request_id = ?', [request_id], (err, results) => {
                         if (err) {
                             return db.rollback(() => callback(err));
                         }
     
-                        // Delete request_id from Request table
-                        db.query('DELETE FROM Request WHERE request_id = ?', [request_id], (err, results) => {
+                        // Commit the transaction
+                        db.commit((err) => {
                             if (err) {
                                 return db.rollback(() => callback(err));
                             }
-    
-                            // Commit the transaction
-                            db.commit((err) => {
-                                if (err) {
-                                    return db.rollback(() => callback(err));
-                                }
-                                callback(null); // Request and image deleted successfully
-                            });
+                            callback(null); // Request deleted successfully
                         });
                     });
                 });
             });
         });
     },
+    
 
     acceptRequest: function(request_id, data, callback){
         const { status, sup_ke, duedate } = data;
