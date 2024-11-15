@@ -131,7 +131,7 @@ const YearlyRequestsChart: React.FC = () => {
           <h5 className="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Request Summary</h5>
         </div>
 
-        <div id="column-chart" className="mb-4" style={{ height: '200px' }}>
+        <div id="column-chart" className="mb-4" >
           <Bar data={chartData} />
         </div>
 
