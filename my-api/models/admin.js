@@ -73,8 +73,7 @@ const Admin = {
             lp.lineprocess_name AS 'Line Process', 
             nr.station AS 'Station', 
             nr.cause As 'Cause', 
-            nr.detail AS 'Detail', 
-            nr.image As 'Image' ,
+            nr.detail AS 'Detail',
             nr.newrequest_id As 'NewRequestID'
         FROM 
             Request r 
