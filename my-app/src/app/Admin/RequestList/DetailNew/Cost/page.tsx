@@ -269,24 +269,26 @@ export default function Cost(){
                     </div>
                 </div>
 
-                <div className="flex flex-row justify-between items-center mt-5 gap-4">
-                    <div className="ml-20">
-                        <span className="text-lg font-bold">Total Amount: </span>
-                        <span className="text-lg">{grandTotal.toFixed(2)} บาท</span>
+                <div className="flex justify-between items-center mt-5">
+                    <div className="text-lg font-bold ml-20">
+                        Total Amount: <span>{grandTotal.toFixed(2)} บาท</span>
                     </div>
-                    <button
-                        onClick={handleAccept}
-                        className="bg-red-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 mr-20"
-                    >
-                        No use of items
-                    </button>
-                    <button
-                        onClick={handleAccept}
-                        className="bg-green-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 mr-20"
-                    >
-                        Confirm and Save
-                    </button>
+                    <div className="flex gap-4 mr-20">
+                        <button
+                            onClick={handleAccept}
+                            className="bg-red-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            No use of items
+                        </button>
+                        <button
+                            onClick={handleAccept}
+                            className="bg-green-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        >
+                            Confirm and Save
+                        </button>
+                    </div>
                 </div>
+
 
             </main>
         </div>
