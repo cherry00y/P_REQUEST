@@ -145,7 +145,7 @@ export default function Cost(){
                     timer: 2000,
 
                 }).then(() => {
-                    window.location.href = '/Admin/Information/Infomcompleted'
+                    window.location.href = '/Admin/RequestList'
                 })    
             } else {
                 Swal.fire("Error", "Failed to save cost data", "error");
