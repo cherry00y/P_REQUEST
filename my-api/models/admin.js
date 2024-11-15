@@ -100,25 +100,25 @@ const Admin = {
             // ลบขั้นตอนที่เกี่ยวกับการดึงพาธของรูปภาพและการลบไฟล์
     
             // Delete request_id from RepairRequest table
-            db.query('DELETE FROM RepairRequest WHERE request_id = ?', [request_id], (err, results) => {
+            connection.query('DELETE FROM RepairRequest WHERE request_id = ?', [request_id], (err, results) => {
                 if (err) {
                     return db.rollback(() => callback(err));
                 }
     
                 // Delete request_id from NewRequest table
-                db.query('DELETE FROM NewRequest WHERE request_id = ?', [request_id], (err, results) => {
+                connection.query('DELETE FROM NewRequest WHERE request_id = ?', [request_id], (err, results) => {
                     if (err) {
                         return db.rollback(() => callback(err));
                     }
     
                     // Delete request_id from Request table
-                    db.query('DELETE FROM Request WHERE request_id = ?', [request_id], (err, results) => {
+                    connection.query('DELETE FROM Request WHERE request_id = ?', [request_id], (err, results) => {
                         if (err) {
                             return db.rollback(() => callback(err));
                         }
     
                         // Commit the transaction
-                        db.commit((err) => {
+                        connection.commit((err) => {
                             if (err) {
                                 return db.rollback(() => callback(err));
                             }
