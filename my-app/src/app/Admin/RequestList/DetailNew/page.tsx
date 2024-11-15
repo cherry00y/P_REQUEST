@@ -19,7 +19,7 @@ interface DetailNewRequest {
     station: string;
     cause: string;
     detail: string;
-    image: string | null; // Add image property
+    //image: string | null; // Add image property
     newrequest_id: string;
 }
 
@@ -208,6 +208,7 @@ export default function DetailRequest(){
                                     >
                                     {detailnewrequest.detail}
                                 </div>
+                                {/*
                                 <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Detail Image</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">
                                     {detailnewrequest.image ? (
@@ -222,6 +223,7 @@ export default function DetailRequest(){
                                         <p>No image available</p>
                                     )}
                                 </div>
+                                */}
                                 </>
                             )}
                             

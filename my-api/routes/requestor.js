@@ -69,17 +69,14 @@ router.get('/lineprocess', (req,res) => {
 router.post('/request', authenticateToken, (req, res) => {
     const form = new formidable.IncomingForm();
 
-    // ตั้งค่าการอัปโหลด
-    form.uploadDir = path.join(__dirname, 'uploads'); // กำหนดที่เก็บไฟล์
     form.keepExtensions = true;  // เก็บนามสกุลไฟล์เดิม
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, (err, fields) => { // นำ `files` ออกจากพารามิเตอร์
         if (err) {
             console.error('Error parsing the form:', err);
             return res.status(500).send('Error parsing the form');
         }
 
         console.log('Fields:', fields);  // ข้อมูลที่ได้จาก body (ไม่รวมไฟล์)
-        console.log('Files:', files);    // ข้อมูลไฟล์ที่อัปโหลด
 
         // แก้ไขการดึงค่าจากอาร์เรย์
         const {
@@ -100,7 +97,6 @@ router.post('/request', authenticateToken, (req, res) => {
         const requestType = request_type[0]; // ดึงค่าจากอาร์เรย์ (หากมีค่า)
         const lineProcess = lineprocess[0]; // ดึงค่าจากอาร์เรย์
         const jobType = job_type[0]; // ดึงค่าจากอาร์เรย์
-        const imagePath = files.pic ? files.pic[0].filepath : null; // ถ้ามีไฟล์ให้ดึง path
 
         const user_id = req.user.id;
         const requestor = `${req.user.firstname} ${req.user.lastname}`;
@@ -148,7 +144,6 @@ router.post('/request', authenticateToken, (req, res) => {
                     cause,
                     detail,
                     job_type: jobType,
-                    image: imagePath // บันทึก path ของไฟล์
                 };
 
                 Requestor.insertNewRequest(newRequestData, (err) => {

@@ -54,8 +54,8 @@ const Requestor = {
 
     insertNewRequest: function(newRequestData, callback) {
         const query = `
-            INSERT INTO NewRequest (request_id, job_type,lineprocess, station, subject, cause, detail,image)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+            INSERT INTO NewRequest (request_id, job_type,lineprocess, station, subject, cause, detail)
+            VALUES (?, ?, ?, ?, ?, ?, ?)`;
         connection.query(query, [
             newRequestData.request_id, 
             newRequestData.job_type,
@@ -64,7 +64,6 @@ const Requestor = {
             newRequestData.subject, 
             newRequestData.cause, 
             newRequestData.detail, 
-            newRequestData.image
             
         ], callback);
     },

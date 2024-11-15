@@ -1,7 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-const cors = require('cors');
-const path = require('path');
+const cors = require('cors');;
 const Login = require('./routes/login');
 const Requestor = require('./routes/requestor');
 const Admin = require('./routes/admin');
@@ -9,8 +8,6 @@ const Operator = require('./routes/worker');
 const Dashboard = require('./routes/dashbord');
 
 const app = express();
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // CORS configuration - make sure this is at the top of the file before any routes
 const corsOptions = {

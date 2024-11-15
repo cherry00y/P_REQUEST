@@ -66,10 +66,10 @@ export default function RequestNew(){
         data.append('cause', causeTextareaRef.current?.value ?? '');
         data.append('detail', detailTextareaRef.current?.value ?? '');
 
-        const fileInput = document.getElementById('file_input') as HTMLInputElement | null;
+        /*const fileInput = document.getElementById('file_input') as HTMLInputElement | null;
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
             data.append('pic', fileInput.files[0]);
-        }
+        }*/
 
 
         try {
@@ -196,10 +196,12 @@ export default function RequestNew(){
                             <label htmlFor="detail" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">รายละเอียด(detail)</label>
                             <textarea id="detail" ref={detailTextareaRef} rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your details here..."></textarea>
                         </div>
+                        {/** 
                         <div className="mt-3">
                             <label htmlFor="file_input" className="block mb-2 text-sm font-medium">Upload Image</label>
                             <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" id="file_input" type="file" name="pic" />
                         </div>
+                        */}
                         <div className="flex items-center justify-center mt-4">
                             <button onClick={handleSubmit} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Submit</button>
                         </div>
