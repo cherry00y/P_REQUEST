@@ -1,3 +1,4 @@
+"use client"
 import NavbarAdmin from "@/components/NavbarAdmin";
 import { apiFetch } from "@/information/api";
 import Link from "next/link";
