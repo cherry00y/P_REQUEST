@@ -103,10 +103,10 @@ export default function AllInformationrepairrequest() {
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Solution</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.solution}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
-                                <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
+                                <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
                                 <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าที่เช็คได้1: {alldetail?.torquecheck1} Nm.</div>
                                 <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าที่เช็คได้2: {alldetail?.torquecheck2} Nm.</div>
-                                <div className="col-span-4 p-3 text-lg font-medium text-black">ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
+                                <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีเปลี่ยน Screwdriver</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.typescrewdriver}</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.speed}</div>
