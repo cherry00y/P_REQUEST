@@ -61,12 +61,7 @@ export default function RequestRepair() {
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
-    const userId = Cookies.get('useId') || '';
 
-  if (!userId) {
-    alert("User ID is missing. Please log in again.");
-    return;
-  }
 
 
     if (!token) {
@@ -75,15 +70,9 @@ export default function RequestRepair() {
       window.location.href = "/Login"; // Redirect to login page
       return;
     }
-
-    if (!userId) {
-      alert("User ID is missing. Please log in again.");
-      return;
-    }
     
 
     const data = {
-      user_id: userId, 
       request_type: 'Repair Request',
       rank: selectedRank,  // Send the rank ID
       lineprocess: lineProcessSelectRef.current?.value ?? '',
