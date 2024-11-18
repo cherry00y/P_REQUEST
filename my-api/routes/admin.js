@@ -284,19 +284,14 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
         return res.status(400).send('Request ID is required');
     }
 
-    Admin.getAllRepairRequest((err, results) => {
+    Admin.getAllRepairRequest(request_id, (err, results) => {
         if (err) {
-            console.error('Error fetching data:', err);
-            res.status(500).send('Error retrieving data');
+            console.error('Error fetching detailrepair:', err);
+            return res.status(500).send('Error retrieving data');
         }
 
-        Admin.getAllRepairRequest(request_id, (err, results) => {
-            if (err) {
-                console.error('Error fetching detailrepair', err);
-                return res.status(500).send('Error retrieving data');
-            }
-    
-            if (Array.isArray(results)) {
+        if (Array.isArray(results) && results.length > 0) {
+            try {
                 const formattedData = results.map(row => ({
                     request_id: `Doc No.24-${row['Doc No.']}`,
                     requestor: row.Requestor,
@@ -317,20 +312,21 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
                     typescrewdriver: row.Typescrewdriver,
                     speed: row.Speed,
                     serialno: row['Serial No'],
-                    list: row.List.split(","),
-                    quantity: row.Quantity.split(","),
-                    pricearray: row["Price per Unit"].split(", "),
+                    list: row.List ? row.List.split(",") : [],
+                    quantity: row.Quantity ? row.Quantity.split(",") : [],
+                    pricearray: row["Price per Unit"] ? row["Price per Unit"].split(", ") : [],
                     totalcost: row['Total Cost']
-
-
                 }));
                 res.json(formattedData);
-            } else {
-                console.error('Unexpected data format:', results);
-                res.status(500).send('Unexpected data format');
+            } catch (error) {
+                console.error('Error formatting data:', error);
+                res.status(500).send('Error processing data');
             }
-        });
-    })
-})
+        } else {
+            console.error('No data found for request_id:', request_id);
+            res.status(404).send('No data found');
+        }
+    });
+});
 
 module.exports = router;
