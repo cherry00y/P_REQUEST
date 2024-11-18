@@ -32,9 +32,13 @@ function LoginUser() {
     
             const { token, user } = data;
     
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
-            
+            // เก็บ token และ userId ลงใน localStorage
+            localStorage.setItem('token', token);  // เก็บ token
+            localStorage.setItem('user', JSON.stringify(user));  // เก็บข้อมูล user
+    
+            // ถ้าคุณต้องการใช้ Cookies แทน LocalStorage
+            // Cookies.set('token', token);
+            // Cookies.set('user', JSON.stringify(user));
     
             // Redirect based on user role
             if (user.position_name === 'Staff') {
@@ -67,6 +71,7 @@ function LoginUser() {
         }
     };
 
+    // ตรวจสอบการหมดอายุของ Token ทุกๆ 10 วินาที
     useEffect(() => {
         const checkTokenExpiry = () => {
             const token = localStorage.getItem('token');
@@ -107,7 +112,6 @@ function LoginUser() {
     
         return () => clearInterval(interval); // Clear interval on component unmount
     }, [router]);
-    
 
 
     return (
