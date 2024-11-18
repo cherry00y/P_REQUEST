@@ -61,9 +61,13 @@ export default function RequestRepair() {
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
-    const userId = Cookies.get('userId') || '';
+    const userId = localStorage.getItem('userId') || '';
 
-    console.log("User ID from cookies:", userId);
+  if (!userId) {
+    alert("User ID is missing. Please log in again.");
+    return;
+  }
+
 
     if (!token) {
       console.error('No token found.');
