@@ -41,7 +41,7 @@ export default function AllInformationnewrequest() {
         const request_id = queryParams.get('request_id')?.split('-')[1];
 
         if (request_id) {
-            apiFetch(`/Admin/AllDetailRepairRequest/${request_id}`)
+            apiFetch(`/Admin/AllDetailNewRequest/${request_id}`)
             .then(response => response.json())
             .then(data => {
                 if(data.length > 0 ){
