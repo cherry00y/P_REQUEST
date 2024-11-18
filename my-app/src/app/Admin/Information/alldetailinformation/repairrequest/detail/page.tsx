@@ -95,25 +95,30 @@ export default function AllInformationrepairrequest() {
                             </>
                         </div>
                         <hr className="col-span-12 my-4 border-gray-300"/>
+                        <div className="flex flex-col justify-center items-center">
+                            <div className="p-3 border bg-blue-300 text-lg font-medium text-black">{alldetail?.requester}</div>
+                            <div className="p-3 border bg-yellow-100 text-lg font-medium text-black">{alldetail?.sup_ke}</div>
+                        </div>
+                        <hr className="col-span-12 my-4 border-gray-300"/>
                         <h3 className="font-bold text-xl">Repair details</h3>
                         <div className="grid grid-cols-12 gap-4 mt-4">
                             <>
-                                <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Cause</div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Cause</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.cause}</div>
-                                <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Solution</div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Solution</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.solution}</div>
-                                <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
                                 <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าที่เช็คได้1: {alldetail?.torquecheck1} Nm.</div>
                                 <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าที่เช็คได้2: {alldetail?.torquecheck2} Nm.</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
-                                <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีเปลี่ยน Screwdriver</div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">กรณีเปลี่ยน Screwdriver</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.typescrewdriver}</div>
                                 <div className="col-span-2 p-3 text-lg font-medium text-black">{alldetail?.speed}</div>
                                 <div className="col-span-5 p-3 text-lg font-medium text-black">Serial No.{alldetail?.serialno}</div>
-                                <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Comment</div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Comment</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.detail}</div>
-                                <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Cost</div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Cost</div>
                                 <div className="col-span-10 p-3">
                                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg border bg-white">
                                         <table className="col-span-10 w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -142,6 +147,11 @@ export default function AllInformationrepairrequest() {
                                     </div>
                                 </div>
                             </>
+                        </div>
+
+                        <hr className="col-span-12 my-4 border-gray-300"/>
+                        <div className="flex flex-col justify-center items-center">
+                            <div className="p-3 border bg-blue-300 text-lg font-medium text-black">{alldetail?.operator}</div>
                         </div>
                     </div>
                 </div>
