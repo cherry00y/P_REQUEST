@@ -30,7 +30,7 @@ export default function NavbarAdmin() {
                     <Link href="/Admin/Information/Informcompleted" className="block px-4 py-2 hover:bg-gray-50">Cost RepairRequest</Link>
                   </li>
                   <li>
-                    <Link href="/symbol" className="block px-4 py-2 hover:bg-gray-50">Completed Information</Link>
+                    <Link href="/Admin/Information/alldetailinformation/repairrequest" className="block px-4 py-2 hover:bg-gray-50">Completed Information</Link>
                   </li>
                 </ul>
               </details>

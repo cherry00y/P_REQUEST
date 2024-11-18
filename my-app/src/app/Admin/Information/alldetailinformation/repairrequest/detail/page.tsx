@@ -7,11 +7,6 @@ export default function AllInformationrepairrequest() {
         <div className="flex flex-col min-h-screen">
             <NavbarAdmin/>
             <main className="p-4 bg-white flex flex-col flex-1">
-                <div className="p-5">
-                    <Link className="link text-blue-600 underline dark:text-blue-500 hover:no-underline" href="/Admin/Information/alldetailinformation/newrequest">
-                        New Request
-                    </Link>
-                </div>
                 <h2 className="text-2xl font-bold ml-20 mt-3">Completed Information</h2>
                 <div className="flex justify-center items-center w-screen">
                     <div className="container rounded shadow-lg p-5 mt-5 border">
