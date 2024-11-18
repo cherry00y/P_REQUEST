@@ -109,34 +109,36 @@ export default function AllInformationrepairrequest() {
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีเปลี่ยน Screwdriver</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.typescrewdriver}</div>
-                                <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.speed}</div>
-                                <div className="col-span-4 p-3 text-lg font-medium text-black">Serial No.{alldetail?.serialno}</div>
+                                <div className="col-span-2 p-3 text-lg font-medium text-black">{alldetail?.speed}</div>
+                                <div className="col-span-5 p-3 text-lg font-medium text-black">Serial No.{alldetail?.serialno}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Comment</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.detail}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Cost</div>
-                                <div className="relative overflow-x-auto shadow-md sm:rounded-lg border bg-white">
-                                    <table className="col-span-10 w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                            <tr>
-                                                <th scope="col" className="px-6 py-3">List</th>
-                                                <th scope="col" className="px-6 py-3">Quantity</th>
-                                                <th scope="col" className="px-6 py-3">Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {alldetail?.list.map((item, index) => (
-                                                <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        {item}
-                                                    </th>
-                                                    <td className="px-6 py-4">{alldetail.quantity[index]}</td>
-                                                    <td className="px-6 py-4">{alldetail.pricearray[index]}</td>
+                                <div className="col-span-10 p-3">
+                                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg border bg-white">
+                                        <table className="col-span-10 w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                <tr>
+                                                    <th scope="col" className="px-6 py-3">List</th>
+                                                    <th scope="col" className="px-6 py-3">Quantity</th>
+                                                    <th scope="col" className="px-6 py-3">Price</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                    <div className="flex justify-start items-center p-5">
-                                        <span className="text-lg font-bold">Total Amount: {alldetail?.totalcost}</span>
+                                            </thead>
+                                            <tbody>
+                                                {alldetail?.list.map((item, index) => (
+                                                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                            {item}
+                                                        </th>
+                                                        <td className="px-6 py-4">{alldetail.quantity[index]}</td>
+                                                        <td className="px-6 py-4">{alldetail.pricearray[index]}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                        <div className="flex justify-start items-center p-5">
+                                            <span className="text-lg font-bold">Total Amount: {alldetail?.totalcost}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </>
