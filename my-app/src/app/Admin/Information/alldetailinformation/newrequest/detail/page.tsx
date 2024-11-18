@@ -8,8 +8,8 @@ interface DataDetailAllRequestRepair {
     request_id: string;
     requester: string;
     date: string;
-    rank: string;
     subject: string;
+    jobtype: string;
     lineprocess: string;
     station: string;
     linestop: string;
