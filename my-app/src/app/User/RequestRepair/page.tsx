@@ -73,11 +73,10 @@ export default function RequestRepair() {
     }
 
     if (!userId) {
-      console.error('No user ID found.');
-      alert("No user ID found. Please login again.");
-      window.location.href = "/Login"; // Redirect to login page
+      alert("User ID is missing. Please log in again.");
       return;
     }
+    
 
     const data = {
       user_id: userId, 

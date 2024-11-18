@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const formidable = require('formidable');
 const jwt = require('jsonwebtoken');
-const path = require('path');
 const secretKey = process.env.SECRET_KEY; 
 const Requestor = require('../models/requestor');
 
@@ -67,18 +65,7 @@ router.get('/lineprocess', (req,res) => {
 
 // สร้าง route สำหรับการอัปโหลดคำร้อง
 router.post('/request', authenticateToken, (req, res) => {
-    const form = new formidable.IncomingForm();
 
-    form.keepExtensions = true;  // เก็บนามสกุลไฟล์เดิม
-    form.parse(req, (err, fields) => { // นำ `files` ออกจากพารามิเตอร์
-        if (err) {
-            console.error('Error parsing the form:', err);
-            return res.status(500).send('Error parsing the form');
-        }
-
-        console.log('Fields:', fields);  // ข้อมูลที่ได้จาก body (ไม่รวมไฟล์)
-
-        // แก้ไขการดึงค่าจากอาร์เรย์
         const {
             request_type,
             rank,
@@ -92,19 +79,21 @@ router.post('/request', authenticateToken, (req, res) => {
             cause,
             detail,
             job_type
-        } = fields;
+        } = req.body;
 
-        const requestType = request_type[0]; // ดึงค่าจากอาร์เรย์ (หากมีค่า)
-        const lineProcess = lineprocess[0]; // ดึงค่าจากอาร์เรย์
-        const jobType = job_type[0]; // ดึงค่าจากอาร์เรย์
+        console.log('Received data:', req.body);
 
         const user_id = req.user.id;
         const requestor = `${req.user.firstname} ${req.user.lastname}`;
         const lineStopValue = linestop ? 1 : 0;
 
+        if (!['Repair Request', 'New Request'].includes(request_type)) {
+            return res.status(400).send('Invalid request type');
+        }
+
         const requestData = {
             user_id,
-            request_type: requestType, // ใช้ค่าจากอาร์เรย์
+            request_type, // ใช้ค่าจากอาร์เรย์
             requestor,
             duedate: duedate || null
         };
@@ -121,7 +110,7 @@ router.post('/request', authenticateToken, (req, res) => {
                 const repairData = {
                     request_id: requestId,
                     rank: rank,
-                    lineprocess: lineProcess,
+                    lineprocess: lineprocess,
                     station,
                     subjectrr: subjectrr,
                     linestop: lineStopValue,
@@ -138,12 +127,12 @@ router.post('/request', authenticateToken, (req, res) => {
             } else if (requestData.request_type === 'New Request') {
                 const newRequestData = {
                     request_id: requestId,
-                    lineprocess: lineProcess,
+                    lineprocess: lineprocess,
                     station,
                     subject,
                     cause,
                     detail,
-                    job_type: jobType,
+                    job_type: job_type,
                 };
 
                 Requestor.insertNewRequest(newRequestData, (err) => {
@@ -157,7 +146,6 @@ router.post('/request', authenticateToken, (req, res) => {
                 res.status(400).send('Invalid request type');
             }
         });
-    });
 });
 
 
