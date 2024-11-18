@@ -108,8 +108,11 @@ export default function RequestNew(){
                 title: 'Success',
                 text:'Your request was successful!',
                 timer: 2000
-              });
-            window.location.href = '/User'
+              }).then(() => {
+                window.location.href = '/User'
+                return
+              })
+            
         } catch (error) {
             console.error('Error:', (error as Error).message);
             Swal.fire({
