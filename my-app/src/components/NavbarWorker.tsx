@@ -12,7 +12,7 @@ export default function NavbarWorker() {
     return (
       <nav className="bg-red-700 p-4">
       <div className="container mx-auto flex items-center justify-between">
-      <Link href="/Admin" className="text-3xl text-white font-bold" aria-label="Home Page">
+      <Link href="/Woker" className="text-3xl text-white font-bold" aria-label="Home Page">
         RICOH
       </Link>
       <div className="flex">

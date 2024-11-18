@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { apiFetch } from "@/information/api";
 import Swal from 'sweetalert2'; // Import SweetAlert
 
@@ -66,6 +66,47 @@ function LoginWorker() {
             }
         }
     };
+
+    useEffect(() => {
+        const checkTokenExpiry = () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    // Extract the expiration date from the token
+                    const base64Url = token.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // fix base64
+                    const decoded = JSON.parse(window.atob(base64)); // Decode base64
+                    const currentTime = Date.now() / 1000; // Get current time in seconds
+    
+                    // Check if token is expired
+                    if (decoded.exp < currentTime) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('user');
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Session Expired',
+                            text: 'Your session has expired. Please log in again.',
+                            timer: 2000,
+                            showConfirmButton: false,
+                        }).then(() => {
+                            router.push('/');
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error decoding token:', error);
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    router.push('/');
+                }
+            }
+        };
+    
+        checkTokenExpiry();
+    
+        const interval = setInterval(checkTokenExpiry, 10000); // Check every 10 seconds
+    
+        return () => clearInterval(interval); // Clear interval on component unmount
+    }, [router]);
 
     return (
         <div className='flex flex-col min-h-screen'>

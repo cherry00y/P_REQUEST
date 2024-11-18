@@ -23,7 +23,7 @@ const UserService = {
                     firstname: user.firstname,
                     lastname: user.lastname,
                     position: user.position_name
-                }, secretKey, { expiresIn: '1h' });
+                }, secretKey, { expiresIn: '20m' });
 
                 return callback(null, { token, user });
             } else {
