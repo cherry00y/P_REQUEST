@@ -52,7 +52,7 @@ export default function InformCompleted() {
         <div className="flex flex-col min-h-screen">
             <NavbarAdmin/>
             <main className="p-4 bg-white flex flex-col flex-1">
-                <div className="pl-8">
+                <div className="pl-14">
                     <Link className="link text-blue-600 underline dark:text-blue-500 hover:no-underline " href="/Admin/Information/alldetailinformation/repairrequest">
                         Repair Request
                     </Link>
