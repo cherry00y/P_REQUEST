@@ -400,7 +400,7 @@ const Admin = {
             nr.station,
             nr.cause,
             nr.detail,
-            r.sup_ke
+            r.sup_ke,
             rl.cause, 
             rl.solution, 
             rl.comment, 
