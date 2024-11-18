@@ -67,6 +67,11 @@ export default function AllInformationrepairrequest() {
         <div className="flex flex-col min-h-screen">
             <NavbarAdmin/>
             <main className="p-4 bg-white flex flex-col flex-1">
+                <a href="/Admin/Information/alldetailinformation/repairrequest">
+                    <svg className="ml-12 w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                    </svg>
+                </a>
                 <h2 className="text-2xl font-bold ml-20 mt-3">Completed Information</h2>
                 <div className="flex justify-center items-center w-screen">
                     <div className="container rounded shadow-lg p-5 mt-5 border">

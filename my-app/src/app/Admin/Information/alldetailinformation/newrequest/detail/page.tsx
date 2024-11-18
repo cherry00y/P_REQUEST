@@ -12,7 +12,7 @@ interface DataDetailAllRequestRepair {
     jobtype: string;
     lineprocess: string;
     station: string;
-    linestop: string;
+    causerequest: string;
     detail: string;
     sup_ke: string;
     cause: string;
@@ -67,6 +67,11 @@ export default function AllInformationnewrequest() {
         <div className="flex flex-col min-h-screen">
             <NavbarAdmin/>
             <main className="p-4 bg-white flex flex-col flex-1">
+                <a href="/Admin/Information/alldetailinformation/newrequest">
+                    <svg className="ml-12 w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                    </svg>
+                </a>
                 <h2 className="text-2xl font-bold ml-20 mt-3">Completed Information</h2>
                 <div className="flex justify-center items-center w-screen">
                     <div className="container rounded shadow-lg p-5 mt-5 border">
@@ -80,16 +85,16 @@ export default function AllInformationnewrequest() {
                                 <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Date</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.date}</div>
                                 <hr className="col-span-12 my-4 border-gray-300"/>
-                                <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Rank</div>
-                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.rank}</div>
                                 <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">JobType</div>
+                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.jobtype}</div>
+                                <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Subject</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.subject}</div>
                                 <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">LineProcess</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.lineprocess}</div>
                                 <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Station</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.station}</div>
-                                <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Line Stop</div>
-                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.linestop}</div>
+                                <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Cause</div>
+                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.causerequest}</div>
                                 <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Detail</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.detail}</div>
                             </>
