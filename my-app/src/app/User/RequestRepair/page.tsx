@@ -61,6 +61,9 @@ export default function RequestRepair() {
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
+    const userId = Cookies.get('userId') || '';
+
+    console.log("User ID from cookies:", userId);
 
     if (!token) {
       console.error('No token found.');
@@ -69,7 +72,12 @@ export default function RequestRepair() {
       return;
     }
 
-    const userId = Cookies.get('userId') || '';
+    if (!userId) {
+      console.error('No user ID found.');
+      alert("No user ID found. Please login again.");
+      window.location.href = "/Login"; // Redirect to login page
+      return;
+    }
 
     const data = {
       user_id: userId, 
