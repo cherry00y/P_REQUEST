@@ -103,16 +103,14 @@ export default function AllInformationrepairrequest() {
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Solution</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.solution}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
-                                <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
-                                <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าที่เช็คได้1: {alldetail?.torquecheck1} Nm.</div>
-                                <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าที่เช็คได้2: {alldetail?.torquecheck2} Nm.</div>
-                                <div className="col-span-3 p-3 text-lg font-medium text-black">ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
+                                <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
+                                <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าที่เช็คได้1: {alldetail?.torquecheck1} Nm.</div>
+                                <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าที่เช็คได้2: {alldetail?.torquecheck2} Nm.</div>
+                                <div className="col-span-2 p-3 text-lg font-medium text-black">ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีเปลี่ยน Screwdriver</div>
-                                <div className="flex space-x-6 text-lg font-medium text-black">
-                                    <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.typescrewdriver}</div>
-                                    <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.speed}</div>
-                                    <div className="col-span-3 p-3 text-lg font-medium text-black">Serial No.{alldetail?.serialno}</div>
-                                </div>
+                                <div className="col-span-2 p-3 text-lg font-medium text-black">{alldetail?.typescrewdriver}</div>
+                                <div className="col-span-2 p-3 text-lg font-medium text-black">{alldetail?.speed}</div>
+                                <div className="col-span-3 p-3 text-lg font-medium text-black">Serial No.{alldetail?.serialno}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Comment</div>
                                 <div className="border p-3 bg-white text-lg font-medium text-black">{alldetail?.comment}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Cost</div>
@@ -137,9 +135,10 @@ export default function AllInformationrepairrequest() {
                                             ))}
                                         </tbody>
                                     </table>
+                                    <div className="flex justify-start items-center p-5">
+                                        <span className="text-lg font-bold">Total Amount: {alldetail?.totalcost}</span>
+                                    </div>
                                 </div>
-                                <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Total cost</div>
-                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.totalcost}</div>
                             </>
                         </div>
                     </div>
