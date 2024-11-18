@@ -315,7 +315,7 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
             try {
                 const formattedData = results.map(row => ({
                     request_id: `Doc No.24-${row['Doc No.']}`,
-                    requestor: row.Requestor,
+                    requester: row.Requestor,
                     date: new Date(row.Date).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
                     rank: row.Rank,
                     subject: row.Subject,
