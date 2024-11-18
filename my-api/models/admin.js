@@ -213,7 +213,7 @@ const Admin = {
         `, callback)
     },
         
-    getComplatedInformRepair: function(callback) {
+    getCompletedInformRepair: function(callback) {
         connection.query(`
             SELECT 
             r.request_id AS 'Doc No.',
@@ -236,7 +236,27 @@ const Admin = {
             AND r.request_type = 'Repair Request'`, callback)
     },
 
-    getAllRepairRequest: function(request_id,callback) {
+    getCompletedInformNew: function(callback) {
+        connection.query(`
+            SELECT 
+            r.request_id AS 'Doc No.',
+            r.requestor AS 'Requester',
+            nr.subject AS 'Subject',
+            rp.implement_end AS 'DataComplete',
+            r.request_type AS 'Type', 
+            r.status AS 'Status'
+        FROM
+            Request r
+        LEFT JOIN
+            NewRequest nr ON nr.request_id = r.request_id
+        LEFT JOIN
+            Repairlog rp ON rp.request_id = r.request_id
+        WHERE
+            r.status = 'Completed' 
+            AND r.request_type = 'New Request';`, callback)
+    },
+
+    getAllRepairRequest: function(request_id, callback) {
         connection.query(`
             SELECT 
             r.request_id AS 'Doc No.', 
@@ -302,9 +322,89 @@ const Admin = {
             rr.station,
             rr.linestop,
             rr.problem,
+            r.sup_ke
             rl.cause, 
             rl.solution, 
             rl.comment, 
+            rl.operator_name,
+            t.torque_label, 
+            t.torque_check1, 
+            t.torque_check2, 
+            t.torque_check3, 
+            ts.name, 
+            sd.serial_no, 
+            sd.speed;`,[request_id], callback)
+    },
+
+    getAllNewRequest: function(request_id, callback) {
+        connection.query(`
+            SELECT 
+            r.request_id AS 'Doc No.', 
+            CASE 
+                WHEN r.request_type = 'New Request' THEN nr.subject
+                ELSE NULL 
+            END AS 'Subject',
+            r.date AS 'Date',
+            r.requestor AS 'Requester',
+            lp.lineprocess_name AS 'Lineprocess',
+            jt.jobtype_name AS 'JobType',
+            nr.station AS 'Station',
+            nr.cause AS 'CauseRequest',
+            nr.detail AS 'Detail',
+            r.sup_ke AS 'SupAccept',
+            rl.cause AS 'Cause',
+            rl.solution AS 'Solution',
+            rl.comment AS 'Comment',
+            rl.operator_name AS 'Operator',
+            t.torque_label AS 'Torquelabel',
+            t.torque_check1 AS 'Torquecheck1',
+            t.torque_check2 AS 'Torquecheck2',
+            t.torque_check3 AS 'Torquecheck3',
+            ts.name AS 'Typescrewdriver',
+            sd.serial_no AS 'Serial No',
+            sd.speed AS 'Speed',
+            GROUP_CONCAT(c.productname SEPARATOR ', ') AS 'List',
+            GROUP_CONCAT(c.quantity SEPARATOR ', ') AS 'Quantity',
+            GROUP_CONCAT(c.price SEPARATOR ', ') AS 'Price per Unit',
+            SUM(c.price * c.quantity) AS 'Total Cost'
+        FROM 
+            Request r
+        LEFT JOIN 
+            NewRequest nr ON nr.request_id = r.request_id
+        LEFT JOIN 
+            JobType jt ON nr.job_type = jt.jobtype_id
+        LEFT JOIN 
+            Lineprocess lp ON nr.lineprocess = lp.lineprocess_id
+        LEFT JOIN 
+            Repairlog rl ON rl.request_id = r.request_id 
+        LEFT JOIN 
+            Torque t ON t.repairlog_id = rl.repairlog_id  
+        LEFT JOIN 
+            Screwdriver sd ON sd.repairlog_id = rl.repairlog_id
+        LEFT JOIN 
+            Cost c ON c.newrequest_id = nr.newrequest_id
+        LEFT JOIN 
+            TypeScrewdriver ts ON sd.typesd = ts.typesd_id
+        WHERE 
+            r.request_id = 44
+        GROUP BY 
+            r.request_id, 
+            nr.subject,
+            r.date, 
+            r.request_type, 
+            r.requestor, 
+            r.status, 
+            lp.lineprocess_name,
+            nr.station,
+            jt.jobtype_name,
+            nr.station,
+            nr.cause,
+            nr.detail,
+            r.sup_ke
+            rl.cause, 
+            rl.solution, 
+            rl.comment, 
+            rl.operator_name,
             t.torque_label, 
             t.torque_check1, 
             t.torque_check2, 

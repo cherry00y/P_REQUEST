@@ -254,7 +254,7 @@ router.get('/information', (req, res) => {
 });
 
 router.get('/InformCompleteRepari', (req, res) => {
-    Admin.getComplatedInformRepair((err, results) => {
+    Admin.getCompletedInformRepair((err, results) => {
         if (err) {
             console.error('Error fetching data:', err);
             res.status(500).send('Error retrieving data');
@@ -273,7 +273,28 @@ router.get('/InformCompleteRepari', (req, res) => {
             
         });
 
-        res.json(modifiedResults)
+        res.json(modifiedResults);
+    });
+});
+
+router.get('/InformationCompleteNew', (req, res) => {
+    Admin.getCompletedInformNew((err, results) => {
+        if (err) {
+            console.error('Error fetching data:', err);
+            res.status(500).send('Error retrieving data');
+        }
+
+        const modifiedResults = results.map(row => {
+            return {
+                request_id: `Doc No.24-${row['Doc No.']}`,
+                requester: row.Requester,
+                subject: row.Subject,
+                datecompleted: new Date(row.DataComplete).toLocaleDateString('th-TH', { timeZone: 'Asia/Bangkok' }),
+                request_type: row.Type,
+                status: row.Status
+            };
+        });
+        res.json(modifiedResults);
     });
 });
 
@@ -330,5 +351,62 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
         }
     });
 });
+
+router.get('/AllDetailNewRequest/:request_id', (req, res) => {
+    const request_id = req.params.request_id;
+
+    if (!request_id) {
+        return res.status(400).send('Request ID is required');
+    }
+
+    Admin.getAllRepairRequest(request_id, (err, results) => {
+        if (err) {
+            console.error('Error fetching detailrepair:', err);
+            return res.status(500).send('Error retrieving data');
+        }
+
+        if (Array.isArray(results) && results.length > 0) {
+            try {
+                const formattedData = results.map(row => ({
+                    request_id: `Doc No.24-${row['Doc No.']}`,
+                    requester: row.Requestor,
+                    date: new Date(row.Date).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
+                    subject: row.Subject,
+                    lineprocess: row['Line Process'],
+                    station: row.Station,
+                    linestop: row['Line Stop'],
+                    jobtype: row.JobType,
+                    causerequest: row.CauseRequest,
+                    detail: row.Detail,
+                    sup_ke: row.SupAccept,
+                    cause: row.Cause,
+                    solution: row.Solution,
+                    commemt: row.Commemt,
+                    opertator: row.Operator,
+                    torquelabel: row.Torquelabel,
+                    torquecheck1: row.Torquecheck1,
+                    torquecheck2: row.Torquecheck2,
+                    torquecheck3: row.Torquecheck3,
+                    typescrewdriver: row.Typescrewdriver,
+                    speed: row.Speed,
+                    serialno: row['Serial No'],
+                    list: row.List ? row.List.split(",") : [],
+                    quantity: row.Quantity ? row.Quantity.split(",") : [],
+                    pricearray: row["Price per Unit"] ? row["Price per Unit"].split(", ") : [],
+                    totalcost: row['Total Cost']
+                }));
+                res.json(formattedData);
+            } catch (error) {
+                console.error('Error formatting data:', error);
+                res.status(500).send('Error processing data');
+            }
+        } else {
+            console.error('No data found for request_id:', request_id);
+            res.status(404).send('No data found');
+        }
+    });
+});
+
+
 
 module.exports = router;
