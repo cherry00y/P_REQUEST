@@ -359,7 +359,7 @@ router.get('/AllDetailNewRequest/:request_id', (req, res) => {
         return res.status(400).send('Request ID is required');
     }
 
-    Admin.getAllRepairRequest(request_id, (err, results) => {
+    Admin.getAllNewRequest(request_id, (err, results) => {
         if (err) {
             console.error('Error fetching detailrepair:', err);
             return res.status(500).send('Error retrieving data');

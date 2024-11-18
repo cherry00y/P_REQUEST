@@ -311,7 +311,7 @@ const Admin = {
         LEFT JOIN 
             TypeScrewdriver ts ON sd.typesd = ts.typesd_id
         WHERE 
-            r.request_id = 11
+            r.request_id = ?
         GROUP BY 
             r.request_id, 
             it.issuetype_name, 
@@ -386,7 +386,7 @@ const Admin = {
         LEFT JOIN 
             TypeScrewdriver ts ON sd.typesd = ts.typesd_id
         WHERE 
-            r.request_id = 44
+            r.request_id = ?
         GROUP BY 
             r.request_id, 
             nr.subject,
