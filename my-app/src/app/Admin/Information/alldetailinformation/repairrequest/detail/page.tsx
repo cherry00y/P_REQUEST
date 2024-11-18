@@ -108,25 +108,31 @@ export default function AllInformationrepairrequest() {
                                     <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.cause}</div>
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Solution</div>
                                     <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.solution}</div>
+                                    <div className="grid grid-cols-12 gap-4">
+                                    {/* กรณีปรับค่าทอร์ก */}
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
-                                    <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
-                                    <div className="flex space-x-6 text-lg font-medium text-black">
+                                    <div className="col-span-10 p-3 flex space-x-6 text-lg font-medium text-black">
                                         <div>ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
                                         <div>ค่าที่เช็คได้1: {alldetail?.torquecheck1} Nm.</div>
                                         <div>ค่าที่เช็คได้2: {alldetail?.torquecheck2} Nm.</div>
                                         <div>ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
                                     </div>
+
+                                    {/* กรณีเปลี่ยน Screwdriver */}
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีเปลี่ยน Screwdriver</div>
-                                    <div className="flex space-x-6 text-lg font-medium text-black">
+                                    <div className="col-span-10 p-3 flex space-x-6 text-lg font-medium text-black">
                                         <div>{alldetail?.typescrewdriver}</div>
                                         <div>{alldetail?.speed}</div>
                                         <div>{alldetail?.serialno}</div>
                                     </div>
-                                    <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Comment</div>
-                                    <div className="border p-3 bg-white text-lg font-medium text-black">{alldetail?.comment}</div>
 
+                                    {/* Comment */}
+                                    <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Comment</div>
+                                    <div className="col-span-10 p-3 border bg-white text-lg font-medium text-black">{alldetail?.comment}</div>
+
+                                    {/* Cost Table */}
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Cost</div>
-                                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg border bg-white">
+                                    <div className="col-span-10 relative overflow-x-auto shadow-md sm:rounded-lg border bg-white">
                                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                 <tr>
@@ -151,6 +157,7 @@ export default function AllInformationrepairrequest() {
                                             <span className="text-lg font-bold">Total Amount: {alldetail?.totalcost}</span>
                                         </div>
                                     </div>
+                                </div>
                                 </>
                             )}
                         </div>
