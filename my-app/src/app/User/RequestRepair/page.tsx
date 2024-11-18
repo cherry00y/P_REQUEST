@@ -68,7 +68,8 @@ export default function RequestRepair() {
       window.location.href = "/Login"; // Redirect to login page
       return;
     }
-    const userId = Cookies.get('user_id') || '';
+
+    const userId = Cookies.get('userId') || '';
 
     const data = {
       user_id: userId, 

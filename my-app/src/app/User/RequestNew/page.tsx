@@ -30,8 +30,8 @@ export default function RequestNew(){
     useEffect(() => {
         // Fetch data from API
         Promise.all([
-            apiFetch('/Requestor/jobtype').then(response => response.json()),
-            apiFetch('/Requestor/lineprocess').then(response => response.json())
+            apiFetch('/Requester/jobtype').then(response => response.json()),
+            apiFetch('/Requester/lineprocess').then(response => response.json())
         ])
         .then(([jobtypes, lineprocesses]) => {
             setJobType(jobtypes);
@@ -73,7 +73,7 @@ export default function RequestNew(){
 
 
         try {
-            const response = await apiFetch('/Requestor/request', {
+            const response = await apiFetch('/Requester/request', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
