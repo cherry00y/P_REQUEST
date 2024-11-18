@@ -95,10 +95,11 @@ export default function AllInformationrepairrequest() {
                             </>
                         </div>
                         <hr className="col-span-12 my-4 border-gray-300"/>
-                        <div className="flex flex-col justify-center items-center">
+                        <div className="flex flex-row justify-center items-center space-x-4">
                             <div className="p-3 border bg-blue-300 text-lg font-medium text-black">{alldetail?.requester}</div>
                             <div className="p-3 border bg-yellow-100 text-lg font-medium text-black">{alldetail?.sup_ke}</div>
                         </div>
+
                         <hr className="col-span-12 my-4 border-gray-300"/>
                         <h3 className="font-bold text-xl">Repair details</h3>
                         <div className="grid grid-cols-12 gap-4 mt-4">

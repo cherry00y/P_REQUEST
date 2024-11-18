@@ -327,7 +327,7 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
                     cause: row.Cause,
                     solution: row.Solution,
                     comment: row.Comment,
-                    opertator: row.Operator,
+                    operator: row.Operator,
                     torquelabel: row.Torquelabel,
                     torquecheck1: row.Torquecheck1,
                     torquecheck2: row.Torquecheck2,
