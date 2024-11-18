@@ -118,7 +118,7 @@ export default function Implement() {
                     showConfirmButton: false
                 }).then(() => {
                     resetForm();
-                window.location.href = `/Worker/NewRequest`;
+                window.location.href = `/Worker/RepairRequest`;
                 })
             } else {
                 console.error('Failed to submit repair details.');
