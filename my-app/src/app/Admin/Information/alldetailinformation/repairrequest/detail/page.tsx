@@ -109,20 +109,19 @@ export default function AllInformationrepairrequest() {
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Solution</div>
                                     <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.solution}</div>
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
-                                    <div className="grid grid-cols-4 gap-3 border p-3 bg-white">
-                                        <div className="text-lg font-medium text-black">ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
-                                        <div className="text-lg font-medium text-black">ค่าที่เช็คได้1: {alldetail?.torquecheck1} Nm.</div>
-                                        <div className="text-lg font-medium text-black">ค่าที่เช็คได้2: {alldetail?.torquecheck2} Nm.</div>
-                                        <div className="text-lg font-medium text-black">ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
+                                    <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีปรับค่าทอร์ก</div>
+                                    <div className="flex space-x-6 text-lg font-medium text-black">
+                                        <div>ค่าทอร์กป้าย: {alldetail?.torquelabel} Nm.</div>
+                                        <div>ค่าที่เช็คได้1: {alldetail?.torquecheck1} Nm.</div>
+                                        <div>ค่าที่เช็คได้2: {alldetail?.torquecheck2} Nm.</div>
+                                        <div>ค่าที่เช็คได้3: {alldetail?.torquecheck3} Nm.</div>
                                     </div>
-
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">กรณีเปลี่ยน Screwdriver</div>
-                                    <div className="grid grid-cols-3 gap-3 border p-3 bg-white">
-                                        <div className="text-lg font-medium text-black">{alldetail?.typescrewdriver}</div>
-                                        <div className="text-lg font-medium text-black">{alldetail?.speed}</div>
-                                        <div className="text-lg font-medium text-black">{alldetail?.serialno}</div>
+                                    <div className="flex space-x-6 text-lg font-medium text-black">
+                                        <div>{alldetail?.typescrewdriver}</div>
+                                        <div>{alldetail?.speed}</div>
+                                        <div>{alldetail?.serialno}</div>
                                     </div>
-
                                     <div className="col-span-2 p-3 border bg-yellow-600 text-lg font-medium text-white">Comment</div>
                                     <div className="border p-3 bg-white text-lg font-medium text-black">{alldetail?.comment}</div>
 
