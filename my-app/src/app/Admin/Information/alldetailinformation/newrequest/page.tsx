@@ -72,7 +72,7 @@ export default function InformCompleted() {
                         Repair Request
                     </Link>
                 </div>
-                <h2  className="text-2xl font-bold ml-20 mt-8">NewRequest Completed Information</h2>
+                <h2  className="text-2xl font-bold ml-20 mt-8">Completed NewRequest Information</h2>
                 <form onSubmit={handleSearch} className="max-w-md ml-20 mt-6">
                     <label htmlFor="default-search" className="mb- text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div className="relative">
@@ -112,8 +112,8 @@ export default function InformCompleted() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredRequests.length > 0 ? (
-                                        filteredRequests.map((request) => (
+                                    {paginatedRequests.length > 0 ? (
+                                        paginatedRequests.map((request) => (
                                         <tr key={request.request_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td className="px-6 py-4">{request.request_id}</td>
                                             <td className="px-6 py-4">{request.subject}</td>

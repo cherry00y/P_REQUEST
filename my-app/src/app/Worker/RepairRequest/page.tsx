@@ -17,6 +17,8 @@ export default function RepairAccept() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); // Track current page
+    const rowsPerPage = 10; // Rows per page
 
     useEffect(() => {
         apiFetch('/Operator/RepairRequest')
@@ -40,6 +42,20 @@ export default function RepairAccept() {
     const filteredRequests = request.filter(request =>
         request.request_type.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const totalPages = Math.ceil(filteredRequests.length / rowsPerPage);
+    const paginatedRequests = filteredRequests.slice(
+        (currentPage - 1) * rowsPerPage,
+        currentPage * rowsPerPage
+    );
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
 
 
     if (loading) return <p>Loading...</p>;
@@ -89,8 +105,8 @@ export default function RepairAccept() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredRequests.length > 0 ? (
-                                        filteredRequests.map((request) => (
+                                    {paginatedRequests.length > 0 ? (
+                                        paginatedRequests.map((request) => (
                                         <tr key={request.request_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td className="px-6 py-4">{request.request_id}</td>
                                             <td className="px-6 py-4">{request.subject}</td>
@@ -118,6 +134,21 @@ export default function RepairAccept() {
                             </table>
                         </div>
                     </div>
+                </div>
+                <div className="flex justify-center mt-4">
+                    <button 
+                        onClick={handlePreviousPage} 
+                        disabled={currentPage === 1} 
+                        className="px-4 py-2 mx-1 bg-gray-200 rounded disabled:bg-gray-400">
+                        Previous
+                    </button>
+                    <span className="px-4 py-2">{`Page ${currentPage} of ${totalPages}`}</span>
+                    <button 
+                        onClick={handleNextPage} 
+                        disabled={currentPage === totalPages} 
+                        className="px-4 py-2 mx-1 bg-gray-200 rounded disabled:bg-gray-400">
+                        Next
+                    </button>
                 </div>
             </main>
         </div>
