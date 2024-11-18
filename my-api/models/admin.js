@@ -322,7 +322,7 @@ const Admin = {
             rr.station,
             rr.linestop,
             rr.problem,
-            r.sup_ke
+            r.sup_ke,
             rl.cause, 
             rl.solution, 
             rl.comment, 
