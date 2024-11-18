@@ -263,6 +263,7 @@ router.get('/InformCompleteRepari', (req, res) => {
         const modifiedResults = results.map(row => {
             return {
                 request_id: `Doc No.24-${row['Doc No.']}`,
+                requester: row.Requester,
                 subject: row.Subject,
                 datecompleted: new Date(row.DataComplete).toLocaleDateString('th-TH', { timeZone: 'Asia/Bangkok' }),
                 request_type: row.Type,
@@ -275,5 +276,61 @@ router.get('/InformCompleteRepari', (req, res) => {
         res.json(modifiedResults)
     });
 });
+
+router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
+    const request_id = req.params.request_id;
+
+    if (!request_id) {
+        return res.status(400).send('Request ID is required');
+    }
+
+    Admin.getAllRepairRequest((err, results) => {
+        if (err) {
+            console.error('Error fetching data:', err);
+            res.status(500).send('Error retrieving data');
+        }
+
+        Admin.getAllRepairRequest(request_id, (err, results) => {
+            if (err) {
+                console.error('Error fetching detailrepair', err);
+                return res.status(500).send('Error retrieving data');
+            }
+    
+            if (Array.isArray(results)) {
+                const formattedData = results.map(row => ({
+                    request_id: `Doc No.24-${row['Doc No.']}`,
+                    requestor: row.Requestor,
+                    date: new Date(row.Date).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
+                    rank: row.Rank,
+                    subject: row.Subject,
+                    lineprocess: row['Line Process'],
+                    station: row.Station,
+                    linestop: row['Line Stop'],
+                    detail: row.Problem,
+                    cause: row.Cause,
+                    solution: row.Solution,
+                    commemt: row.Commemt,
+                    torquelabel: row.Torquelabel,
+                    torquecheck1: row.Torquecheck1,
+                    torquecheck2: row.Torquecheck2,
+                    torquecheck3: row.Torquecheck3,
+                    typescrewdriver: row.Typescrewdriver,
+                    speed: row.Speed,
+                    serialno: row['Serial No'],
+                    list: row.List.split(","),
+                    quantity: row.Quantity.split(","),
+                    pricearray: row["Price per Unit"].split(", "),
+                    totalcost: row['Total Cost']
+
+
+                }));
+                res.json(formattedData);
+            } else {
+                console.error('Unexpected data format:', results);
+                res.status(500).send('Unexpected data format');
+            }
+        });
+    })
+})
 
 module.exports = router;

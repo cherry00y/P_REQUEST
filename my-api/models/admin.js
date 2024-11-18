@@ -211,12 +211,13 @@ const Admin = {
             year DESC, month DESC;
 
         `, callback)
-        },
+    },
         
     getComplatedInformRepair: function(callback) {
         connection.query(`
             SELECT 
             r.request_id AS 'Doc No.',
+            r.requestor AS 'Requester',
             it.issuetype_name AS 'Subject',
             rp.implement_end AS 'DataComplete',
             r.request_type AS 'Type', 
@@ -233,6 +234,82 @@ const Admin = {
         WHERE
             r.status IN ('Completed') 
             AND r.request_type = 'Repair Request'`, callback)
+    },
+
+    getAllRepairRequest: function(request_id,callback) {
+        connection.query(`
+            SELECT 
+            r.request_id AS 'Doc No.', 
+            CASE 
+                WHEN r.request_type = 'Repair Request' THEN it.issuetype_name
+                ELSE NULL 
+            END AS 'Subject',
+            r.date AS 'Date',
+            r.requestor AS 'Requester',
+            rk.description AS 'Rank',
+            lp.lineprocess_name AS 'Lineprocess',
+            rr.station AS 'Station',
+            CASE 
+                WHEN rr.linestop = 0 THEN NULL
+                ELSE 'เกิด Line Stop'
+            END AS 'Line Stop',
+            rr.problem AS 'Problem',
+            rl.cause AS 'Cause',
+            rl.solution AS 'Solution',
+            rl.comment AS 'Comment',
+            t.torque_label AS 'Torquelabel',
+            t.torque_check1 AS 'Torquecheck1',
+            t.torque_check2 AS 'Torquecheck2',
+            t.torque_check3 AS 'Torquecheck3',
+            ts.name AS 'Typescrewdriver',
+            sd.serial_no AS 'Serial No',
+            sd.speed AS 'Speed',
+            GROUP_CONCAT(c.productname SEPARATOR ', ') AS 'List',
+            GROUP_CONCAT(c.quantity SEPARATOR ', ') AS 'Quantity',
+            GROUP_CONCAT(c.price SEPARATOR ', ') AS 'Price per Unit',
+            SUM(c.price * c.quantity) AS 'Total Cost'
+        FROM 
+            Request r
+        LEFT JOIN 
+            RepairRequest rr ON rr.request_id = r.request_id
+        LEFT JOIN 
+            IssueType it ON rr.subjectrr = it.issuetype_id
+        LEFT JOIN 
+            Ranks rk ON rr.rank = rk.rank_id
+        LEFT JOIN 
+            Lineprocess lp ON rr.lineprocess = lp.lineprocess_id
+        LEFT JOIN 
+            Repairlog rl ON rl.request_id = r.request_id 
+        LEFT JOIN 
+            Torque t ON t.repairlog_id = rl.repairlog_id  
+        LEFT JOIN 
+            Screwdriver sd ON sd.repairlog_id = rl.repairlog_id
+        LEFT JOIN 
+            Cost c ON c.repairlog_id = rl.repairlog_id
+        LEFT JOIN 
+            TypeScrewdriver ts ON sd.typesd = ts.typesd_id
+        WHERE 
+            r.request_id = 11
+        GROUP BY 
+            r.request_id, 
+            it.issuetype_name, 
+            r.date, 
+            r.requestor, 
+            rk.description,
+            lp.lineprocess_name,
+            rr.station,
+            rr.linestop,
+            rr.problem,
+            rl.cause, 
+            rl.solution, 
+            rl.comment, 
+            t.torque_label, 
+            t.torque_check1, 
+            t.torque_check2, 
+            t.torque_check3, 
+            ts.name, 
+            sd.serial_no, 
+            sd.speed;`,[request_id], callback)
     },
 };
 

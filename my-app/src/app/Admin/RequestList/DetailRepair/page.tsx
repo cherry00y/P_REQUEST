@@ -191,7 +191,7 @@ export default function DetailRequest(){
                                 <>
                                     <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Doc No.</div>
                                     <div className="col-span-10 p-3 text-lg font-medium text-black">{detailrepair.request_id}</div>
-                                    <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Requestor</div>
+                                    <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Requester</div>
                                     <div className="col-span-10 p-3 text-lg font-medium text-black">{detailrepair.requestor}</div>
                                     <div className="col-span-2 p-3 border bg-blue-600 text-lg font-medium text-white">Date</div>
                                     <div className="col-span-10 p-3 text-lg font-medium text-black">{detailrepair.date}</div>
