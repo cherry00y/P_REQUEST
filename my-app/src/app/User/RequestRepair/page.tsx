@@ -82,7 +82,7 @@ export default function RequestRepair() {
     };
 
     try {
-      const response = await apiFetch('/Requestor/request', {
+      const response = await apiFetch('/Requester/request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

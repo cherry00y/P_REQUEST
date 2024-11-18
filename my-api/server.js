@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 // Use route handlers
-app.use('/Requestor', Requestor);
+app.use('/Requester', Requestor);
 app.use('/Login', Login);
 app.use('/Admin', Admin);
 app.use('/Operator', Operator);
