@@ -6,20 +6,21 @@ const Requestor = require('../models/requestor');
 
 
 // Middleware สำหรับตรวจสอบ Token
-function authenticateToken(req, res, next) {
+const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    console.log('Authorization Header:', authHeader);
-
     const token = authHeader && authHeader.split(' ')[1];
+    if (!token) {
+        return res.status(403).send('Forbidden: No token provided');
+    }
 
-    if (token == null) return res.sendStatus(403);
-
-    jwt.verify(token, secretKey, (err, user) => {
-        if (err) return res.sendStatus(403);
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) {
+            return res.status(403).send('Forbidden: Invalid token');
+        }
         req.user = user;
         next();
     });
-}
+};
 
 
 router.get('/issuetype', (req, res) => {
