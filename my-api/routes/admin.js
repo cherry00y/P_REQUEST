@@ -369,7 +369,7 @@ router.get('/AllDetailNewRequest/:request_id', (req, res) => {
             try {
                 const formattedData = results.map(row => ({
                     request_id: `Doc No.24-${row['Doc No.']}`,
-                    requester: row.Requestor,
+                    requester: row.Requester,
                     date: new Date(row.Date).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
                     subject: row.Subject,
                     lineprocess: row['Line Process'],
@@ -381,7 +381,7 @@ router.get('/AllDetailNewRequest/:request_id', (req, res) => {
                     sup_ke: row.SupAccept,
                     cause: row.Cause,
                     solution: row.Solution,
-                    commemt: row.Commemt,
+                    comment: row.Comment,
                     opertator: row.Operator,
                     torquelabel: row.Torquelabel,
                     torquecheck1: row.Torquecheck1,

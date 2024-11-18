@@ -32,7 +32,7 @@ interface DataDetailAllRequestRepair {
     totalcost: string
 }
 
-export default function AllInformationrepairrequest() {
+export default function AllInformationnewrequest() {
 
     const [alldetail, setAllDetail] = useState<DataDetailAllRequestRepair | null>(null);
 
