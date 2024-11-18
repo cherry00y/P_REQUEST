@@ -13,7 +13,7 @@ const authenticateToken = (req, res, next) => {
         return res.status(403).send('Forbidden: No token provided');
     }
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    jwt.verify(token, secretKey, (err, user) => {
         if (err) {
             return res.status(403).send('Forbidden: Invalid token');
         }
