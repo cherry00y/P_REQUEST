@@ -35,9 +35,9 @@ export default function RequestRepair() {
 
   useEffect(() => {
     Promise.all([
-      apiFetch('/Requestor/issuetype').then(response => response.json()),
-      apiFetch('/Requestor/lineprocess').then(response => response.json()),
-      apiFetch('/Requestor/rank').then(response => response.json())
+      apiFetch('/Requester/issuetype').then(response => response.json()),
+      apiFetch('/Requester/lineprocess').then(response => response.json()),
+      apiFetch('/Requester/rank').then(response => response.json())
     ])
     .then(([issuetypes, lineprocesses, ranks]) => {
       setIssueType(issuetypes);
