@@ -54,18 +54,18 @@ export default function RequestNew(){
             return;
         }
 
-        const userId = Cookies.get('userId') || '';
-        const data = new FormData();  // FormData instead of JSON for handling files
+        const data = {
+            request_type: 'New Request',
+            lineprocess: lineProcessSelectRef.current?.value ?? '',
+            station: stationInputRef.current?.value ?? '',
+            job_type:jobTypeSelectRef.current?.value ?? '',
+            subject: subjectInputRef.current?.value ?? '',
+            cause: causeTextareaRef.current?.value ?? '',
+            detail: detailTextareaRef.current?.value ?? '',
 
-        data.append('user_id', userId);
-        data.append('request_type', 'New Request');
-        data.append('lineprocess', lineProcessSelectRef.current?.value ?? '');
-        data.append('station', stationInputRef.current?.value ?? '');
-        data.append('job_type', jobTypeSelectRef.current?.value ?? '');
-        data.append('subject', subjectInputRef.current?.value ?? '');
-        data.append('cause', causeTextareaRef.current?.value ?? '');
-        data.append('detail', detailTextareaRef.current?.value ?? '');
+        }  // FormData instead of JSON for handling files
 
+        
         /*const fileInput = document.getElementById('file_input') as HTMLInputElement | null;
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
             data.append('pic', fileInput.files[0]);
@@ -76,9 +76,10 @@ export default function RequestNew(){
             const response = await apiFetch('/Requester/request', {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: data,
+                body: JSON.stringify(data),
             });
 
             if (response.status === 401) {
