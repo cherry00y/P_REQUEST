@@ -254,9 +254,11 @@ const Admin = {
                 ELSE 'เกิด Line Stop'
             END AS 'Line Stop',
             rr.problem AS 'Problem',
+            r.sup_ke AS 'SupAccept',
             rl.cause AS 'Cause',
             rl.solution AS 'Solution',
             rl.comment AS 'Comment',
+            rl.operator_name AS 'Operator',
             t.torque_label AS 'Torquelabel',
             t.torque_check1 AS 'Torquecheck1',
             t.torque_check2 AS 'Torquecheck2',
