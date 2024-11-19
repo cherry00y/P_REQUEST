@@ -29,7 +29,8 @@ interface DataDetailAllRequestRepair {
     list: string[],
     quantity: string[],
     pricearray: string[],
-    totalcost: string
+    totalcost: string;
+    document: string;
 }
 
 export default function AllInformationrepairrequest() {
@@ -128,6 +129,8 @@ export default function AllInformationrepairrequest() {
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">{alldetail?.typescrewdriver}</div>
                                 <div className="col-span-2 p-3 text-lg font-medium text-black">{alldetail?.speed}</div>
                                 <div className="col-span-5 p-3 text-lg font-medium text-black">Serial No.{alldetail?.serialno}</div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Document to follow</div>
+                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.document}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Comment</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.detail}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Cost</div>

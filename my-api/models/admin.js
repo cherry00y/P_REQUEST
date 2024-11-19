@@ -289,7 +289,8 @@ const Admin = {
             GROUP_CONCAT(c.productname SEPARATOR ', ') AS 'List',
             GROUP_CONCAT(c.quantity SEPARATOR ', ') AS 'Quantity',
             GROUP_CONCAT(c.price SEPARATOR ', ') AS 'Price per Unit',
-            SUM(c.price * c.quantity) AS 'Total Cost'
+            SUM(c.price * c.quantity) AS 'Total Cost',
+            d.numberdoc AS 'Document'
         FROM 
             Request r
         LEFT JOIN 
@@ -310,6 +311,8 @@ const Admin = {
             Cost c ON c.repairlog_id = rl.repairlog_id
         LEFT JOIN 
             TypeScrewdriver ts ON sd.typesd = ts.typesd_id
+        LEFT JOIN
+        	Document d ON d.repairlog_id = rl.repairlog_id
         WHERE 
             r.request_id = ?
         GROUP BY 
@@ -333,7 +336,8 @@ const Admin = {
             t.torque_check3, 
             ts.name, 
             sd.serial_no, 
-            sd.speed;`,[request_id], callback)
+            sd.speed,
+            d.numberdoc ;`,[request_id], callback)
     },
 
     getAllNewRequest: function(request_id, callback) {
@@ -366,7 +370,8 @@ const Admin = {
             GROUP_CONCAT(c.productname SEPARATOR ', ') AS 'List',
             GROUP_CONCAT(c.quantity SEPARATOR ', ') AS 'Quantity',
             GROUP_CONCAT(c.price SEPARATOR ', ') AS 'Price per Unit',
-            SUM(c.price * c.quantity) AS 'Total Cost'
+            SUM(c.price * c.quantity) AS 'Total Cost',
+            d.numberdoc AS 'Document'
         FROM 
             Request r
         LEFT JOIN 
@@ -385,6 +390,8 @@ const Admin = {
             Cost c ON c.newrequest_id = nr.newrequest_id
         LEFT JOIN 
             TypeScrewdriver ts ON sd.typesd = ts.typesd_id
+        LEFT JOIN
+        	Document d ON d.repairlog_id = rl.repairlog_id
         WHERE 
             r.request_id = ?
         GROUP BY 
@@ -411,7 +418,8 @@ const Admin = {
             t.torque_check3, 
             ts.name, 
             sd.serial_no, 
-            sd.speed;`,[request_id], callback)
+            sd.speed,
+            d.numberdoc ;`,[request_id], callback)
     },
 };
 

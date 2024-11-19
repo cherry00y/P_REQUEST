@@ -338,7 +338,8 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
                     list: row.List ? row.List.split(",") : [],
                     quantity: row.Quantity ? row.Quantity.split(",") : [],
                     pricearray: row["Price per Unit"] ? row["Price per Unit"].split(", ") : [],
-                    totalcost: row['Total Cost']
+                    totalcost: row['Total Cost'],
+                    document: row.Document
                 }));
                 res.json(formattedData);
             } catch (error) {
@@ -392,7 +393,8 @@ router.get('/AllDetailNewRequest/:request_id', (req, res) => {
                     list: row.List ? row.List.split(",") : [],
                     quantity: row.Quantity ? row.Quantity.split(",") : [],
                     pricearray: row["Price per Unit"] ? row["Price per Unit"].split(", ") : [],
-                    totalcost: row['Total Cost']
+                    totalcost: row['Total Cost'],
+                    document: row.Document
                 }));
                 res.json(formattedData);
             } catch (error) {
