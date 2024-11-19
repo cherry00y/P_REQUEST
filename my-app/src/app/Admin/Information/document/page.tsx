@@ -111,10 +111,8 @@ export default function Document() {
                                         <th scope="col" className="px-6 py-3">Date</th>
                                         <th scope="col" className="px-6 py-3">Requester</th>
                                         <th scope="col" className="px-6 py-3">Type</th>
-                                        <th scope="col" className="px-6 py-3">Status</th>
-                                        <th scope="col" className="px-6 py-3">Sup KE</th>
-                                        <th scope="col" className="px-6 py-3">Operator</th>
                                         <th scope="col" className="px-6 py-3">Document No.</th>
+                                        <th scope="col" className="px-6 py-3">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,8 +124,6 @@ export default function Document() {
                                             <td className="px-6 py-4">{request.date}</td>
                                             <td className="px-6 py-4">{request.requester}</td>
                                             <td className="px-6 py-4">{request.request_type}</td>
-                                            <td className="px-6 py-4">{request.sup_ke}</td>
-                                            <td className="px-6 py-4">{request.operator}</td>
                                             <td className="px-6 py-4">{request.document}</td>
                                             <td className="px-6 py-4">
                                                 <a
