@@ -408,6 +408,30 @@ router.get('/AllDetailNewRequest/:request_id', (req, res) => {
     });
 });
 
+router.get('/Document', (req, res) => {
+    Admin.getDocument((err, results) => {
+        if (err) {
+            console.error('Error fetching data:', err);
+            res.status(500).send('Error retrieving data');
+        }
+
+        const modifiedResults = results.map(row => {
+            return {
+                request_id: `Doc No.24-${row['Doc No.']}`,
+                requester: row.Requester,
+                subject: row.Subject,
+                date: new Date(row.Date).toLocaleDateString('th-TH', { timeZone: 'Asia/Bangkok' }),
+                request_type: row.RequestType,
+                status: row.Status,
+                sup_ke: row.SupAccept,
+                operator: row.Operator,
+                document: row.Document
+            };
+        });
+        res.json(modifiedResults);
+    });
+});
+
 
 
 module.exports = router;

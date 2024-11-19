@@ -421,6 +421,40 @@ const Admin = {
             sd.speed,
             d.numberdoc ;`,[request_id], callback)
     },
+
+    getDocument: function(callback) {
+        connection.query(`
+            SELECT 
+            r.request_id AS 'Doc No.', 
+            CASE 
+                WHEN r.request_type = 'Repair Request' THEN it.issuetype_name
+                WHEN r.request_type = 'New Request' THEN nr.subject
+                ELSE NULL
+            END AS 'Subject',
+            r.date AS 'Date',
+            r.requestor AS 'Requester',
+            r.request_type AS 'RequestType',
+            r.status AS 'Status',
+            r.sup_ke AS 'SupAccept',
+            rl.operator_name AS 'Operator',
+            d.numberdoc AS 'Document'
+        FROM 
+            Request r
+        LEFT JOIN 
+            RepairRequest rr ON rr.request_id = r.request_id
+        LEFT JOIN 
+            NewRequest nr ON nr.request_id = r.request_id
+        LEFT JOIN 
+            IssueType it ON rr.subjectrr = it.issuetype_id
+        LEFT JOIN 
+            Repairlog rl ON rl.request_id = r.request_id 
+        LEFT JOIN 
+            Document d ON d.repairlog_id = rl.repairlog_id
+        WHERE 
+            r.status = 'Completed' 
+            AND d.numberdoc IS NOT NULL;`, callback)
+    },
+
 };
 
 
