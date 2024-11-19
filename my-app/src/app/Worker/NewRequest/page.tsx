@@ -41,7 +41,10 @@ export default function NewRequestAccept() {
     }
 
     const filteredRequests = request.filter(request => 
-        request.request_type.toLowerCase().includes(searchTerm.toLowerCase())
+        Object.values(request).some(value => {
+            if (value == null) return false; // ตรวจสอบว่า value ไม่เป็น null หรือ undefined
+            return value.toString().toLowerCase().includes(searchTerm.toLowerCase());
+        })
     );
 
     const totalPages = Math.ceil(filteredRequests.length / rowsPerPage);

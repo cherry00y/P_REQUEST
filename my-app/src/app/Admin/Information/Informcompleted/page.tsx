@@ -40,8 +40,11 @@ export default function InformCompleted() {
         event.preventDefault();
     }
 
-    const filteredRequests = request.filter(request =>
-        request.request_id.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredRequests = request.filter(request => 
+        Object.values(request).some(value => {
+            if (value == null) return false; // ตรวจสอบว่า value ไม่เป็น null หรือ undefined
+            return value.toString().toLowerCase().includes(searchTerm.toLowerCase());
+        })
     );
 
     const totalPages = Math.ceil(filteredRequests.length / rowsPerPage);
