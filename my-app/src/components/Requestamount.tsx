@@ -35,21 +35,26 @@ const ChartComponent: React.FC = () => {
   const filterData = useCallback((range: string) => {
     const currentDate = new Date();
     const currentDateString = currentDate.toISOString().split('T')[0];
-    
+  
     // Calculate the start of the current week (Monday)
     const startOfWeekMonday = new Date(currentDate);
     const dayOfWeek = startOfWeekMonday.getDay();
     const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If it's Sunday, set to Monday
     startOfWeekMonday.setDate(startOfWeekMonday.getDate() - daysSinceMonday);
-    
+    startOfWeekMonday.setHours(0, 0, 0, 0); // Reset time to start of the day
+  
     // Calculate the end of the week (Friday)
     const endOfWeekFriday = new Date(startOfWeekMonday);
     endOfWeekFriday.setDate(startOfWeekMonday.getDate() + 4); // Add 4 days to reach Friday
-
+    endOfWeekFriday.setHours(23, 59, 59, 999); // Set time to the end of the day
+  
     const startOfLastWeek = new Date(startOfWeekMonday);
     startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
+    startOfLastWeek.setHours(0, 0, 0, 0);
+  
     const endOfLastWeek = new Date(startOfLastWeek);
     endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
+    endOfLastWeek.setHours(23, 59, 59, 999);
   
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
@@ -60,7 +65,7 @@ const ChartComponent: React.FC = () => {
       }
   
       if (range === 'This week') {
-        // Check if date falls between Monday and Friday of this week
+        // Check if date falls between Monday (00:00:00) and Friday (23:59:59) of this week
         return itemDate >= startOfWeekMonday && itemDate <= endOfWeekFriday;
       }
   
@@ -77,6 +82,7 @@ const ChartComponent: React.FC = () => {
   
     setFilteredData(filtered);
   }, [data, customDate]);
+  
   
 
   useEffect(() => {
