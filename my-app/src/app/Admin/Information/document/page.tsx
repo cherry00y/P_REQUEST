@@ -75,11 +75,6 @@ export default function Document() {
         <div className="flex flex-col min-h-screen">
             <NavbarAdmin/>
             <main className="p-4 bg-white flex flex-col flex-1">
-                <div className="pl-14">
-                    <Link className="link text-blue-600 underline dark:text-blue-500 hover:no-underline " href="/Admin/Information/alldetailinformation/newrequest">
-                        New Request
-                    </Link>
-                </div>
                 <h2  className="text-2xl font-bold ml-20 mt-8">Completed RepairRequest Information</h2>
                 <form onSubmit={handleSearch} className="max-w-md ml-20 mt-6">
                     <label htmlFor="default-search" className="mb- text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -139,8 +134,8 @@ export default function Document() {
                                                     className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                                     href={
                                                         request.request_type === "Repair Request"
-                                                            ? `/Admin/Information/alldetailinformation/repairrequest/detail?request_id=${request.request_id}`
-                                                            : `/Admin/Information/alldetailinformation/newrequest/detail?request_id=${request.request_id}`
+                                                            ? `/Admin/Information/document/detailrepair?request_id=${request.request_id}`
+                                                            : `/Admin/Information/document/detailnew?request_id=${request.request_id}`
                                                     }
                                                 >
                                                     <span className="relative px-4 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
