@@ -73,7 +73,7 @@ export default function DetailRequest(){
                     showConfirmButton: false,
                     timer: 1500
                   }).then(() => {
-                    window.location.href = '/RequestList';
+                    window.location.href = '/Admin/RequestList';
                   });
             } else {
                 console.error('Failed to reject request:', response.statusText);
