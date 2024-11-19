@@ -41,15 +41,20 @@ const WeeklyRequestsChart: React.FC = () => {
     const dayOfWeek = startOfWeekMonday.getDay();
     const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If it's Sunday, set to Monday
     startOfWeekMonday.setDate(startOfWeekMonday.getDate() - daysSinceMonday);
+    startOfWeekMonday.setHours(0, 0, 0, 0);
     
     // Calculate the end of the week (Friday)
     const endOfWeekFriday = new Date(startOfWeekMonday);
     endOfWeekFriday.setDate(startOfWeekMonday.getDate() + 4); // Add 4 days to reach Friday
+    endOfWeekFriday.setHours(23, 59, 59, 999);
 
     const startOfLastWeek = new Date(startOfWeekMonday);
     startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
+    startOfLastWeek.setHours(0, 0, 0, 0);
+
     const endOfLastWeek = new Date(startOfLastWeek);
     endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
+    endOfLastWeek.setHours(23, 59, 59, 999);
   
     const filtered = data.filter((item) => {
       const itemDate = new Date(item.day);
