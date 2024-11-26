@@ -149,7 +149,7 @@ export default function Implement() {
         <div className="flex flex-col min-h-screen">
             <NavbarWorker />
             <main className="p-4 bg-white flex flex-col flex-1">
-                <h2 className="text-3xl font-bold ml-16 mt-3">Details of Repair</h2>
+                <h2 className="text-3xl font-bold ml-16 mt-3">Details of New Request</h2>
                 <div className="flex justify-center items-center w-screen">
                     <div className="container rounded shadow-lg p-5 mt-5 border">
                         <div>
