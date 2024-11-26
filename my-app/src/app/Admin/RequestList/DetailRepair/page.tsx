@@ -53,40 +53,48 @@ export default function DetailRequest(){
     }, []);
 
     const handleReject = async (request_id: string) => {
-
         const numericId = request_id.split('-')[1];
-        if (!request_id) return;
-
+        if (!numericId) return;
+    
         try {
             const response = await apiFetch(`/Admin/reject/${numericId}`, {
-                method: 'DELETE',
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    status: 'Rejected',
+                }),
             });
-
+    
             if (response.ok) {
-                const responseData = await response.text(); // หรือ .json() ขึ้นอยู่กับสิ่งที่เซิร์ฟเวอร์ตอบกลับ
-                console.log('Server response:', responseData);
                 Swal.fire({
-                    icon: "success",
-                    title: "Request successfully rejected",
+                    icon: 'success',
+                    title: 'Request successfully rejected',
                     showConfirmButton: false,
-                    timer: 1500
-                  }).then(() => {
+                    timer: 1500,
+                }).then(() => {
                     window.location.href = '/Admin/RequestList';
-                  })
+                });
             } else {
                 console.error('Failed to reject request:', response.statusText);
                 Swal.fire({
-                    icon: "success",
-                    title: "Error rejecting request",
+                    icon: 'error',
+                    title: 'Error rejecting request',
                     showConfirmButton: false,
-                    timer: 1500
-                  });
+                    timer: 1500,
+                });
             }
         } catch (err) {
             console.error('Error rejecting request:', err);
-            alert('Error rejecting request');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error rejecting request',
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
-    }; 
+    };
 
     const handleAccept = async (request_id: string) => {
         const numericId = request_id.split('-')[1];

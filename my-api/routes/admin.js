@@ -116,20 +116,25 @@ router.get('/detailnewrequest/:request_id', (req,res) => {
 });
 
 
-router.delete('/reject/:request_id', (req,res) => {
+router.put('/reject/:request_id', authenticateToken, (req,res) => {
     const request_id = req.params.request_id;
+    const updatedData = req.body;
+    const supervisorName = `${req.user.firstname} ${req.user.lastname}`;
 
-    if(!request_id) {
-        return res.status(400).send('Request ID is required');
+    updatedData.sup_ke = supervisorName;
+
+
+    if(!request_id || !updatedData) {
+        return res.status(400).send('Request ID and update data are required');
     }
 
-    Admin.rejectRequest(request_id, (err) => {
+    Admin.rejectRequest(request_id, updatedData, (err, results) => {
         if(err) {
             console.error('Error deleting request:', err);
             return res.status(500).send('Error reject request');
         }
 
-        res.status(200).send('Request ID ${request_id} and associated data deleted successfully');
+        res.status(200).send('Request ID ${request_id} updated successfully');
     });
 });
 

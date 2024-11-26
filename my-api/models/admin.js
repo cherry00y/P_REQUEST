@@ -89,44 +89,21 @@ const Admin = {
             r.request_id = ?`, [request_id], callback)
     },
 
-    rejectRequest: function (request_id, callback) {
+    rejectRequest: function (request_id, data, callback) {
 
-        connection.beginTransaction((err) => {
-            if (err) {
-                return callback(err);
-            }
-    
-            // ลบขั้นตอนที่เกี่ยวกับการดึงพาธของรูปภาพและการลบไฟล์
-    
-            // Delete request_id from RepairRequest table
-            connection.query('DELETE FROM RepairRequest WHERE request_id = ?', [request_id], (err, results) => {
-                if (err) {
-                    return db.rollback(() => callback(err));
-                }
-    
-                // Delete request_id from NewRequest table
-                connection.query('DELETE FROM NewRequest WHERE request_id = ?', [request_id], (err, results) => {
-                    if (err) {
-                        return db.rollback(() => callback(err));
-                    }
-    
-                    // Delete request_id from Request table
-                    connection.query('DELETE FROM Request WHERE request_id = ?', [request_id], (err, results) => {
-                        if (err) {
-                            return db.rollback(() => callback(err));
-                        }
-    
-                        // Commit the transaction
-                        connection.commit((err) => {
-                            if (err) {
-                                return db.rollback(() => callback(err));
-                            }
-                            callback(null); // Request deleted successfully
-                        });
-                    });
-                });
-            });
-        });
+        const { status, sup_ke} = data;
+
+        const updateQuery = `
+        UPDATE Request
+        SET 
+            status = ?
+            sup_ke = ?
+        WHERE 
+            request_id`;
+        
+        const values = [status, sup_ke, request_id];
+
+        connection.query(updateQuery, values, callback)
     },
     
 
