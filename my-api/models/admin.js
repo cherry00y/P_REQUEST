@@ -99,7 +99,7 @@ const Admin = {
             status = ?,
             sup_ke = ?
         WHERE 
-            request_id`;
+            request_id = ?`;
         
         const values = [status, sup_ke, request_id];
 
