@@ -96,7 +96,7 @@ const Admin = {
         const updateQuery = `
         UPDATE Request
         SET 
-            status = ?
+            status = ?,
             sup_ke = ?
         WHERE 
             request_id`;
