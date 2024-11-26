@@ -57,10 +57,12 @@ export default function DetailRequest(){
         if (!numericId) return;
     
         try {
+            const token = localStorage.getItem('token');
             const response = await apiFetch(`/Admin/reject/${numericId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     status: 'Rejected',
