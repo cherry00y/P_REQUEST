@@ -89,7 +89,7 @@ const IssueTypeamount: React.FC = () => {
         <div className="flex justify-between items-start w-full">
             <div className="flex-col items-center">
             <div className="flex items-center mb-1">
-                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">Request Summary</h5>
+                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">Top 3 problem occurrences</h5>
                 <svg
                 className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
                 aria-hidden="true"

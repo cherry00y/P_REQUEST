@@ -128,7 +128,7 @@ const YearlyRequestsChart: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-screen-xl w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 relative">
         <div className="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
-          <h5 className="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Request Summary</h5>
+          <h5 className="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Summary of monthly requests</h5>
         </div>
 
         <div id="column-chart" className="mb-4" >
