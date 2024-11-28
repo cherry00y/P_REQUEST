@@ -25,6 +25,7 @@ export default function RequestRepair() {
   const [lineProcess, setLineProcess] = useState<LineProcess[]>([]);
   const [issueType, setIssueType] = useState<IssueType[]>([]);
   const [ranks, setRanks] = useState<Rank[]>([]);
+  const [selectedIssueType, setSelectedIssueType] = useState<string>("");
   const [selectLineStop, setLineStop] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +33,8 @@ export default function RequestRepair() {
   const lineProcessSelectRef = useRef<HTMLSelectElement | null>(null);
   const issueTypeSelectRef = useRef<HTMLSelectElement | null>(null);
   const problemTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const otherIssueInputRef = useRef<HTMLInputElement | null>(null);
+
 
   useEffect(() => {
     Promise.all([
@@ -57,6 +60,14 @@ export default function RequestRepair() {
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLineStop(event.target.checked);
+  };
+
+
+  const handleIssueTypeChange = (value: string) => {
+    setSelectedIssueType(value);
+    if (value !== "อื่นๆ") {
+      otherIssueInputRef.current!.value = ""; // ล้างค่าถ้าไม่ใช่ "อื่นๆ"
+    }
   };
 
   const handleSubmit = async () => {
@@ -188,21 +199,48 @@ export default function RequestRepair() {
               </div>
               <hr/>
             {/*dropdown issuetype */}
-              <div className="mt-4">
-                <label htmlFor="issueType" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">IssueType
+            <div className="mt-4">
+                <label
+                  htmlFor="issueType"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  IssueType
+                </label>
                 <select
                   id="issueType"
                   ref={issueTypeSelectRef}
+                  value={issueTypeSelectRef.current?.value || ''}
+                  onChange={(e) => handleIssueTypeChange(e.target.value)}
                   className="mt-3 bg-gray-50 border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                    <option value="" disabled>Select an IssueType</option>
-                      {issueType.map((issueType) => (
-                        <option key={issueType.issuetype_id} value={issueType.issuetype_id}>
-                          {issueType.issuetype_name}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                  <option value="" disabled>
+                    Select an IssueType
+                  </option>
+                  {issueType.map((issue) => (
+                    <option key={issue.issuetype_id} value={issue.issuetype_id}>
+                      {issue.issuetype_name}
+                    </option>
+                  ))}
+                  <option value="other">อื่นๆ</option>
+                </select>
+
+                {selectedIssueType === "อื่นๆ" && (
+                  <div className="mt-3">
+                    <label
+                      htmlFor="otherIssue"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Please specify the issue
+                    </label>
+                    <input
+                      type="text"
+                      id="otherIssue"
+                      ref={otherIssueInputRef}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Enter your issue here"
+                    />
+                  </div>
+                )}
               </div>
               <hr/>
               
