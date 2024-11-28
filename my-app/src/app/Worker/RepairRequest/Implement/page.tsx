@@ -81,6 +81,16 @@ export default function Implement() {
 
         const operatorId = Cookies.get('operatorId') || '';
 
+        const getDateTime = (timeString: string): string => {
+            const date = new Date();
+            const [hours, minutes] = timeString.split(':');
+            date.setHours(Number(hours), Number(minutes));
+            return date.toISOString(); // Converts to ISO string format
+        };
+    
+        const implementStartDateTime = implementStart ? getDateTime(implementStart) : null;
+        const implementEndDateTime = implementEnd ? getDateTime(implementEnd) : null;
+
         const data = {
             operator_id: operatorId,
             cause: causeRef.current?.value ?? '',
@@ -95,8 +105,8 @@ export default function Implement() {
             has_document: selectDoc,
             numberdoc: documentDetail,
             comment: commentTextareaRef.current?.value ?? '',
-            implement_start: implementStart,
-            implement_end: implementEnd,
+            implement_start: implementStartDateTime,
+            implement_end: implementEndDateTime,
             request_id: numericId,
         };
 
