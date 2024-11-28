@@ -76,14 +76,16 @@ export default function RequestRepair() {
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
 
-
-
     if (!token) {
       console.error('No token found.');
       alert("No token found. Please login.");
       window.location.href = "/Login"; // Redirect to login page
       return;
     }
+
+    const subjectrr = selectedIssueType === "อื่นๆ"
+    ? otherIssueInputRef.current?.value ?? '' // ใช้ค่าจาก input ถ้าเลือก "อื่นๆ"
+    : issueTypeSelectRef.current?.value ?? '';
     
 
     const data = {
@@ -91,10 +93,7 @@ export default function RequestRepair() {
       rank: selectedRank,
       lineprocess: lineProcessSelectRef.current?.value ?? '',
       station: stationInputRef.current?.value ?? '',
-      subjectrr:
-        selectedIssueType === "อื่นๆ"
-          ? otherIssueInputRef.current?.value ?? ''
-          : selectedIssueType, // ใช้ค่า "อื่นๆ" ถ้ามี
+      subjectrr: subjectrr,
       linestop: selectLineStop,
       problem: problemTextareaRef.current?.value ?? ''
     };
