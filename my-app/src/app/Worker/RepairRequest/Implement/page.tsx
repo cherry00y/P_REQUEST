@@ -17,6 +17,8 @@ export default function Implement() {
     const [documentDetail, setDocumentDetail] = useState('');
     const [loading, setLoading] = useState(true);
     const [implementStart, setImplementStart] = useState<string | null>(null);
+    const [implementEnd, setImplementEnd] = useState<string | null>(null);
+
 
     const commentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
     const causeRef = useRef<HTMLTextAreaElement | null>(null);
@@ -26,7 +28,6 @@ export default function Implement() {
     const serialnoInputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
-        setImplementStart(new Date().toISOString());
 
         const fetchData = async () => {
             try {
@@ -79,7 +80,6 @@ export default function Implement() {
         }
 
         const operatorId = Cookies.get('operatorId') || '';
-        const implementEnd = new Date().toISOString();
 
         const data = {
             operator_id: operatorId,
@@ -297,7 +297,16 @@ export default function Implement() {
                                             <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
                                         </svg>
                                     </div>
-                                    <input type="time" id="start_time" className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="08:00" max="18:00" value="08:00" required />
+                                    <input
+                                        type="time"
+                                        id="start_time"
+                                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        min="08:00"
+                                        max="18:00"
+                                        value={implementStart || "08:00"}
+                                        onChange={(e) => setImplementStart(e.target.value)}
+                                        required
+                                    />
                                 </div>
                             </div>
 
@@ -309,13 +318,19 @@ export default function Implement() {
                                             <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
                                         </svg>
                                     </div>
-                                    <input type="time" id="end_time" className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="08:00" max="18:00" value="18:00" required />
+                                    <input
+                                        type="time"
+                                        id="end_time"
+                                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        min="08:00"
+                                        max="18:00"
+                                        value={implementEnd || "18:00"}
+                                        onChange={(e) => setImplementEnd(e.target.value)}
+                                        required
+                                    />
                                 </div>
                             </div>
                         </form>
-
-
-
                         <button 
                             onClick={handleSubmit} 
                             className="mt-4 w-full p-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
