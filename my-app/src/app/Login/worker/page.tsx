@@ -119,7 +119,7 @@ function LoginWorker() {
                         <div className="mb-6">
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-start">Email address</label>
                             <input
-                                type="email"
+                                type="text"
                                 id="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
