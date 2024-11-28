@@ -25,7 +25,6 @@ export default function RequestRepair() {
   const [lineProcess, setLineProcess] = useState<LineProcess[]>([]);
   const [issueType, setIssueType] = useState<IssueType[]>([]);
   const [ranks, setRanks] = useState<Rank[]>([]);
-  const [selectedIssueType, setSelectedIssueType] = useState<string>("");
   const [selectLineStop, setLineStop] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -33,8 +32,6 @@ export default function RequestRepair() {
   const lineProcessSelectRef = useRef<HTMLSelectElement | null>(null);
   const issueTypeSelectRef = useRef<HTMLSelectElement | null>(null);
   const problemTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const otherIssueInputRef = useRef<HTMLInputElement | null>(null);
-
 
   useEffect(() => {
     Promise.all([
@@ -62,19 +59,10 @@ export default function RequestRepair() {
     setLineStop(event.target.checked);
   };
 
-
-  const handleIssueTypeChange = (value: string) => {
-    setSelectedIssueType(value); // อัปเดต state
-    if (value !== "อื่นๆ") {
-      if (otherIssueInputRef.current) {
-        otherIssueInputRef.current.value = ""; // ล้างค่า input ถ้าไม่ใช่ "อื่นๆ"
-      }
-    }
-  };
-  
-
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
+
+
 
     if (!token) {
       console.error('No token found.');
@@ -82,22 +70,17 @@ export default function RequestRepair() {
       window.location.href = "/Login"; // Redirect to login page
       return;
     }
-
-    const subjectrr = selectedIssueType === "อื่นๆ"
-    ? otherIssueInputRef.current?.value ?? '' // ใช้ค่าจาก input ถ้าเลือก "อื่นๆ"
-    : issueTypeSelectRef.current?.value ?? '';
     
 
     const data = {
       request_type: 'Repair Request',
-      rank: selectedRank,
+      rank: selectedRank,  // Send the rank ID
       lineprocess: lineProcessSelectRef.current?.value ?? '',
       station: stationInputRef.current?.value ?? '',
-      subjectrr: subjectrr,
+      subjectrr: issueTypeSelectRef.current?.value ?? '',
       linestop: selectLineStop,
       problem: problemTextareaRef.current?.value ?? ''
     };
-    
 
     try {
       const response = await apiFetch('/Requester/request', {
@@ -205,41 +188,22 @@ export default function RequestRepair() {
               </div>
               <hr/>
             {/*dropdown issuetype */}
-            <select
-              id="issueType"
-              ref={issueTypeSelectRef}
-              value={selectedIssueType} // ใช้ state แทน ref
-              onChange={(e) => handleIssueTypeChange(e.target.value)}
-              className="mt-3 bg-gray-50 border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value="" disabled>
-                Select an IssueType
-              </option>
-              {issueType.map((issue) => (
-                <option key={issue.issuetype_id} value={issue.issuetype_name}>
-                  {issue.issuetype_name}
-                </option>
-              ))}
-            </select>
-
-            {selectedIssueType === "อื่นๆ" && (
-              <div className="mt-3">
-                <label
-                  htmlFor="otherIssue"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              <div className="mt-4">
+                <label htmlFor="issueType" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">IssueType
+                <select
+                  id="issueType"
+                  ref={issueTypeSelectRef}
+                  className="mt-3 bg-gray-50 border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  Please specify the issue
+                    <option value="" disabled>Select an IssueType</option>
+                      {issueType.map((issueType) => (
+                        <option key={issueType.issuetype_id} value={issueType.issuetype_id}>
+                          {issueType.issuetype_name}
+                      </option>
+                    ))}
+                  </select>
                 </label>
-                <input
-                  type="text"
-                  id="otherIssue"
-                  ref={otherIssueInputRef}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter your issue here"
-                />
               </div>
-            )}
-
               <hr/>
               
             <div className="flex items-center mb-4 mt-3">
