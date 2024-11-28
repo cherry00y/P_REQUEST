@@ -221,7 +221,6 @@ export default function RequestRepair() {
                       {issue.issuetype_name}
                     </option>
                   ))}
-                  <option value="other">อื่นๆ</option>
                 </select>
 
                 {selectedIssueType === "อื่นๆ" && (
