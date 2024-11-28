@@ -81,15 +81,22 @@ export default function Implement() {
 
         const operatorId = Cookies.get('operatorId') || '';
 
-        const getDateTime = (timeString: string): string => {
+        const getDateTimeInThaiTimeZone = (timeString: string): string => {
             const date = new Date();
             const [hours, minutes] = timeString.split(':');
-            date.setHours(Number(hours), Number(minutes));
-            return date.toISOString(); // Converts to ISO string format
+            
+            // Set the hours and minutes from the input time string
+            date.setHours(Number(hours), Number(minutes), 0, 0); 
+            
+            // Adjust the time by adding 7 hours for the Thai time zone (UTC+7)
+            const thaiTime = new Date(date.getTime() + (7 * 60 * 60 * 1000)); // Add 7 hours in milliseconds
+        
+            return thaiTime.toISOString(); // Converts to ISO string format
         };
-    
-        const implementStartDateTime = implementStart ? getDateTime(implementStart) : null;
-        const implementEndDateTime = implementEnd ? getDateTime(implementEnd) : null;
+        
+        const implementStartDateTime = implementStart ? getDateTimeInThaiTimeZone(implementStart) : null;
+        const implementEndDateTime = implementEnd ? getDateTimeInThaiTimeZone(implementEnd) : null;
+        
 
         const data = {
             operator_id: operatorId,
