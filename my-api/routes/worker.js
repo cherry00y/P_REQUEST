@@ -110,8 +110,23 @@ router.post('/Implement', authenticateToken, (req, res) => {
     });
 
 
-    const formattedImplementStart = new Date(implement_start).toISOString().slice(0, 19).replace('T', ' ');
-    const formattedImplementEnd = new Date(implement_end).toISOString().slice(0, 19).replace('T', ' ');
+    const getFormattedTimeForDatabase = (timeString) => {
+        const date = new Date();
+        const [hours, minutes, seconds] = timeString.split(':');
+        
+        // ตั้งเวลาตามชั่วโมง, นาที, และวินาทีที่ได้รับมา
+        date.setHours(Number(hours), Number(minutes), Number(seconds), 0);
+
+        // แปลงเวลาเป็นโซนประเทศไทย (UTC+7)
+        const utcTimestamp = date.getTime();
+        const thaiTime = new Date(utcTimestamp + (7 * 60 * 60 * 1000));
+
+        // คืนค่าตามรูปแบบ ISO ที่ตัดวันที่ออก
+        return thaiTime.toISOString().slice(0, 19).replace('T', ' ');
+    };
+
+    const formattedImplementStart = implement_start ? getFormattedTimeForDatabase(implement_start) : null;
+    const formattedImplementEnd = implement_end ? getFormattedTimeForDatabase(implement_end) : null;
 
     const operator_id = req.user.id;
     const operator_name = `${req.user.firstname} ${req.user.lastname}`;
