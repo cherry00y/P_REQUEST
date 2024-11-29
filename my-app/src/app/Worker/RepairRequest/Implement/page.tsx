@@ -81,25 +81,51 @@ export default function Implement() {
 
         const operatorId = Cookies.get('operatorId') || '';
 
-        const getTimeForDatabase = (timeString: string) => {
-            const [hours, minutes, seconds] = timeString.split(':').map(Number);
+        const isValidTimeFormat = (timeString: string): boolean => {
+            const timeRegex = /^([01]?\d|2[0-3]):[0-5]?\d(:[0-5]?\d)?$/; // Regex สำหรับเวลา HH:mm หรือ HH:mm:ss
+            return timeRegex.test(timeString);
+        };
         
-            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+        const getTimeForDatabase = (timeString: string): string => {
+            if (typeof timeString !== "string") {
+                throw new Error('Time must be a string');
+            }
+        
+            if (!isValidTimeFormat(timeString)) {
                 throw new Error('Invalid time format');
             }
         
-            // ตรวจสอบชั่วโมง นาที และวินาที เพื่อความถูกต้อง
+            const [hours, minutes, seconds = 0] = timeString.split(':').map((val) => Number(val.trim()));
+        
+            // ตรวจสอบค่าที่ไม่อยู่ในช่วงเวลา
+            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+                throw new Error('Invalid time values');
+            }
+        
             if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) {
                 throw new Error('Time values out of range');
             }
         
-            // คืนค่าเป็นฟอร์แมต HH:mm:ss
+            // คืนค่าเป็นรูปแบบ HH:mm:ss
             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         };
         
-        // การใช้งาน
-        const implementStartDateTime = implementStart ? getTimeForDatabase(implementStart) : null;
-        const implementEndDateTime = implementEnd ? getTimeForDatabase(implementEnd) : null;
+        try {
+        
+            const implementStartDateTime = implementStart ? getTimeForDatabase(implementStart) : null;
+            const implementEndDateTime = implementEnd ? getTimeForDatabase(implementEnd) : null;
+        
+            console.log('Start Time:', implementStartDateTime);
+            console.log('End Time:', implementEndDateTime);
+        } catch (error) {
+            // ตรวจสอบประเภทของ error
+            if (error instanceof Error) {
+                console.error('Error:', error.message);
+            } else {
+                console.error('Unexpected error:', error);
+            }
+        }
+        
 
         const data = {
             operator_id: operatorId,
