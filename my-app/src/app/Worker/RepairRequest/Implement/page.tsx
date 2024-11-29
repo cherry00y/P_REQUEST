@@ -97,7 +97,6 @@ export default function Implement() {
         
             const [hours, minutes, seconds = 0] = timeString.split(':').map((val) => Number(val.trim()));
         
-            // ตรวจสอบค่าที่ไม่อยู่ในช่วงเวลา
             if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
                 throw new Error('Invalid time values');
             }
@@ -106,47 +105,36 @@ export default function Implement() {
                 throw new Error('Time values out of range');
             }
         
-            // คืนค่าเป็นรูปแบบ HH:mm:ss
             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         };
         
         try {
-        
-            const implementStartDateTime = implementStart ? getTimeForDatabase(implementStart) : null;
-            const implementEndDateTime = implementEnd ? getTimeForDatabase(implementEnd) : null;
+            const implementStartDateTime = implementStart ? getTimeForDatabase(implementStart) : '00:00:00'; // Default to '00:00:00' if undefined
+            const implementEndDateTime = implementEnd ? getTimeForDatabase(implementEnd) : '00:00:00'; // Default to '00:00:00' if undefined
         
             console.log('Start Time:', implementStartDateTime);
             console.log('End Time:', implementEndDateTime);
-        } catch (error) {
-            // ตรวจสอบประเภทของ error
-            if (error instanceof Error) {
-                console.error('Error:', error.message);
-            } else {
-                console.error('Unexpected error:', error);
-            }
-        }
         
-
-        const data = {
-            operator_id: operatorId,
-            cause: causeRef.current?.value ?? '',
-            solution: solutionRef.current?.value ?? '',
-            torque_label: torqueRefs.current[0]?.value ?? '',
-            torque_check1: torqueRefs.current[1]?.value ?? '',
-            torque_check2: torqueRefs.current[2]?.value ?? '',
-            torque_check3: torqueRefs.current[3]?.value ?? '',
-            typesd: typeScrewdriverSelectRef.current?.value ?? '',
-            speed: types.includes('High-Speed') ? 'High-Speed' : 'Low-Speed',
-            serial_no: serialnoInputRef.current?.value ?? '',
-            has_document: selectDoc,
-            numberdoc: documentDetail,
-            comment: commentTextareaRef.current?.value ?? '',
-            implement_start: implementStartDateTime,
-            implement_end: implementEndDateTime,
-            request_id: numericId,
-        };
-
-        try {
+            const data = {
+                operator_id: operatorId,
+                cause: causeRef.current?.value ?? '',
+                solution: solutionRef.current?.value ?? '',
+                torque_label: torqueRefs.current[0]?.value ?? '',
+                torque_check1: torqueRefs.current[1]?.value ?? '',
+                torque_check2: torqueRefs.current[2]?.value ?? '',
+                torque_check3: torqueRefs.current[3]?.value ?? '',
+                typesd: typeScrewdriverSelectRef.current?.value ?? '',
+                speed: types.includes('High-Speed') ? 'High-Speed' : 'Low-Speed',
+                serial_no: serialnoInputRef.current?.value ?? '',
+                has_document: selectDoc,
+                numberdoc: documentDetail,
+                comment: commentTextareaRef.current?.value ?? '',
+                implement_start: implementStartDateTime,
+                implement_end: implementEndDateTime,
+                request_id: numericId,
+            };
+        
+            // Send data to API
             const response = await apiFetch('/Operator/Implement', {
                 method: 'POST',
                 headers: {
@@ -155,7 +143,7 @@ export default function Implement() {
                 },
                 body: JSON.stringify(data)
             });
-
+        
             if (response.ok) {
                 Swal.fire({
                     icon: 'success',
@@ -164,27 +152,29 @@ export default function Implement() {
                     showConfirmButton: false
                 }).then(() => {
                     resetForm();
-                window.location.href = `/Worker/RepairRequest`;
-                })
+                    window.location.href = `/Worker/RepairRequest`; // Redirect after success
+                });
             } else {
-                console.error('Failed to submit repair details.');
+                const errorMessage = await response.text(); // Extract error message
+                console.error('Failed to submit repair details:', errorMessage);
+                Swal.fire('Submission Failed', errorMessage, 'error');
             }
         } catch (error) {
             console.error('Error submitting repair details:', error);
+            Swal.fire('Submission Failed', 'An error occurred during submission. Please try again.', 'error');
         }
-    };
-
-    const resetForm = () => {
-        setTypes([]);
-        setSelectDoc(false);
-        setDocumentDetail('');
-        commentTextareaRef.current && (commentTextareaRef.current.value = '');
-        causeRef.current && (causeRef.current.value = '');
-        solutionRef.current && (solutionRef.current.value = '');
-        serialnoInputRef.current && (serialnoInputRef.current.value = '');
-        torqueRefs.current.forEach(ref => ref && (ref.value = ''));
-    };
-
+        
+        const resetForm = () => {
+            setTypes([]);
+            setSelectDoc(false);
+            setDocumentDetail('');
+            commentTextareaRef.current && (commentTextareaRef.current.value = '');
+            causeRef.current && (causeRef.current.value = '');
+            solutionRef.current && (solutionRef.current.value = '');
+            serialnoInputRef.current && (serialnoInputRef.current.value = '');
+            torqueRefs.current.forEach(ref => ref && (ref.value = ''));
+        };
+        
     if (loading) {
         return <div>Loading...</div>; // Optional loading state
     }
@@ -388,4 +378,5 @@ export default function Implement() {
             </main>
         </div>
     );
+    }
 }
