@@ -82,7 +82,7 @@ export default function Implement() {
         const operatorId = Cookies.get('operatorId') || '';
 
         const isValidTimeFormat = (timeString: string): boolean => {
-            const timeRegex = /^([01]?\d|2[0-3]):[0-5]?\d(:[0-5]?\d)?$/; // Regex สำหรับเวลา HH:mm หรือ HH:mm:ss
+            const timeRegex = /^([01]?\d|2[0-3]):[0-5]?\d(:[0-5]?\d)?$/; // Regex for HH:mm or HH:mm:ss
             return timeRegex.test(timeString);
         };
         
@@ -108,7 +108,7 @@ export default function Implement() {
             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         };
         
-        // การใช้งาน
+        // Usage
         const implementStartDateTime = implementStart ? getTimeForDatabase(implementStart) : null;
         const implementEndDateTime = implementEnd ? getTimeForDatabase(implementEnd) : null;
 
@@ -126,10 +126,12 @@ export default function Implement() {
             has_document: selectDoc,
             numberdoc: documentDetail,
             comment: commentTextareaRef.current?.value ?? '',
-            implement_start: implementStartDateTime,
+            implement_start: implementStartDateTime,  
             implement_end: implementEndDateTime,
             request_id: numericId,
         };
+
+        console.log('Data to be sent:', data);
 
         try {
             const response = await apiFetch('/Operator/Implement', {
