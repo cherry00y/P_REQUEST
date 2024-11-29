@@ -81,36 +81,25 @@ export default function Implement() {
 
         const operatorId = Cookies.get('operatorId') || '';
 
-        const isValidTimeFormat = (timeString: string): boolean => {
-            const timeRegex = /^([01]?\d|2[0-3]):[0-5]?\d(:[0-5]?\d)?$/; // Regex for HH:mm or HH:mm:ss
-            return timeRegex.test(timeString);
+        const getFormattedTimeForDatabase = (timeString: string): string => {
+            const date = new Date();
+            const [hours, minutes] = timeString.split(':');
+        
+            // ตั้งชั่วโมงและนาทีจาก timeString
+            date.setHours(Number(hours), Number(minutes), 0, 0);
+        
+            // ปรับเวลาเป็น Time Zone ประเทศไทย (UTC+7)
+            const utcTimestamp = date.getTime();
+            const thaiTime = new Date(utcTimestamp + (7 * 60 * 60 * 1000));
+        
+            // คืนค่าเฉพาะเวลาในฟอร์แมต HH:mm:ss
+            return thaiTime.toTimeString().split(' ')[0];
         };
         
-        const getTimeForDatabase = (timeString: string): string => {
-            if (typeof timeString !== "string") {
-                throw new Error('Time must be a string');
-            }
+        // การใช้งาน
+        const implementStartDateTime = implementStart ? getFormattedTimeForDatabase(implementStart) : null;
+        const implementEndDateTime = implementEnd ? getFormattedTimeForDatabase(implementEnd) : null;
         
-            if (!isValidTimeFormat(timeString)) {
-                throw new Error('Invalid time format');
-            }
-        
-            const [hours, minutes, seconds = 0] = timeString.split(':').map((val) => Number(val.trim()));
-        
-            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
-                throw new Error('Invalid time values');
-            }
-        
-            if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) {
-                throw new Error('Time values out of range');
-            }
-        
-            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        };
-        
-        // Usage
-        const implementStartDateTime = implementStart ? getTimeForDatabase(implementStart) : null;
-        const implementEndDateTime = implementEnd ? getTimeForDatabase(implementEnd) : null;
 
         const data = {
             operator_id: operatorId,
@@ -126,19 +115,17 @@ export default function Implement() {
             has_document: selectDoc,
             numberdoc: documentDetail,
             comment: commentTextareaRef.current?.value ?? '',
-            implement_start: implementStartDateTime,  
+            implement_start: implementStartDateTime,
             implement_end: implementEndDateTime,
             request_id: numericId,
         };
-
-        console.log('Data to be sent:', data);
 
         try {
             const response = await apiFetch('/Operator/Implement', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify(data)
             });
