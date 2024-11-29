@@ -79,25 +79,8 @@ export default function Implement() {
             return;
         }
 
-        const getFormattedTimeForDatabase = (timeString: string) => {
-            // สร้างวันที่จากเวลา (ไม่ได้กำหนดวันที่ ดังนั้นจะใช้วันที่ปัจจุบัน)
-            const date = new Date();
-            const [hours, minutes, seconds] = timeString.split(':');
-        
-            // ตั้งชั่วโมงและนาทีจาก timeString
-            date.setHours(Number(hours), Number(minutes), Number(seconds), 0);
-        
-            // คำนวณเวลาจาก UTC+7 โดยการบวกเวลาเข้าไป 7 ชั่วโมง
-            const thaiTime = new Date(date.getTime() + (7 * 60 * 60 * 1000));
-        
-            // คืนค่ารูปแบบเวลาในประเทศไทย (HH:mm:ss)
-            return thaiTime.toISOString().slice(0, 19).replace('T', ' ');
-        };
-        
-        
-        // Usage example:
-        const implementStartDateTime = implementStart ? getFormattedTimeForDatabase(implementStart) : null;
-        const implementEndDateTime = implementEnd ? getFormattedTimeForDatabase(implementEnd) : null;
+        const implementStartDateTime = implementStart || null;
+        const implementEndDateTime = implementEnd || null;
         
 
         const data = {
