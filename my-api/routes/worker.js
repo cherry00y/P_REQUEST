@@ -111,18 +111,10 @@ router.post('/Implement', authenticateToken, (req, res) => {
 
 
     const getFormattedTimeForDatabase = (timeString) => {
-        const date = new Date();
-        const [hours, minutes, seconds] = timeString.split(':');
-        
-        // ตั้งเวลาตามชั่วโมง, นาที, และวินาทีที่ได้รับมา
-        date.setHours(Number(hours), Number(minutes), Number(seconds), 0);
-
-        // แปลงเวลาเป็นโซนประเทศไทย (UTC+7)
-        const utcTimestamp = date.getTime();
-        const thaiTime = new Date(utcTimestamp + (7 * 60 * 60 * 1000));
-
-        // คืนค่าตามรูปแบบ ISO ที่ตัดวันที่ออก
-        return thaiTime.toISOString().slice(0, 19).replace('T', ' ');
+        if (!timeString) return null;
+        // แปลงจากเวลา HH:mm เป็น HH:mm:ss
+        const [hours, minutes] = timeString.split(':');
+        return `${hours}:${minutes}:00`; // คืนค่าเป็นเวลาในรูปแบบ HH:mm:ss
     };
 
     const formattedImplementStart = implement_start ? getFormattedTimeForDatabase(implement_start) : null;
