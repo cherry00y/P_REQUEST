@@ -31,6 +31,8 @@ interface DataDetailAllRequestRepair {
     pricearray: string[],
     totalcost: string;
     document: string;
+    timestart: string;
+    timeend: string;
 }
 
 export default function AllInformationrepairrequest() {
@@ -161,6 +163,9 @@ export default function AllInformationrepairrequest() {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Repair Time</div>
+                                <div className="col-span-3 p-3 text-lg font-medium text-black">time start: {alldetail?.timestart} to</div>
+                                <div className="col-span-7 p-3 text-lg font-medium text-black">timeend: {alldetail?.torquecheck1} </div>
                             </>
                         </div>
 

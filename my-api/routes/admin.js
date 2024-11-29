@@ -344,7 +344,9 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
                     quantity: row.Quantity ? row.Quantity.split(",") : [],
                     pricearray: row["Price per Unit"] ? row["Price per Unit"].split(", ") : [],
                     totalcost: row['Total Cost'],
-                    document: row.Document
+                    document: row.Document,
+                    timestart: row.Timestart,
+                    timeend: row.Timeend
                 }));
                 res.json(formattedData);
             } catch (error) {

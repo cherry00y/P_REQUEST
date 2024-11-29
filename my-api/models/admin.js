@@ -267,7 +267,9 @@ const Admin = {
             GROUP_CONCAT(c.quantity SEPARATOR ', ') AS 'Quantity',
             GROUP_CONCAT(c.price SEPARATOR ', ') AS 'Price per Unit',
             SUM(c.price * c.quantity) AS 'Total Cost',
-            d.numberdoc AS 'Document'
+            d.numberdoc AS 'Document',
+            rl.implement_start AS 'Timestart',
+            rl.implement_end AS 'Timeend'
         FROM 
             Request r
         LEFT JOIN 
@@ -314,7 +316,9 @@ const Admin = {
             ts.name, 
             sd.serial_no, 
             sd.speed,
-            d.numberdoc ;`,[request_id], callback)
+            d.numberdoc,
+            rl.implement_start,
+            rl.implement_end ;`,[request_id], callback)
     },
 
     getAllNewRequest: function(request_id, callback) {
