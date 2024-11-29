@@ -79,20 +79,21 @@ export default function Implement() {
             return;
         }
 
-        const getFormattedTimeForDatabase = (timeString: string): string => {
-            // Create a Date object for the current date
+        const getFormattedTimeForDatabase = (timeString: string) => {
+            // สร้างวันที่จากเวลา (ไม่ได้กำหนดวันที่ ดังนั้นจะใช้วันที่ปัจจุบัน)
             const date = new Date();
-            const [hours, minutes] = timeString.split(':');
-            
-            // Set the hours and minutes on the current date
-            date.setHours(Number(hours), Number(minutes), 0, 0);
-            
-            // Format the time for Thailand timezone (UTC+7) using toLocaleTimeString
-            const thaiTime = date.toLocaleTimeString('th-TH', { hour12: false });
+            const [hours, minutes, seconds] = timeString.split(':');
         
-            // Return the time in HH:mm:ss format
-            return thaiTime;
+            // ตั้งชั่วโมงและนาทีจาก timeString
+            date.setHours(Number(hours), Number(minutes), Number(seconds), 0);
+        
+            // คำนวณเวลาจาก UTC+7 โดยการบวกเวลาเข้าไป 7 ชั่วโมง
+            const thaiTime = new Date(date.getTime() + (7 * 60 * 60 * 1000));
+        
+            // คืนค่ารูปแบบเวลาในประเทศไทย (HH:mm:ss)
+            return thaiTime.toISOString().slice(0, 19).replace('T', ' ');
         };
+        
         
         // Usage example:
         const implementStartDateTime = implementStart ? getFormattedTimeForDatabase(implementStart) : null;
