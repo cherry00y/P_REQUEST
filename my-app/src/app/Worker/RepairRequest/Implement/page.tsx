@@ -81,15 +81,25 @@ export default function Implement() {
 
         const operatorId = Cookies.get('operatorId') || '';
 
-        const getDateTime = (timeString: string): string => {
+        const getFormattedTimeForDatabase = (timeString: string): string => {
             const date = new Date();
             const [hours, minutes] = timeString.split(':');
-            date.setHours(Number(hours), Number(minutes));
-            return date.toISOString(); // Converts to ISO string format
+        
+            // ตั้งชั่วโมงและนาทีจาก timeString
+            date.setHours(Number(hours), Number(minutes), 0, 0);
+        
+            // ปรับเวลาเป็น Time Zone ประเทศไทย (UTC+7)
+            const utcTimestamp = date.getTime();
+            const thaiTime = new Date(utcTimestamp + (7 * 60 * 60 * 1000));
+        
+            // คืนค่าเฉพาะเวลาในฟอร์แมต HH:mm:ss
+            return thaiTime.toTimeString().split(' ')[0];
         };
-    
-        const implementStartDateTime = implementStart ? getDateTime(implementStart) : null;
-        const implementEndDateTime = implementEnd ? getDateTime(implementEnd) : null;
+        
+        // การใช้งาน
+        const implementStartDateTime = implementStart ? getFormattedTimeForDatabase(implementStart) : null;
+        const implementEndDateTime = implementEnd ? getFormattedTimeForDatabase(implementEnd) : null;
+        
 
         const data = {
             operator_id: operatorId,
