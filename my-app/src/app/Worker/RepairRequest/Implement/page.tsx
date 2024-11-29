@@ -81,25 +81,25 @@ export default function Implement() {
 
         const operatorId = Cookies.get('operatorId') || '';
 
-        const getFormattedTimeForDatabase = (timeString: string): string => {
-            const date = new Date();
-            const [hours, minutes] = timeString.split(':');
+        const getTimeForDatabase = (timeString: string) => {
+            const [hours, minutes, seconds] = timeString.split(':').map(Number);
         
-            // ตั้งชั่วโมงและนาทีจาก timeString
-            date.setHours(Number(hours), Number(minutes), 0, 0);
+            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+                throw new Error('Invalid time format');
+            }
         
-            // ปรับเวลาเป็น Time Zone ประเทศไทย (UTC+7)
-            const utcTimestamp = date.getTime();
-            const thaiTime = new Date(utcTimestamp + (7 * 60 * 60 * 1000));
+            // ตรวจสอบชั่วโมง นาที และวินาที เพื่อความถูกต้อง
+            if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) {
+                throw new Error('Time values out of range');
+            }
         
-            // คืนค่าเฉพาะเวลาในฟอร์แมต HH:mm:ss
-            return thaiTime.toTimeString().split(' ')[0];
+            // คืนค่าเป็นฟอร์แมต HH:mm:ss
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         };
         
         // การใช้งาน
-        const implementStartDateTime = implementStart ? getFormattedTimeForDatabase(implementStart) : null;
-        const implementEndDateTime = implementEnd ? getFormattedTimeForDatabase(implementEnd) : null;
-        
+        const implementStartDateTime = implementStart ? getTimeForDatabase(implementStart) : null;
+        const implementEndDateTime = implementEnd ? getTimeForDatabase(implementEnd) : null;
 
         const data = {
             operator_id: operatorId,
