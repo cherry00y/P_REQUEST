@@ -79,8 +79,6 @@ export default function Implement() {
             return;
         }
 
-        const operatorId = Cookies.get('operatorId') || '';
-
         const getFormattedTimeForDatabase = (timeString: string): string => {
             const date = new Date();
             const [hours, minutes] = timeString.split(':');
@@ -102,7 +100,6 @@ export default function Implement() {
         
 
         const data = {
-            operator_id: operatorId,
             cause: causeRef.current?.value ?? '',
             solution: solutionRef.current?.value ?? '',
             torque_label: torqueRefs.current[0]?.value ?? '',
