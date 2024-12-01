@@ -346,7 +346,8 @@ router.get('/AllDetailRepairRequest/:request_id', (req, res) => {
                     totalcost: row['Total Cost'],
                     document: row.Document,
                     timestart: row.Timestart,
-                    timeend: row.Timeend
+                    timeend: row.Timeend,
+                    totaltime: row.TotalWorkTime
                 }));
                 res.json(formattedData);
             } catch (error) {

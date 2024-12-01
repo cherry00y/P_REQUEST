@@ -33,6 +33,7 @@ interface DataDetailAllRequestRepair {
     document: string;
     timestart: string;
     timeend: string;
+    totaltime: string;
 }
 
 export default function AllInformationrepairrequest() {
@@ -165,7 +166,8 @@ export default function AllInformationrepairrequest() {
                                 </div>
                                 <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Repair Time</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">time start: {alldetail?.timestart}</div>
-                                <div className="col-span-7 p-3 text-lg font-medium text-black">timeend: {alldetail?.timeend} </div>
+                                <div className="col-span-3 p-3 text-lg font-medium text-black">timeend: {alldetail?.timeend} </div>
+                                <div className="col-span-4 p-3 text-lg font-medium text-black">total work time: {alldetail?.totaltime}</div>
                             </>
                         </div>
 

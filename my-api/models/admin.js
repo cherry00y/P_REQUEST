@@ -269,7 +269,9 @@ const Admin = {
             SUM(c.price * c.quantity) AS 'Total Cost',
             d.numberdoc AS 'Document',
             rl.implement_start AS 'Timestart',
-            rl.implement_end AS 'Timeend'
+            rl.implement_end AS 'Timeend',
+            -- หาผลรวมเวลาที่ใช้ในการทำงาน
+            SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, rl.implement_start, rl.implement_end))) AS 'TotalWorkTime'
         FROM 
             Request r
         LEFT JOIN 
@@ -291,9 +293,9 @@ const Admin = {
         LEFT JOIN 
             TypeScrewdriver ts ON sd.typesd = ts.typesd_id
         LEFT JOIN
-        	Document d ON d.repairlog_id = rl.repairlog_id
+            Document d ON d.repairlog_id = rl.repairlog_id
         WHERE 
-            r.request_id = ?
+            r.request_id = 12
         GROUP BY 
             r.request_id, 
             it.issuetype_name, 
@@ -318,7 +320,7 @@ const Admin = {
             sd.speed,
             d.numberdoc,
             rl.implement_start,
-            rl.implement_end ;`,[request_id], callback)
+            rl.implement_end;`,[request_id], callback)
     },
 
     getAllNewRequest: function(request_id, callback) {
