@@ -17,14 +17,14 @@ export default function Dashboard() {
     <div className='flex flex-col min-h-screen bg-gray-50'>
       <NavbarAdmin />
       <main className="flex-1 p-6 bg-gray-100">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           {/* Top section with two chart components */}
           <div className="bg-white p-6 shadow-xl rounded-lg">
             <ChartComponent />
           </div>
-          <div className="bg-white p-6 shadow-xl rounded-lg">
+          {/** <div className="bg-white p-6 shadow-xl rounded-lg">
             <WeeklyRequestsChart />
-          </div>
+          </div>*/}
           <div className="bg-white p-6 shadow-xl rounded-lg">
             <IssueTypeamount />
           </div>
