@@ -85,7 +85,7 @@ const IssueTypeamount: React.FC = () => {
     };
 
   return (
-    <div className="max-w-md w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 relative">
+    <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 relative">
         <div className="flex justify-between items-start w-full">
             <div className="flex-col items-center">
             <div className="flex items-center mb-1">
@@ -152,7 +152,7 @@ const IssueTypeamount: React.FC = () => {
             )}
         </div>
 
-        <div id="pie-chart" className="mb-4" style={{ height: '400px' }}>
+        <div id="pie-chart" className="mb-4" style={{ width: "100%", height: "400px" }}>
             <Pie data={chartData} options={options} />
         </div>
     </div>
