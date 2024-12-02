@@ -8,12 +8,12 @@ function canRequest(position_name) {
 
 // ตรวจสอบว่าเป็น Admin ที่สามารถเข้าดูข้อมูลได้
 function isAdmin(position_name) {
-    return ['Senior Staff', 'Supervisor', 'Manager'].includes(position_name);
+    return ['Senior Staff', 'Supervisor', 'Manager', 'Leader'].includes(position_name);
 }
 
 // ตรวจสอบว่าเป็น Worker ที่สามารถกรอกข้อมูลได้
 function isWorker(position_name) {
-    return ['Senior Staff', 'Technician'].includes(position_name);
+    return ['Senior Staff', 'Technician', 'Operator', 'Assistant Technician'].includes(position_name);
 }
 
 
