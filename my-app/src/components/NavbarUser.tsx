@@ -17,7 +17,7 @@ export default function Navbar() {
         <div className="flex">
           <ul className="menu menu-horizontal px-1 flex space-x-4">
             <li>
-              <Link href="/User/RequestRepair" className="text-white hover:text-white font-bold">Information</Link>
+              <Link href="/User/RequestRepair" className="text-white hover:text-white font-bold">Request</Link>
             </li>
             <li>
               <a className="text-white hover:text-white font-bold" onClick={handleLogout}>Log out</a>
