@@ -72,11 +72,11 @@ export default function InformCompleted() {
         <div className="flex flex-col min-h-screen">
             <NavbarAdmin/>
             <main className="p-4 bg-white flex flex-col flex-1">
-                <div className="pl-14">
+                {/** <div className="pl-14">
                     <Link className="link text-blue-600 underline dark:text-blue-500 hover:no-underline " href="/Admin/Information/alldetailinformation/newrequest">
                         New Request
                     </Link>
-                </div>
+                </div>*/}
                 <h2  className="text-2xl font-bold ml-20 mt-8">Completed RepairRequest Information</h2>
                 <form onSubmit={handleSearch} className="max-w-md ml-20 mt-6">
                     <label htmlFor="default-search" className="mb- text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
