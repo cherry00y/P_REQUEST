@@ -270,7 +270,6 @@ router.get('/InformCompleteRepari', (req, res) => {
                 request_id: `Doc No.24-${row['Doc No.']}`,
                 requester: row.Requester,
                 subject: row.Subject,
-                datecompleted: new Date(row.DataComplete).toLocaleDateString('th-TH', { timeZone: 'Asia/Bangkok' }),
                 request_type: row.Type,
                 status: row.Status,
                 repairlog_id: row.Repairlog_id

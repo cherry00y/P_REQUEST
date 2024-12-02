@@ -8,7 +8,6 @@ interface CompleatedtData {
     request_id: string;
     requester: string;
     subject: string; 
-    datecompleted: string;
     request_type: string;
     status: string;
 }
@@ -110,7 +109,6 @@ export default function InformCompleted() {
                                     <tr>
                                         <th scope="col" className="px-6 py-3">Doc No.</th>
                                         <th scope="col" className="px-6 py-3">Subject</th>
-                                        <th scope="col" className="px-6 py-3">DateCompleted</th>
                                         <th scope="col" className="px-6 py-3">Requester</th>
                                         <th scope="col" className="px-6 py-3">Type</th>
                                         <th scope="col" className="px-6 py-3">Status</th>
@@ -122,7 +120,6 @@ export default function InformCompleted() {
                                         <tr key={request.request_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td className="px-6 py-4">{request.request_id}</td>
                                             <td className="px-6 py-4">{request.subject}</td>
-                                            <td className="px-6 py-4">{request.datecompleted}</td>
                                             <td className="px-6 py-4">{request.requester}</td>
                                             <td className="px-6 py-4">{request.request_type}</td>
                                             <td className="px-6 py-4">

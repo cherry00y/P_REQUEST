@@ -196,7 +196,6 @@ const Admin = {
             r.request_id AS 'Doc No.',
             r.requestor AS 'Requester',
             it.issuetype_name AS 'Subject',
-            rp.implement_end AS 'DataComplete',
             r.request_type AS 'Type', 
             r.status AS 'Status' ,
             rp.repairlog_id AS 'Repairlog_id'
@@ -295,7 +294,7 @@ const Admin = {
         LEFT JOIN
             Document d ON d.repairlog_id = rl.repairlog_id
         WHERE 
-            r.request_id = 12
+            r.request_id = ?
         GROUP BY 
             r.request_id, 
             it.issuetype_name, 
