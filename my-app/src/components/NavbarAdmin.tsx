@@ -26,9 +26,9 @@ export default function NavbarAdmin() {
                   <li>
                     <Link href="/Admin/Information" className="block px-4 py-2 hover:bg-gray-50">Pending Information</Link>
                   </li>
-                  <li>
+                  {/** <li>
                     <Link href="/Admin/Information/Informcompleted" className="block px-4 py-2 hover:bg-gray-50">Cost RepairRequest</Link>
-                  </li>
+                  </li>*/}
                   <li>
                     <Link href="/Admin/Information/document" className="block px-4 py-2 hover:bg-gray-50">Document to follow</Link>
                   </li>

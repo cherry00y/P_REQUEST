@@ -5,7 +5,6 @@ import { apiFetch } from "@/information/api";
 import Swal from 'sweetalert2';
 
 
-
 interface Product{
     product_id: number;
     productname: string;
@@ -37,6 +36,7 @@ export default function Cost(){
             window.location.href = '/Admin/Information/Informcompleted'; // Redirect if no repairlog_id is found
         }
 
+        {/** 
         apiFetch('/Admin/product')
         .then(response => response.json())
         .then((products) => {
@@ -44,7 +44,8 @@ export default function Cost(){
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-        });
+        });*/}
+        
     }, []);
 
     const handleAddItem = () => {
