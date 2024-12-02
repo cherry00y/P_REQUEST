@@ -37,7 +37,7 @@ function LoginWorker() {
             
     
             // Redirect based on user role
-            if (['Senior Staff', 'Technician'].includes(user.position_name)) {
+            if (['Senior Staff', 'Technician', 'Operator', 'Assistant Techician'].includes(user.position_name)) {
                 await Swal.fire({
                     icon: 'success',
                     title: 'Login Successful',
