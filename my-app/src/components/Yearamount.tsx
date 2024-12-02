@@ -102,13 +102,6 @@ const YearlyRequestsChart: React.FC = () => {
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       },
-      {
-        label: 'New Request',
-        data: new Array(12).fill(0),  // Initialize empty data for New Requests
-        backgroundColor: 'rgba(255, 99, 132, 1)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1,
-      },
     ],
   };
 
@@ -119,9 +112,9 @@ const YearlyRequestsChart: React.FC = () => {
   
     if (item.request_type === 'Repair Request') {
       chartData.datasets[0].data[monthIndex] += item.count;
-    } else if (item.request_type === 'New Request') {
+    }{/** else if (item.request_type === 'New Request') {
       chartData.datasets[1].data[monthIndex] += item.count;
-    }
+    }*/}
   });
 
   return (
