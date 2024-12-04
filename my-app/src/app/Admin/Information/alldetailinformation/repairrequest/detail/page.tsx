@@ -135,8 +135,8 @@ export default function AllInformationrepairrequest() {
                                 <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Document to follow</div>
                                 <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.document}</div>
                                 <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Comment</div>
-                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.detail}</div>
-                                <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Cost</div>
+                                <div className="col-span-10 p-3 text-lg font-medium text-black">{alldetail?.comment}</div>
+                                {/** <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Cost</div>
                                 <div className="col-span-10 p-3">
                                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg border bg-white">
                                         <table className="col-span-10 w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -163,7 +163,7 @@ export default function AllInformationrepairrequest() {
                                             <span className="text-lg font-bold">Total Amount: {alldetail?.totalcost}</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*/}
                                 <div className="col-span-2 p-3 border bg-yellow-400 text-lg font-medium text-white">Repair Time</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">time start: {alldetail?.timestart}</div>
                                 <div className="col-span-3 p-3 text-lg font-medium text-black">timeend: {alldetail?.timeend} </div>

@@ -13,7 +13,7 @@ function isAdmin(position_name) {
 
 // ตรวจสอบว่าเป็น Worker ที่สามารถกรอกข้อมูลได้
 function isWorker(position_name) {
-    return ['Senior Staff', 'Technician', 'Operator', 'Assistant Technician'].includes(position_name);
+    return ['Senior Staff', 'Technician', 'Operator', 'Assistant Technician', 'Leader'].includes(position_name);
 }
 
 
